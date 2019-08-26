@@ -1,0 +1,55 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceManagementServiceApi } from "../common/services/devicemanagement.api";
+import { DeviceDetails } from "../common/models/devicedetails.model";
+import { DeviceactivationComponent } from "./deviceactivation/deviceactivation.component";
+import { PageModel } from "../common/models/page.model";
+import { DevicedetailsComponent } from "./devicedetails/devicedetails.component";
+
+@Component({
+  selector: 'app-devicedetails',
+  templateUrl: './devices.component.html',
+  styleUrls: ['./devices.component.css']
+})
+export class DevicesComponent implements OnInit {
+  private showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+  deviceData : Array<DeviceDetails> = [];
+  constructor(private devicemanagementApiService : DeviceManagementServiceApi, private modalService: NgbModal) { 
+    this.page = new PageModel(0, 0, 0, 0);
+  }
+
+  ngOnInit() {
+    this.getAllDeviceDetails(0,10,'','');
+  }
+
+  activateDevice() {
+    const modalRef = this.modalService.open(DeviceactivationComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+  }
+
+  deviceDetailspopup(deviceDetails) {
+    const modalRef = this.modalService.open(DevicedetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.selectedDeviceDetails = deviceDetails;
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+
+  pageChanged(event) {
+    this.p = event;
+    this.getAllDeviceDetails(this.p-1,10,'','');
+  }
+  getAllDeviceDetails(page:number, size:number, searchDate:string,searchValue:string) {
+    this.devicemanagementApiService.getDeviceDetails(page,size,searchValue,searchDate)
+    .subscribe((data : DeviceDetails) => {
+      this.deviceData = data.content;
+      this.page = data.page;
+      console.log(this.deviceData);
+    });
+  }
+
+}

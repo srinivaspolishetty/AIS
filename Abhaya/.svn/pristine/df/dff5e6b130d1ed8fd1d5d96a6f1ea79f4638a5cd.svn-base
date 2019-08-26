@@ -1,0 +1,68 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{pageTitle}}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row" *ngIf="viewdata == false">
+    <div class="row m-a-0">
+      <div class="col-md-4 form-group">
+        <label class="required">Chassis Number</label>
+        <input type="text" class="form-control" [(ngModel)]="addeditvehicle.chassisNumber">
+      </div>
+      <div class="col-md-4 form-group">
+        <label class="required">Engine Number</label>
+        <input type="text" class="form-control" [(ngModel)]="addeditvehicle.engineNumber">
+      </div>
+      <div class="col-md-4 form-group">
+        <label class="required">Vehicle Make</label>
+        <input type="text" class="form-control" [(ngModel)]="addeditvehicle.vehicleMake">
+      </div>
+      <div class="col-md-4 form-group">
+        <label class="required">Vehicle Model</label>
+        <input type="text" class="form-control" [(ngModel)]="addeditvehicle.vehicleModel">
+      </div>
+      <div class="col-md-4 form-group">
+        <label class="required">Vehicle Registration No</label>
+        <input type="text" class="form-control" [(ngModel)]="addeditvehicle.vehicleRegNumber">
+      </div>
+    </div>
+
+    <div class="row m-a-0">
+      <div class="col-md-6 form-group">
+        <button type="submit" (click)="saveVehicle(addeditvehicle)" class="btn-primary m-t-1">SUBMIT</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="viewdata == true">
+    
+      <div class="row m-a-0">
+        <div class="col-md-6">
+          <h5>ID No</h5>
+          <h4>{{selectVehicleDetails.vehicleId}}</h4>
+        </div>
+        <div class="col-md-6">
+          <h5>Chassis Number</h5>
+          <h4>{{selectVehicleDetails.chassisNumber}}</h4>
+        </div>
+        <div class="col-md-6 p-t-2">
+          <h5>Engine Number</h5>
+          <h4>{{selectVehicleDetails.engineNumber}}</h4>
+        </div>
+        <div class="col-md-6 p-t-2">
+          <h5>Vehicle Make</h5>
+          <h4>{{selectVehicleDetails.vehicleMake}}</h4>
+        </div>
+        <div class="col-md-6 p-t-2">
+          <h5>Vehicle Model</h5>
+          <h4>{{selectVehicleDetails.vehicleModel}}</h4>
+        </div>
+        <div class="col-md-6 p-t-2">
+          <h5>Vehicle Registration Number</h5>
+          <h4>{{selectVehicleDetails.vehicleRegNumber}}</h4>
+        </div>
+      </div>
+  </div>
+</div>

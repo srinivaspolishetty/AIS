@@ -1,0 +1,25 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Deviceactivation } from '../../common/models/deviceactivation.model';
+
+@Component({
+    selector: 'app-deviceactivation',
+    templateUrl: './deviceactivation.component.html',
+    styleUrls: ['./deviceactivation.component.css']
+})
+export class DeviceactivationComponent implements OnInit {
+    @Input() deviceDetails;
+    showFilters = false;
+    public deviceActivedata: Deviceactivation;
+    constructor(public activeModal: NgbActiveModal) {
+    }
+
+    ngOnInit() {
+    }
+    onSubmit() {
+        this.activeModal.close();
+    }
+    btnShowFilters() {
+        this.showFilters = !this.showFilters;
+    }
+}

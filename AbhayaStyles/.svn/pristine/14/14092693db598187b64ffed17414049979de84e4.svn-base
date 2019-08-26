@@ -1,0 +1,63 @@
+.login{
+	&-main{
+		margin: auto;
+		background-color: white !important;
+		overflow:hidden !important;
+	}
+	&-banner{
+		width:750px;
+		height:560px;
+		background-image:url(assets/images/bg_login.png);
+	}
+	&-logo{
+		margin-top:27px;
+		padding-left:45%;
+		// & img{
+		// 	float:right;
+		// 	padding-left:50%;
+		// }
+	}
+	&-leftline{
+		height:20px;
+		width:3px;
+		background-color:$abhaya-primary-color;
+	}
+	&-content{
+		h3{
+			padding-left:10px;
+			font-weight: bold;
+			font-size:18px;
+			color:$abhaya-primary-color;
+		}
+	}
+	&-form{
+		margin-top:40PX;
+		background-position: 10px 12px;
+		background-repeat: no-repeat;
+		width: 80%;
+		font-size: 16px;
+		padding-bottom:12PX;
+		border: none;
+		margin-bottom: 12px;
+		border-bottom: 1px solid #f8f8f8;
+		outline: none;
+		& option{
+			font-weight: normal;
+			display: block;
+			white-space: pre;
+			min-height: 3.2em;
+			padding-top: 0px;
+			padding-right: 0px;
+			padding-bottom: 1px;
+			padding-left: 2px;
+			box-sizing: border-box;
+		}
+	}
+	&-block{
+		padding-top:85px;
+		padding-left:45px;
+	}
+	&-height{
+		min-height:700px;
+	}
+}

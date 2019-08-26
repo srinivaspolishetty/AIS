@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="clip-ic_EmergencyAlerts">
+      <rect width="32" height="32"/>
+    </clipPath>
+  </defs>
+  <g id="ic_EmergencyAlerts" clip-path="url(#clip-ic_EmergencyAlerts)">
+    <g id="Group_183" data-name="Group 183" transform="translate(-1 -0.007)">
+      <path id="Path_184" data-name="Path 184" d="M119.857,432.191H102.473l1.42-4.189h14.544Z" transform="translate(-94.172 -402.264)" fill="#fff"/>
+      <path id="Path_188" data-name="Path 188" d="M109.539,161.779a.566.566,0,0,0-.536-.384h-.082v-8.21a7.19,7.19,0,0,0-14.38,0v8.21h-.082a.566.566,0,0,0-.536.384l-1.42,4.189a.566.566,0,0,0,.536.748h17.384a.566.566,0,0,0,.536-.748Zm-13.866-8.594a6.058,6.058,0,0,1,12.115,0v8.21H95.673v-8.21Zm-1.845,12.4,1.036-3.057H108.6l1.036,3.057Z" transform="translate(-84.738 -136.223)" fill="#ffb04c"/>
+      <path id="Path_189" data-name="Path 189" d="M246.566,4.529a.566.566,0,0,0,.566-.566V.566a.566.566,0,0,0-1.132,0v3.4A.566.566,0,0,0,246.566,4.529Z" transform="translate(-229.573 1.507)" fill="#fa6657"/>
+      <path id="Path_190" data-name="Path 190" d="M246.566,100.1a.565.565,0,1,0-.4-.165A.57.57,0,0,0,246.566,100.1Z" transform="translate(-229.573 -91.854)" fill="#fa6657"/>
+      <path id="Path_191" data-name="Path 191" d="M43.319,268.225a.566.566,0,0,0-.566-.566h-2.6a.566.566,0,1,0,0,1.132h2.6A.566.566,0,0,0,43.319,268.225Z" transform="translate(-34.846 -250.999)" fill="#fa6657"/>
+      <path id="Path_192" data-name="Path 192" d="M.573,267.66a.566.566,0,1,0,.4.966.566.566,0,0,0-.4-.966Z" transform="translate(2.493 -251)" fill="#fa6657"/>
+      <path id="Path_193" data-name="Path 193" d="M156.688,52.727a.566.566,0,1,0,1.046-.433l-.767-1.852a.566.566,0,0,0-1.046.433Z" transform="translate(-144.553 -45.75)" fill="#fa6657"/>
+      <path id="Path_194" data-name="Path 194" d="M30.849,179.439a.566.566,0,0,0,.217-1.089l-1.852-.767a.566.566,0,1,0-.433,1.046l1.852.767A.567.567,0,0,0,30.849,179.439Z" transform="translate(-24.321 -165.982)" fill="#fa6657"/>
+      <path id="Path_195" data-name="Path 195" d="M413.828,267.66h-2.6a.566.566,0,0,0,0,1.132h2.6a.566.566,0,0,0,0-1.132Z" transform="translate(-384.913 -251)" fill="#fa6657"/>
+      <path id="Path_196" data-name="Path 196" d="M492.959,267.826a.566.566,0,1,0,.166.4A.57.57,0,0,0,492.959,267.826Z" transform="translate(-461.639 -251)" fill="#fa6657"/>
+      <path id="Path_197" data-name="Path 197" d="M388.039,80.9a.565.565,0,0,0,.4-.166l2.786-2.786a.566.566,0,0,0-.8-.8l-2.786,2.786a.566.566,0,0,0,.4.967Z" transform="translate(-363.037 -71.115)" fill="#fa6657"/>
+      <path id="Path_198" data-name="Path 198" d="M58.273,80.735a.566.566,0,1,0,.8-.8l-2.786-2.786a.566.566,0,0,0-.8.8Z" transform="translate(-49.689 -71.118)" fill="#fa6657"/>
+      <path id="Path_199" data-name="Path 199" d="M322.912,53.034a.566.566,0,0,0,.74-.306l.767-1.852a.566.566,0,1,0-1.046-.433l-.767,1.852A.566.566,0,0,0,322.912,53.034Z" transform="translate(-301.801 -45.75)" fill="#fa6657"/>
+      <path id="Path_200" data-name="Path 200" d="M433.044,177.582l-1.852.767a.566.566,0,1,0,.433,1.046l1.853-.767a.566.566,0,1,0-.433-1.046Z" transform="translate(-403.951 -165.981)" fill="#fa6657"/>
+      <path id="Path_185" data-name="Path 185" d="M152.25,171.395H139v-8.776a6.624,6.624,0,0,1,6.624-6.624h0a6.624,6.624,0,0,1,6.624,6.624Z" transform="translate(-128.634 -145.657)" fill="#fa6657"/>
+      <g id="Group_182" data-name="Group 182" transform="translate(15.861 13.906)">
+        <path id="Path_186" data-name="Path 186" d="M237.133,223.991h0A1.132,1.132,0,0,1,236,222.859v-2.717a1.132,1.132,0,0,1,1.132-1.132h0a1.132,1.132,0,0,1,1.132,1.132v2.717A1.132,1.132,0,0,1,237.133,223.991Z" transform="translate(-236.001 -219.009)" fill="#fff"/>
+        <path id="Path_187" data-name="Path 187" d="M237.133,349.269h0A1.132,1.132,0,0,1,236,348.137h0a1.132,1.132,0,0,1,1.132-1.132h0a1.132,1.132,0,0,1,1.132,1.132h0A1.132,1.132,0,0,1,237.133,349.269Z" transform="translate(-236.001 -339.759)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

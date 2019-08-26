@@ -1,0 +1,81 @@
+<div class="modal-header">
+  <h5 class="modal-title">Details For The Device No D534</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+<div class="row">
+  <div class="col-md-6">
+  <h5>IMEI NO.</h5>
+  <h4>IMEI1245585222</h4>
+  </div>
+  <div class="col-md-6">
+    <h5>Vehicle NO.</h5>
+    <h4>AP3912524</h4>
+  </div>
+</div>
+<div class="row p-t-4">
+  <div class="col-md-6">
+  <h5>Vendor ID</h5>
+  <h4>Object Technology Solutions India.</h4>
+  </div>
+  <div class="col-md-6">
+    <h5> Device Location</h5>
+    <h4>Polyclinic Road, Pettengle Pet, Siddhartha Nagars, Hyderabad - 50.</h4>
+  </div>
+</div>
+<div class="row p-t-4">
+  <div class="col-md-6">
+  <h5>Main Power Status</h5>
+  <h4>Connected</h4>
+  </div>
+  <div class="col-md-6">
+    <h5>GSM Signal Strength</h5>
+    <h4>Vaue Raining from 0 - 31</h4>
+  </div>
+</div>
+<div class="row p-t-4">
+  <div class="col-md-6">
+  <h5>Latitude</h5>
+  <h4>17.5885885</h4>
+  </div>
+  <div class="col-md-6">
+    <h5>Longitude</h5>
+    <h4>78.8885885</h4>
+  </div>
+</div>
+<div class="row p-t-4">
+  <div class="col-md-6">
+  <h5>Main Power Status</h5>
+  <h4>Connected</h4>
+  </div>
+  <div class="col-md-6">
+    <h5>GSM Signal Strength</h5>
+    <h4>Vaue Raining from 0 - 31</h4>
+  </div>
+</div>
+<div class="row p-t-4">
+  <div class="col-md-6">
+  <h5>Main Power Status</h5>
+  <h4>Connected</h4>
+  </div>
+  <div class="col-md-6">
+    <h5>GSM Signal Strength</h5>
+    <h4>Vaue Raining from 0 - 31</h4>
+  </div>
+</div>
+<div class="row p-t-4">
+  <div class="col-md-6">
+  <h5>Main Power Status</h5>
+  <h4>Connected</h4>
+  </div>
+  <div class="col-md-6">
+    <h5>GSM Signal Strength</h5>
+    <h4>Vaue Raining from 0 - 31</h4>
+  </div>
+</div>
+</div>
+<!-- <div class="modal-footer">
+  23456789
+</div> -->

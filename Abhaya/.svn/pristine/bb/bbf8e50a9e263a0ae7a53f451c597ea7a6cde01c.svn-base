@@ -1,0 +1,73 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PageModel } from '../common/models/page.model';
+import { VehicleManagementServiceApi } from '../common/services/vehiclemanagement.api';
+import { Vehicledetails } from '../common/models/vehicle.model';
+import { AddeditvehicleComponent } from './addeditvehicle/addeditvehicle.component';
+import { VehiclemappingComponent } from './vehiclemapping/vehiclemapping.component';
+import { environment } from '../../environments/environment';
+
+@Component({
+    selector: 'app-vehicledetails',
+    templateUrl: './vehicledetails.component.html',
+    styleUrls: ['./vehicledetails.component.css']
+})
+export class VehicledetailsComponent implements OnInit {
+
+
+    vehicleDetailsData: Array<Vehicledetails> = [];
+    public pageSize: Number = environment.pageSize;
+    public page: PageModel = new PageModel();
+    public p: Number;
+    public noData: Boolean = false;
+
+    constructor(private vehicleDetailsApi: VehicleManagementServiceApi, private modalService: NgbModal) {
+    }
+
+    ngOnInit() {
+        this.getVehicleDetails(0, 10);
+    }
+    viewVehicleMap(details) {
+        const modalRef = this.modalService.open(VehiclemappingComponent, {
+            size: 'lg', backdrop: 'static',
+            keyboard: false
+        });
+        modalRef.componentInstance.VehicleMapDetails = details;
+        modalRef.result.then((result) => {
+            if (result === 'refreshContent') {
+                this.getVehicleDetails(0, this.pageSize);
+            }
+        }).catch((_error: any) => {
+        });
+    }
+    pageChanged(event) {
+        this.p = event;
+        this.getVehicleDetails(event - 1,this.pageSize);
+    }
+    addVehicleDetails(details, action) {
+        if (action !== undefined && action !== '') {
+            details.action = action;
+        }
+        const modalRef = this.modalService.open(AddeditvehicleComponent, {
+            size: 'lg', backdrop: 'static',
+            keyboard: false
+        });
+        modalRef.componentInstance.selectVehicleDetails = details;
+        modalRef.result.then((result) => {
+            if (result === 'refreshContent') {
+                this.getVehicleDetails(0, this.pageSize);
+            }
+        }).catch((_error: any) => {
+        });
+    }
+
+    getVehicleDetails(page, size) {
+        this.vehicleDetailsApi.getAllVehicleDetails(page, size)
+            .subscribe((data: Vehicledetails) => {
+                this.vehicleDetailsData = data.content;
+                this.noData = (this.vehicleDetailsData.length > 0);
+                this.page = data.page;
+                console.log(this.vehicleDetailsData);
+            });
+    }
+}

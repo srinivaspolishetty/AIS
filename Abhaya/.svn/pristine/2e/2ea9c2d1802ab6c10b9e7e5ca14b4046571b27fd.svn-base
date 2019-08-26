@@ -1,0 +1,79 @@
+<div class="row p-t-1">
+  <div class="col-md-10">
+    <h4>Vehicle Management</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Vehicle Management</li>
+        <li class="breadcrumb-item active" aria-current="page">Vehicle Details</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6 col-md-10 p-t-2">
+        <span class="text-white">Total Records : {{page.totalElements}}</span>
+      </div>
+  <div class="col-md-2 m-b-2 text-right">
+    <button type="button" class="btn-round" (click)="addVehicleDetails()">+ Add Vehicle</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-rect-round">
+      <table class="grid-table m-t-3">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Chassis Number</th>
+            <th>Engine Number</th>
+            <th>Vehicle Make</th>
+            <th>Vehicle Model</th>
+            <th>Vehicle Registration No</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let details of vehicleDetailsData | paginate: { id: 'vehicledetailspage', itemsPerPage: page.size, currentPage: p, totalItems: page.totalElements }">
+            <td>{{details.vehicleId}}</td>
+            <td>{{details.chassisNumber}}</td>
+            <td>{{details.engineNumber}}</td>
+            <td>{{details.vehicleMake}}</td>
+            <td>{{details.vehicleModel}}</td>
+            <td>{{details.vehicleRegNumber}}</td>
+            <td>
+              <div class='actions-menu dropdown-click'>
+                <button>
+                  <i class="icon-ic_more" aria-hidden="true"></i>
+                </button>
+                <ul>
+                   
+                  <li>
+                    <a title="Edit Vehicle" class="icon" (click)="addVehicleDetails(details, 'view')">
+                      <i class="icon-ic_view" aria-hidden="true"></i><span>View Details</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a title="Edit Vehicle" class="icon" (click)="addVehicleDetails(details, 'edit')">
+                      <i class="icon-ic_view" aria-hidden="true"></i><span>Edit Vehicle</span>
+                    </a>
+                  </li>
+                              
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <div style="margin:0px auto;">
+          <pagination-controls id="vehicledetailspage" class="pagination" (pageChange)="pageChanged($event)"
+            maxSize="6" directionLinks="true" autoHide="true" responsive="true" previousLabel="Prev" nextLabel="Next">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

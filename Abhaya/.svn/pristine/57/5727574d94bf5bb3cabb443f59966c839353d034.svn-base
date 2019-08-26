@@ -1,0 +1,97 @@
+import { Component, OnInit } from '@angular/core';
+import { DeviceManagementServiceApi } from "../common/services/devicemanagement.api";
+import { DeviceDetails } from "../common/models/devicedetails.model";
+import { ToasterService } from "../common/services/toaster.service";
+import { CommandManagementServiceApi } from "../common/services/commandmanagement.api";
+import { Payload } from "../common/models/payload.model";
+
+@Component({
+  selector: 'app-commandexecutive',
+  templateUrl: './commandexecutive.component.html',
+  styleUrls: ['./commandexecutive.component.css']
+})
+export class CommandexecutiveComponent implements OnInit {
+
+  public deviceData: Array<DeviceDetails> = [];
+  public executeType: string;
+  public payLoad: string;
+  public imeiNumber: string;
+  public commandType: string;
+  public payloadValue : string;
+  public payloadDesc : string;
+  public payLoadData: Payload;
+  public propertyValue: boolean = false;
+
+  constructor(private devicemanagementApiService: DeviceManagementServiceApi,
+    private commandmanagementApiService: CommandManagementServiceApi,
+    private toasterService: ToasterService) {
+    this.executeType = '';
+    this.payLoad = '';
+    this.imeiNumber = '';
+    this.commandType = '';
+  }
+
+  ngOnInit() {
+    this.getAllDeviceDetails()
+  }
+
+  executechange(){
+    this.commandChange();
+  }
+  commandChange() {
+    if (this.commandType == 'properties') {
+      this.propertyValue = true;
+      this.getPayloadData(this.executeType);
+    }
+    else {
+      this.propertyValue = false;
+    }
+    console.log(this.commandType);
+  }
+
+  payloadchange(event){
+    let selectedOptions = event.target['options'];
+   let selectedIndex = selectedOptions.selectedIndex;
+   this.payloadDesc = selectedOptions[selectedIndex].text;
+  }
+  getPayloadData(type:string) {
+    this.commandmanagementApiService.getpayloadDetails(type)
+    .subscribe((data: Payload) => {
+      this.payLoadData = data;
+      console.log(this.payLoadData);
+    });
+  }
+  getAllDeviceDetails() {
+    this.devicemanagementApiService.getDeviceDetails(0, '', '', '')
+      .subscribe((data: DeviceDetails) => {
+        this.deviceData = data.content;
+        console.log(this.deviceData);
+      });
+  }
+  executecommand(commandExeForm) {
+    const newobj = new Object(
+      {
+        payload : this.payLoad + this.payloadValue,
+        description: this.payloadDesc,
+        commandType: this.executeType,
+        imeiNumber:this.imeiNumber
+      }
+      );
+      console.log(newobj);
+    this.commandmanagementApiService.sendActivationRequest(JSON.stringify(newobj))
+      .subscribe((data: any) => {
+        commandExeForm.resetForm();
+        this.executeType = '';
+        this.payLoad = '';
+        this.imeiNumber = '';
+        this.commandType = '';
+        this.propertyValue = false;
+        this.toasterService.showSuccess('bottom-right', 'Successfully Sent Activation Message.');
+      }, error => {
+        console.log('error', error);
+        this.toasterService.showError('bottom-right', 'ERROR: Unable to Sent Activation Message.');
+      }
+      );
+  }
+
+}

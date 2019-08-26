@@ -1,0 +1,206 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DashboardServiceAPI } from "../../services/dashboard.api";
+import { NgbDateFRParserFormatter } from "../../shared/util/dateformatter";
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { PanicSummary } from "../../shared/panic-alerts-list/panicsummary.model";
+import { UserDetails } from '../../login/userdetails.model';
+import { AuthService } from "../../authgaurd/auth.service";
+import { environment } from '../../../environments/environment';
+import * as Stomp from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
+import { Message } from './message.model';
+
+@Component({
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.css']
+})
+export class MainComponent implements OnInit {
+  showmenu = true;
+  activelink:string;
+  routeDeviationCount: number;
+  panicTotalCount: number;
+  tripClosedCount: number;
+  tripOpenCount: number;
+  totalTripCount: number;
+  formatDate: string;
+  model: NgbDateStruct;
+  panicSummary: Array<PanicSummary> = [];
+  videoPanicSummary: PanicSummary = new PanicSummary();
+  webPanicSummary: PanicSummary = new PanicSummary();
+  userDetails: UserDetails;
+
+  constructor(private dashboardService: DashboardServiceAPI, private authService : AuthService, private ngbDateFRParserFormatter: NgbDateFRParserFormatter,
+    private router: Router, private calendar: NgbCalendar) { 
+      this.model = this.calendar.getToday();
+      this.userDetails = JSON.parse(localStorage.getItem('userdetails'));
+    }
+  
+    ngOnInit() {
+      this.formatDate = this.ngbDateFRParserFormatter.format(this.model);
+      this.getrouteDeviationCount('',this.formatDate,'');
+      this.getPanicSummary('','',this.formatDate);
+  }
+
+  showhide(event){
+    this.showmenu = !this.showmenu;
+    const elements = document.getElementsByClassName('collapse menu-sub show');
+    if(elements.length > 0){
+      elements[0].classList.remove('show');
+    }
+  }
+  hidesubmenu(event){
+    const target = event.currentTarget;
+    if(event !== undefined){
+      const pElement = target.parentElement.parentElement;
+      const pclassAttr = pElement.attributes.id;
+      this.activelink = pclassAttr.value;
+    }
+    else{
+      this.activelink = '';
+      const elements = document.getElementsByClassName('collapse menu-sub show');
+    if(elements.length > 0){
+      elements[0].classList.remove('show');
+    }
+    }
+    if(!this.showmenu){
+      target.parentElement.parentElement.classList.remove('show'); 
+    }
+    
+  }
+
+
+// ************TRIP TRACKING AND ROUTE DEVIATION SERVICES CALL START ****************
+  getrouteDeviationCount(value, searchDate, districtId) {
+    const newSearchDate = searchDate.split('/').reverse().join('-');
+    this.dashboardService.getRouteDeviationAndPanicCount(value, newSearchDate, districtId)
+      .subscribe((data: any) => {
+        this.routeDeviationCount = 0;
+        this.panicTotalCount = 0;
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].type === 'routeDeviation') {
+            this.routeDeviationCount = data[i].count;
+          }
+        }
+        this.getTripSummary('false', newSearchDate, districtId);
+      });
+  }
+  getTripSummary(value, searchDate, districtId) {
+    this.dashboardService.getTripSummanyForDboard(value, searchDate, districtId)
+      .subscribe((data: any) => {
+        this.tripClosedCount = 0;
+        this.tripOpenCount = 0;
+        this.totalTripCount = 0;
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].isClosed) {
+            this.tripClosedCount = data[i].count;
+          } else if (!data[i].isClosed) {
+            this.tripOpenCount = data[i].count;
+          }
+        }
+        this.totalTripCount = this.tripClosedCount + this.tripOpenCount;
+      });
+  }
+// ************TRIP TRACKING AND ROUTE DEVIATION SERVICES CALL END ****************
+
+
+
+
+
+// ************PANIC DETAILS SERVICES CALL START ****************
+getPanicSummary(districtId, cityId, searchDate) {
+  const newSearchDate = searchDate.split('/').reverse().join('-');
+  this.dashboardService.getPanicSummary('', districtId, cityId, searchDate).subscribe((data: PanicSummary[]) => {
+    this.panicSummary = data;
+    this.webPanicSummary.openCount = 0;
+    this.webPanicSummary.closedCount = 0;
+    this.videoPanicSummary.closedCount = 0;
+    this.videoPanicSummary.openCount = 0;
+    for (let count = 0; count < this.panicSummary.length; count++) {
+      if (this.panicSummary[count].eventSource === 'WEB') {
+        if (this.panicSummary[count].isClosed) {
+          this.webPanicSummary.closedCount += this.panicSummary[count].count;
+        } else {
+          this.webPanicSummary.openCount += this.panicSummary[count].count;
+        }
+      } else {
+        if (this.panicSummary[count].isClosed) {
+          this.videoPanicSummary.closedCount += this.panicSummary[count].count;
+        } else {
+          this.videoPanicSummary.openCount += this.panicSummary[count].count;
+        }
+      }
+
+    }
+  });
+}
+// ************PANIC DETAILS SERVICES CALL END ****************
+
+
+
+logout(){
+  this.authService.logout();
+}
+
+
+}
+
+
+
+
+  // private stompClient = null;
+
+  // public msgs: Array<Message> = [];
+
+  // disabled = true;
+  // url = '/rta/livetracking';
+  // constructor(private router: Router) {
+  //   if (this.router.url !== '/rta') {
+  //     this.url = this.router.url;
+  //   }
+  //   this.router.navigate([this.url]);
+  //  }
+
+  //  setConnected(connected: boolean) {
+  //   this.disabled = !connected;
+
+  //   if (connected) {
+  //     this.msgs = [];
+  //   }
+  // }
+
+  // ngOnInit() {
+  //   this.connect();
+  // }
+
+  // connect() {
+  //   const socket = new SockJS(`${environment.apiBase}/distress`);
+  //   this.stompClient = Stomp.over(socket);
+  //   const _this = this;
+  //   this.stompClient.connect({}, function (frame) {
+  //     _this.setConnected(true);
+  //     console.log('Connected: ' + frame);
+  //     _this.stompClient.subscribe('/topic/messages', function (hello) {
+  //         const message = new Message();
+  //         message.msg = hello.body;
+  //         message.isMobile = (hello.body.split(',')[1] === 'MOBILE');
+  //       _this.msgs.push(message);
+  //     });
+  //   });
+  // }
+
+  // openPanicAlerts(isMobile) {
+  //   this.msgs = [];
+  //   if (isMobile) {
+  //     if (this.router.url === '/rta/showvideo') {
+  //       this.router.navigate(['/rta/showvideos']);
+  //     } else {
+  //       this.router.navigate(['/rta/showvideo']);
+  //     }
+  //   } else {
+  //     this.router.navigate(['/rta/panicalertslist']);
+  //   }
+  // }
+
+

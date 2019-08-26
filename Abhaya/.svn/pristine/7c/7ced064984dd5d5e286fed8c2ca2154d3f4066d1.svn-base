@@ -1,0 +1,38 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from "../../environments/environment";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DashboardServiceAPI {
+
+  constructor(private httpClient: HttpClient) { }
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      'Authorization': 'my-auth-token'
+    })
+  };
+ 
+  getRouteDeviationAndPanicCount(districtWise, searchDate, districtId) {
+    let url = `${environment.apiBase}${environment.version}/`;
+    url = url + `getRouteDeviatedAndPanicSummary?isDistrictWise=${districtWise}&searchDate=${searchDate}&districtId=${districtId}`;
+    return this.httpClient.get(url);
+  }
+
+  getTripSummanyForDboard(districtWise, searchDate, districtId) {
+    let url = `${environment.apiBase}${environment.version}/`;
+    url = url + `getTripsSummary?isDistrictWise=${districtWise}&searchDate=${searchDate}&districtId=${districtId}`;
+    return this.httpClient.get(url);
+  }
+
+  getPanicSummary(eventSource, districtId, cityId, searchDate) {
+    let url = `${environment.apiBase}${environment.version}/panicSummary`;
+    url = url + `?eventSource=${eventSource}&districtId=${districtId}&cityId=${cityId}&searchDate=${searchDate}`;
+    return this.httpClient.get(url);
+  }
+ 
+}

@@ -1,0 +1,13 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TrackdeviceComponent } from './trackdevice.component';
+import { TrackmanagementRoutingModule } from "./trackmanagement-routing.module";
+
+@NgModule({
+  declarations: [TrackdeviceComponent],
+  imports: [
+    CommonModule,
+    TrackmanagementRoutingModule
+  ]
+})
+export class TrackmanagementModule { }

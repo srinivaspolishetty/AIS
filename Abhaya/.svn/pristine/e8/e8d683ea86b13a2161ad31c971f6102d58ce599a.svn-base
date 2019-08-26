@@ -1,0 +1,68 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router, ActivatedRoute } from '@angular/router';
+import { PageModel } from "../common/models/page.model";
+import { VehicleManagementServiceApi } from "../common/services/vehiclemanagement.api";
+import { Vehicledetails } from "../common/models/vehicle.model";
+import { AddeditvehicleComponent } from "./addeditvehicle/addeditvehicle.component";
+import { VehiclemappingComponent } from "./vehiclemapping/vehiclemapping.component";
+
+@Component({
+  selector: 'app-vehicledetails',
+  templateUrl: './vehicledetails.component.html',
+  styleUrls: ['./vehicledetails.component.css']
+})
+export class VehicledetailsComponent implements OnInit {
+  
+
+  public vehicleDetailsData : Vehicledetails;
+  public page : PageModel;
+  public p : number;
+
+  constructor(private vehicleDetailsApi : VehicleManagementServiceApi,  private router: Router,
+    private modalService: NgbModal) {
+    this.page = new PageModel(0, 0, 0, 0);
+   }
+
+  ngOnInit() {
+    this.getVehicleDetails(0, 10);
+  }
+  viewVehicleMap(details){
+    const modalRef = this.modalService.open(VehiclemappingComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.VehicleMapDetails = details;
+    modalRef.result.then((result) => {
+      if (result === 'refreshContent') {
+        this.getVehicleDetails(0, 10);
+      }
+    }).catch((error) => {
+    })
+  }
+  pageChanged(event) {
+    this.p = event;
+    this.getVehicleDetails(this.p-1,10);
+  }
+  addVehicleDetails(details, action){
+    if(action !== undefined && action !== '' ){
+      details.action = action;
+    }
+    const modalRef = this.modalService.open(AddeditvehicleComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.selectVehicleDetails = details;
+    modalRef.result.then((result) => {
+      if (result === 'refreshContent') {
+        this.getVehicleDetails(0, 10);
+      }
+    }).catch((error) => {
+    })
+  }
+  
+  getVehicleDetails(page, size){
+    this.vehicleDetailsApi. getAllVehicleDetails(page, size)
+    .subscribe((data : Vehicledetails) => {
+      this.vehicleDetailsData = data.content;
+      this.page = data.page;
+      console.log(this.vehicleDetailsData);
+    });
+  }
+}

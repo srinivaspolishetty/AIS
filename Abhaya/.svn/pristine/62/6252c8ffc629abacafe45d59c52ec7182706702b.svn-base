@@ -1,0 +1,19 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LocationmonitoringRoutingModule } from "./locationmonitoring-routing.module";
+import { LocationmonitoringComponent } from './locationmonitoring.component';
+
+@NgModule({
+  declarations: [LocationmonitoringComponent],
+  imports: [
+    CommonModule,
+    NgbModule,
+    FormsModule,
+    NgxPaginationModule,
+    LocationmonitoringRoutingModule
+  ]
+})
+export class LocationmonitoringModule { }

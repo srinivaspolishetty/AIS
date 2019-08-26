@@ -1,0 +1,73 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { LocationMonitoringServiceApi } from "../common/services/locationmonitoring.api";
+import { LocationMonitoring } from "../common/models/locationmonitoring.model";
+import { PageModel } from "../common/models/page.model";
+import { NgbDateFRParserFormatter } from "../common/directives/dateformatter";
+import { LocationdetailsComponent } from "./locationdetails/locationdetails.component";
+
+@Component({
+  selector: 'app-locationmonitoring',
+  templateUrl: './locationmonitoring.component.html',
+  styleUrls: ['./locationmonitoring.component.css']
+})
+export class LocationmonitoringComponent implements OnInit {
+
+  public showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+  model: NgbDateStruct;
+  public formatDate : string;
+  public searchValue : string;
+  public showSearchClear = false;
+  public noData : boolean = false;
+  locationMonitoringdata : Array<LocationMonitoring> = [];
+  constructor(private locationApiService : LocationMonitoringServiceApi,
+    private modalService: NgbModal, private calendar: NgbCalendar,
+    private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+    this.page = new PageModel(0, 0, 0, 0);
+    this.searchValue = '';
+   }
+
+  ngOnInit() {
+    this.getLocationMonitoringDetails(0,10);
+  }
+
+  locationDetails(locationDetails) {
+    const modalRef = this.modalService.open(LocationdetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.selectedLocationDetails = locationDetails;
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+  changeDate() {
+    this.getLocationMonitoringDetails(0,10);
+  }
+  searchData() {
+    this.getLocationMonitoringDetails(0,10);
+    this.showSearchClear = (this.searchValue.length > 4) ? true : false;
+  }
+  clearSearch() {
+    this.searchValue = '';
+    this.showSearchClear = false;
+    this.searchData();
+  }
+  pageChanged(event) {
+    this.p = event;
+    this.getLocationMonitoringDetails(this.p-1,10);
+  }
+  getLocationMonitoringDetails(page:number, size:number) {
+    this.formatDate = this.ngbDateFRParserFormatter.format(this.model);
+    console.log(this.formatDate);
+    this.locationApiService.getLocationMonitoringDetails(page,size,this.formatDate,this.searchValue)
+    .subscribe((data : LocationMonitoring) => {
+      this.locationMonitoringdata = data.content;
+      this.noData = (this.locationMonitoringdata.length > 0);
+      this.page = data.page;
+      console.log(this.locationMonitoringdata);
+    });
+  }
+}

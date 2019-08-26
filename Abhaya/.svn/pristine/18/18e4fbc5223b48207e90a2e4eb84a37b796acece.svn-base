@@ -1,0 +1,53 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserManagementServiceApi } from "../common/services/usermanagement.api";
+import { User } from "../common/models/user.model";
+import { PageModel } from "../common/models/page.model";
+import { UserdetailsComponent } from "./userdetails/userdetails.component";
+
+@Component({
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
+})
+export class UsersComponent implements OnInit {
+
+  private showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+  pageTitle = "User Details";
+  userdata: Array<User> = [];
+
+  constructor(private usersApiService:UserManagementServiceApi, private modalService: NgbModal) {
+    this.page = new PageModel(0, 0, 0, 0);
+   }
+
+  ngOnInit() {
+    this.getUserDetails(0,10);
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+
+  userDetails(userdetails) {
+    const modalRef = this.modalService.open(UserdetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.user=userdetails;    
+  }
+
+
+  pageChanged(event) {
+    this.p = event;
+    this.getUserDetails(this.p-1,10);
+  }
+  getUserDetails(page:number, size:number) {
+    this.usersApiService.getAllUsers(page,size)
+    .subscribe((data : User) => {
+      this.userdata = data.content;
+      this.page = data.page;
+      console.log(this.userdata);
+    });
+  }
+
+}

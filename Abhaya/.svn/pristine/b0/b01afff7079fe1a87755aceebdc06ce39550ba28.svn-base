@@ -1,0 +1,72 @@
+<div class="row p-t-1 p-a-0 m-a-0">
+        <div class="col-md-10">
+          <h4>Location Management</h4>
+        </div>
+        <div class="col-md-2 text-right">
+          <button type="button" class="active btn-left btn-toggle">Today</button>
+          <button type="button" class="btn-right btn-toggle">All</button>
+        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Location Management</li>
+            </ol>
+          </nav>
+      </div>
+      <div class="row p-a-0 m-a-0">
+            <div class="col-md-12">
+<div class="box-rect-round">
+        <table class="abhaya-table m-t-3">
+          <thead>
+            <tr>
+              <th>Trip ID</th>
+              <th>Citizen Mobile No</th>
+              <th>Vehicle No</th>
+              <th>Start Time</th>
+              <th>Source</th>
+              <th>Destination</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td>9642949201</td>
+              <td>AP39 1234</td>
+              <td>15:10:52</td>
+              <td>Polyclinic road, Pettengle Pet, Siddhartha Nagar</td>
+              <td>MG Road, Auto Nagar, Vijayawada</td>
+              <td><i class="fa fa-ellipsis-v" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td>01</td>
+              <td>9642949201</td>
+              <td>AP39 1234</td>
+              <td>15:10:52</td>
+              <td>Polyclinic road, Pettengle Pet, Siddhartha Nagar</td>
+              <td>MG Road, Auto Nagar, Vijayawada</td>
+              <td><i class="fa fa-ellipsis-v" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td>01</td>
+              <td>9642949201</td>
+              <td>AP39 1234</td>
+              <td>15:10:52</td>
+              <td>Polyclinic road, Pettengle Pet, Siddhartha Nagar</td>
+              <td>MG Road, Auto Nagar, Vijayawada</td>
+              <td><i class="fa fa-ellipsis-v" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td>01</td>
+              <td>9642949201</td>
+              <td>AP39 1234</td>
+              <td>15:10:52</td>
+              <td>Polyclinic road, Pettengle Pet, Siddhartha Nagar</td>
+              <td>MG Road, Auto Nagar, Vijayawada </td>
+              <td><i class="fa fa-ellipsis-v" aria-hidden="true"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+      </div>

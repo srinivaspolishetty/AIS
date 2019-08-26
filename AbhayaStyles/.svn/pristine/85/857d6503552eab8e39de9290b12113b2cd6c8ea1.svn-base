@@ -1,0 +1,18 @@
+agm-map {
+		height: calc(100vh - 163px);
+	}
+	.agm-map-container-inner{
+		border-radius:20px!important;
+	}
+.google_map_align {
+    width: 100%;
+    margin-bottom: 20px;
+	}
+	
+.chart{
+	&-pie{
+		& ngx-charts-pie-chart{
+			margin:auto;
+		}
+	}
+}

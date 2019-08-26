@@ -1,0 +1,15 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-trackdevice',
+  templateUrl: './trackdevice.component.html',
+  styleUrls: ['./trackdevice.component.css']
+})
+export class TrackdeviceComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

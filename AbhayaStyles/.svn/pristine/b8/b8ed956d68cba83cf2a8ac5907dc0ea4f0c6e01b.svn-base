@@ -1,0 +1,90 @@
+/**
+iconfont Webfont
+*/
+@font-face {
+	font-family: 'iconfont';
+	src: url('iconfont.eot?1549534765763');
+	src: url('iconfont.eot?#iefix-1549534765763') format('embedded-opentype'),
+		url('iconfont.woff2?1549534765763') format('woff2'),
+		url('iconfont.woff?1549534765763') format('woff'),
+		url('iconfont.ttf?1549534765763') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^='icon-']:before,
+[class*=' icon-']:before {
+	font-family: 'iconfont';
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 1;
+	font-weight: normal;
+	font-style: normal;
+	speak: none;
+	text-decoration: inherit;
+	font-size: inherit;
+	text-transform: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/*
+Glyphs list
+*/
+
+.icon-ic_arrow_down:before {
+	content: '\ea01';
+}
+
+.icon-ic_arrow_up:before {
+	content: '\ea02';
+}
+
+.icon-ic_close:before {
+	content: '\ea03';
+}
+
+.icon-ic_dashboard:before {
+	content: '\ea04';
+}
+
+.icon-ic_DeviceManagement:before {
+	content: '\ea05';
+}
+
+.icon-ic_devicereport:before {
+	content: '\ea06';
+}
+
+.icon-ic_DriverManagement:before {
+	content: '\ea07';
+}
+
+.icon-ic_mapview:before {
+	content: '\ea08';
+}
+
+.icon-ic_menu_bar:before {
+	content: '\ea09';
+}
+
+.icon-ic_profile:before {
+	content: '\ea0a';
+}
+
+.icon-ic_search:before {
+	content: '\ea0b';
+}
+
+.icon-ic_TripManagement:before {
+	content: '\ea0c';
+}
+
+.icon-ic_UserManagement:before {
+	content: '\ea0d';
+}
+
+.icon-ic_VehicleManagement:before {
+	content: '\ea0e';
+}

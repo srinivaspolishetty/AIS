@@ -1,0 +1,16 @@
+export class HealthnMonitoring {
+    public analogIOStatus: string;
+    public batteryPercentage: string;
+    public createdDate: string;
+    public dataUpdateOFF: string;
+    public dataUpdateON: string;
+    public digitalIOStatus: string;
+    public endOfPacket: string;
+    public firmwareVersion: string;
+    public hmpPacketDataId: number;
+    public imeiNumber: string;
+    public lowBatteryThrValue: string;
+    public memoryPercentage: string;
+    public vendorId: string;
+    public content : any;
+}

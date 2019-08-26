@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" y1="-0.946" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff34c"/>
+      <stop offset="1" stop-color="#ffb04c"/>
+    </linearGradient>
+    <clipPath id="clip-ic_DeviceStatus">
+      <rect width="32" height="32"/>
+    </clipPath>
+  </defs>
+  <g id="ic_DeviceStatus" clip-path="url(#clip-ic_DeviceStatus)">
+    <g id="router" transform="translate(0.5 7)">
+      <path id="Path_23" data-name="Path 23" d="M30.84,350.785H0v5.289a1.71,1.71,0,0,0,1.652,1.763H29.188a1.71,1.71,0,0,0,1.652-1.763ZM3.3,356.661a2.355,2.355,0,0,1,0-4.7,2.355,2.355,0,0,1,0,4.7ZM13.767,354.9H7.158a.589.589,0,0,1,0-1.176h6.609a.589.589,0,0,1,0,1.176Zm3.854.587h-1.1v-2.35h1.1Zm2.2,0h-1.1v-2.35h1.1Zm2.2,0h-1.1v-2.35h1.1Zm2.2,0h-1.1v-2.35h1.1Zm2.2,0h-1.1v-2.35h1.107Zm2.2,0h-1.1v-2.35h1.1Zm0,0" transform="translate(0 -340.204)" fill="url(#linear-gradient)"/>
+      <path id="Path_26" data-name="Path 26" d="M3.636,208.166l-1.668,8.022H32.521l-1.668-8.025a1.679,1.679,0,0,0-1.616-1.38H5.251a1.679,1.679,0,0,0-1.616,1.38Zm23.515-.2h2.2a.589.589,0,0,1,0,1.176h-2.2a.589.589,0,0,1,0-1.176Zm-1.651.587a.569.569,0,0,1-.55.587H5.136a.589.589,0,0,1,0-1.176H24.95a.533.533,0,0,1,.391.172.608.608,0,0,1,.161.417Zm0,0" transform="translate(-1.824 -206.783)" fill="url(#linear-gradient)"/>
+      <path id="Path_27" data-name="Path 27" d="M33.884,383.961a.966.966,0,1,1-.943-1.176A1.079,1.079,0,0,1,33.884,383.961Zm0,0" transform="translate(-29.652 -369.854)" fill="url(#linear-gradient)"/>
+    </g>
+  </g>
+</svg>

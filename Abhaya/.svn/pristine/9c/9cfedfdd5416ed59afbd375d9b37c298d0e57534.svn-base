@@ -1,0 +1,46 @@
+<div class="row p-t-1 p-a-0 m-a-0">
+  <div class="col-md-10">
+    <h4>Raw Data</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Location Management</li>
+        </ol>
+      </nav>
+  </div>
+  <!-- <div class="col-md-2 text-right">
+    <button type="button" class="active btn-left btn-toggle">Today</button>
+    <button type="button" class="btn-right btn-toggle">All</button>
+  </div> -->
+
+</div>
+<div class="row p-a-0 m-a-0">
+  <div class="col-md-12">
+    <div class="box-rect-round">
+      <table class="abhaya-table m-t-3">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>IMEI No</th>
+            <th>Serial No</th>
+            <th>Netword Date</th>
+            <th>Netword Time</th>
+            <th>Created Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let details of rawdata">
+            <td>{{details.rawDataId}}</td>
+            <td>{{details.imeiNumber}}</td>
+            <td>{{details.serialNumber}}</td>
+            <td>{{details.networkDate}}</td>
+            <td>{{details.networkTime}}</td>
+            <td>{{details.createdDate}}</td>
+            <td><i class="fa fa-ellipsis-v" aria-hidden="true"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

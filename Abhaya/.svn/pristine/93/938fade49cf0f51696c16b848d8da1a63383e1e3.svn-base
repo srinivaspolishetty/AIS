@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from "../../../environments/environment";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DeviceManagementServiceApi {
+
+  constructor(private httpClient: HttpClient) { }
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      'Authorization': 'my-auth-token'
+    })
+  };
+  getDeviceDetails(page:number, size:number, searchDate:string,searchValue:string) {
+    let url = `${environment.apiBase}${environment.version}/modemDetails`;
+    url += `?page=${page}&size=${size}&imeiNumber=${searchValue}&searchDate=${searchDate}`;
+    return this.httpClient.get(url);
+  }
+  getDeviceCommDetails(page:number, size:number, searchDate:string,searchValue:string) {
+    let url = `${environment.apiBase}${environment.version}/deviceCommunication`;
+    url += `?page=${page}&size=${size}&imeiNumber=${searchValue}&searchDate=${searchDate}`;
+    return this.httpClient.get(url);
+  }
+}

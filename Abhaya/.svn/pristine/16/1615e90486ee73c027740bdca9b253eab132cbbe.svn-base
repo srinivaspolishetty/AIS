@@ -1,0 +1,34 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceDetails } from "../../common/models/devicedetails.model";
+
+@Component({
+  selector: 'app-devicedetails',
+  templateUrl: './devicedetails.component.html',
+  styleUrls: ['./devicedetails.component.css']
+})
+export class DevicedetailsComponent implements OnInit {
+
+  @Input() selectedDeviceDetails : DeviceDetails;
+  public pageTitle : string;
+  public viewDetails : boolean = true;
+  public mobileNumber : string;
+
+  constructor(public activeModal: NgbActiveModal) { }
+
+  ngOnInit() {
+    if(this.selectedDeviceDetails.selectedEvent == 'edit'){
+      this.viewDetails = false;
+      this.mobileNumber = this.selectedDeviceDetails.mobileNumber;
+      this.pageTitle = "Edit Device Details of " + this.selectedDeviceDetails.imeiNumber;
+    }
+    else{
+      this.viewDetails = true;
+      this.pageTitle = "Device Details of " + this.selectedDeviceDetails.imeiNumber;
+    }
+  }
+  editDeviceDetails(){
+    console.log(this.mobileNumber);
+  }
+
+}

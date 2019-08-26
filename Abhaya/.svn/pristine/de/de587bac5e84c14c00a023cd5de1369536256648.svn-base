@@ -1,0 +1,20 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Vehicledetails } from "../../common/models/vehicle.model";
+
+@Component({
+  selector: 'app-vehiclemapping',
+  templateUrl: './vehiclemapping.component.html',
+  styleUrls: ['./vehiclemapping.component.css']
+})
+export class VehiclemappingComponent implements OnInit {
+  @Input() VehicleMapDetails : Vehicledetails;
+  constructor(public activeModal: NgbActiveModal) { }
+
+  ngOnInit() {
+    console.log(this.VehicleMapDetails);
+  }
+  onSubmit() {
+    this.activeModal.close();
+  }
+}

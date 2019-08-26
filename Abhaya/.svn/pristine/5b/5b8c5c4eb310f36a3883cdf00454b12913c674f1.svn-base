@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { HealthMonitoringServiceApi } from "../common/services/healthmonitoring.api";
+import { HealthnMonitoring } from "../common/models/healthmonitoring.model";
+
+@Component({
+  selector: 'app-healthmonitoring',
+  templateUrl: './healthmonitoring.component.html',
+  styleUrls: ['./healthmonitoring.component.css']
+})
+export class HealthmonitoringComponent implements OnInit {
+
+  pageTitle = "Health Monitoring Page";
+  healthMonitoringdata: Array<HealthnMonitoring> = [];
+  constructor(private healthApiService:HealthMonitoringServiceApi) { }
+
+  ngOnInit() {
+    this.gethealthMonitoringDetails();
+  }
+
+  gethealthMonitoringDetails() {
+    this.healthApiService.gethealthMonitoringDetails()
+    .subscribe((data : HealthnMonitoring) => {
+      this.healthMonitoringdata = data.content;
+      console.log(this.healthMonitoringdata);
+    });
+  }
+
+}

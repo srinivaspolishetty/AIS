@@ -1,0 +1,9 @@
+<div>
+    <div class="container-left">
+        <app-sidemenu (expandDiv)="expandRightDiv($event)"></app-sidemenu>
+    </div>
+    <div class="container-right" [ngClass]="{'expand' : showmenu== false}">
+        <app-header></app-header>
+        <router-outlet></router-outlet>
+    </div>
+</div>

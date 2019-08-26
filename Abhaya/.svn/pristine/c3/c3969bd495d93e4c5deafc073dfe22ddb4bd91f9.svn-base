@@ -1,0 +1,74 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { UserManagementServiceApi } from "../common/services/usermanagement.api";
+import { User } from "../common/models/user.model";
+import { PageModel } from "../common/models/page.model";
+import { NgbDateFRParserFormatter } from "../common/directives/dateformatter";
+import { UserdetailsComponent } from "./userdetails/userdetails.component";
+
+@Component({
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
+})
+export class UsersComponent implements OnInit {
+
+  public showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+  model: NgbDateStruct;
+  pageTitle = "User Details";
+  public showSearchClear = false;
+  public searchValue : string;
+  public formatDate : string;
+  public noData : boolean = false;  
+  userdata: Array<User> = [];
+
+  constructor(private usersApiService:UserManagementServiceApi, private modalService: NgbModal, private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+    this.page = new PageModel(0, 0, 0, 0);
+    this.searchValue = '';
+   }
+
+  ngOnInit() {
+    this.getUserDetails(0,10);
+  }
+  changeDate() {
+    this.getUserDetails(0,10);
+  }
+  searchData() {
+    this.getUserDetails(0,10);
+    this.showSearchClear = (this.searchValue.length > 4) ? true : false;
+  }
+  clearSearch() {
+    this.searchValue = '';
+    this.showSearchClear = false;
+    this.searchData();
+  }
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+
+  userDetails(userdetails) {
+    const modalRef = this.modalService.open(UserdetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.user=userdetails;    
+  }
+
+
+  pageChanged(event) {
+    this.p = event;
+    this.getUserDetails(this.p-1,10);
+  }
+  getUserDetails(page:number, size:number) {
+    this.formatDate = this.ngbDateFRParserFormatter.format(this.model);
+    this.usersApiService.getAllUsers(page,size,this.formatDate,this.searchValue)
+    .subscribe((data : User) => {
+      this.userdata = data.content;
+      this.noData = (this.userdata.length > 0);
+      this.page = data.page;
+      console.log(this.userdata);
+    });
+  }
+
+}

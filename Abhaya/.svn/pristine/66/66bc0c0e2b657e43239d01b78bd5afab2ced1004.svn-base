@@ -1,0 +1,119 @@
+<div class="row p-t-1 page-header">
+  <div class="col-md-8">
+    <h4>Location Management</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Location Management</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 col-md-10 p-t-3">
+    <span class="text-white">Total Records : {{page.totalElements}}</span>
+  </div>
+  <div class="col-md-2 text-right">
+      <button type="button" class="btn-refresh" (click)="refreshPage()"><i class="fa fa-refresh" aria-hidden="true"></i>
+      </button>
+     <button type="button" class="btn-search" (click)="btnShowFilters()"><i class="icon-ic_searchfilter"></i></button>
+  </div>
+</div>
+<div class="row page-filters" [ngClass]="{'show': showFilters == true}">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search By IMEI/Vehicle No" [(ngModel)]="searchValue"
+            (keyup)="searchData();">
+          <button type="button" class="btn-close close" aria-label="Close">
+            <span aria-hidden="true" (click)="clearSearch();" *ngIf="showSearchClear">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="input-group-append datepicker">
+            <input type="text" class="form-control" readOnly placeholder="Start Date" name="dp"
+              [(ngModel)]="startDateModel" (dateSelect)="changeDate();" ngbDatepicker #startDate="ngbDatepicker">
+            <button style="outline:none" class="btn-cal calendar" (click)="startDate.toggle()" type="button"> <i class="fa fa-calendar"
+                aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group-append datepicker">
+              <input type="text" class="form-control" readOnly placeholder="End Date" name="dp"
+                [(ngModel)]="endDateModel" (dateSelect)="changeDate();" ngbDatepicker #endDate="ngbDatepicker">
+              <button style="outline:none" class="btn-cal calendar" (click)="endDate.toggle()" type="button"> <i class="fa fa-calendar"
+                  aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-rect-round o-x-auto">
+      <table class="grid-table m-t-3">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>IMEI No</th>
+            <th>Vehicle No</th>
+            <th>Vendor ID</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Network Date</th>
+            <th>Network Time</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="noData">
+          <tr *ngFor="let location of locationMonitoringdata | paginate: { id: 'locationmonitoringpage', itemsPerPage: page.size, currentPage: p, totalItems: page.totalElements }">
+            <td>{{location.lmpPacketDataId}}</td>
+            <td>{{location.imei}}</td>
+            <td>{{location.vehicleRegNo}}</td>
+            <td>{{location.vendorId}}</td>
+            <td>{{location.latitude}}</td>
+            <td>{{location.longitude}}</td>
+            <td>{{location.networkDate}}</td>
+            <td>{{location.networkTime}}</td>
+            <td> 
+              <div class="actions-menu dropdown-click">
+                <button>
+                  <i class="icon-ic_more" aria-hidden="true"></i>
+                </button>
+                <ul>
+                  <li>
+                    <a title="View Location Details" class="icon" (click)="locationDetails(location)">
+                      <i class="icon-ic_view" aria-hidden="true"></i><span>View Details</span>
+                    </a>
+                  </li>
+              
+                </ul>
+                </div>
+                  </td>
+          </tr>
+        </tbody>
+        <div *ngIf="!noData">
+          <div class="grid-nodata text-center text-red-medium">
+            <h6>No Data Found</h6>
+          </div>
+        </div>
+      </table>
+      <div class="row">
+        <div style="margin:0px auto;">
+          <pagination-controls *ngIf="noData" id="locationmonitoringpage" class="pagination" (pageChange)="pageChanged($event)" maxSize="6"
+            directionLinks="true" autoHide="true" responsive="true" previousLabel="Prev" nextLabel="Next">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

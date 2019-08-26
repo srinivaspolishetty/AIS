@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h5 class="modal-title">Vehicle Map</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+      <div class="col-md-6 form-group">
+        <label class="required">Vehicle Number</label>
+        <input type="text" readonly class="form-control" [(ngModel)]="VehicleMapDetails.vehicleRegNumber">
+      </div>
+      <div class="col-md-6 form-group">
+        <label class="required">IMEI Number</label>
+        <input type="text" class="form-control" [(ngModel)]="VehicleMapDetails.imeiNumber">
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <button type="submit" (click)="saveVehicleMap()" class="btn-primary m-t-1">SUBMIT</button>
+        </div>
+      </div>
+      </div>
+      

@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { EmergencyMonitoringServiceApi } from "../common/services/emergencymonitoring.api";
+import { EmergencynMonitoring } from "../common/models/emergencymonitoring.model";
+
+@Component({
+  selector: 'app-emergencymonitoring',
+  templateUrl: './emergencymonitoring.component.html',
+  styleUrls: ['./emergencymonitoring.component.css']
+})
+export class EmergencymonitoringComponent implements OnInit {
+
+  pageTitle = "Emergency Monitoring Page";
+  emergencyMonitoringdata : Array<EmergencynMonitoring> = [];
+  constructor(private emergencyApiService:EmergencyMonitoringServiceApi) { }
+
+  ngOnInit() {
+    this.getemergencyMonitoringDetails();
+  }
+
+  getemergencyMonitoringDetails() {
+    this.emergencyApiService.getemergencyMonitoringDetails()
+    .subscribe((data : EmergencynMonitoring) => {
+      this.emergencyMonitoringdata = data.content;
+      console.log(this.emergencyMonitoringdata);
+    });
+  }
+
+}

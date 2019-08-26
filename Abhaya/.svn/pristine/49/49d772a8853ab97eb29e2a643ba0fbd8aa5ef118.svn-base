@@ -1,0 +1,56 @@
+<div class="row p-t-1 p-a-0 m-a-0">
+  <div class="col-md-10">
+    <h4>Command Execute</h4>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Command Management</li>
+          <li class="breadcrumb-item active" aria-current="page">Command Execute</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="col-md-2 text-right">
+    <button type="button" class="btn-search" (click)="btnShowFilters()"><i class="icon-ic_searchfilter"></i></button>
+  </div>
+</div>
+<div class="row p-a-0 m-a-0">
+  <div class="col-md-12">
+    <div class="box-rect-round">
+
+
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label>Execute Type</label>
+          <select class="form-control" [(ngModel)]="executeType" >
+            <option value="">Select Execute Type</option>
+            <option value="set">Set</option>
+            <option value="get">Get</option>
+          </select>
+        </div>
+        <div class="col-md-6 form-group">
+          <label>Packet Type</label>
+          <select class="form-control" [(ngModel)]="packetType" >
+              <option value="">Select Packet Type</option>
+              <option value="activation">Activation</option>
+              <option value="health">Health</option>
+            </select>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6 form-group">
+              <label>IMEI Number</label>
+              <select class="form-control" [(ngModel)]="imeiNumber" >
+                  <option value="">Select IMEI Number</option>
+                  <option *ngFor="let device of deviceData" value="{{device.imeiNumber}}">{{device.imeiNumber}}</option>
+                </select>
+            </div>
+            <div class="col-md-6 form-group">
+                <button type="submit" class="btn-primary m-t-5" (click)="executecommand()">Activate</button>
+              </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>

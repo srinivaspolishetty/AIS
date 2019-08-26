@@ -1,0 +1,75 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceDetails } from '../../common/models/devicedetails.model';
+import { ToasterService } from '../../common/services/toaster.service';
+import { DeviceManagementServiceApi } from '../../common/services/devicemanagement.api';
+import { Validations } from '../../common/constants/validationconstants';
+
+
+@Component({
+    selector: 'app-devicedetails',
+    templateUrl: './devicedetails.component.html',
+    styleUrls: ['./devicedetails.component.css']
+})
+export class DevicedetailsComponent implements OnInit {
+
+    @Input() selectedDeviceDetails: DeviceDetails;
+    public pageTitle: string;
+    public viewDetails: Boolean = true;
+    public primaryNumber: string;
+    public primaryProvider: string;
+    public secondaryNumber: string;
+    public secondaryProvider: string;
+    public simDetails = [];
+    mobileNumber = [];
+    public Validations: Object = Validations;
+    public isDataExists: Boolean = false;
+    public mobileNumberField: Boolean;
+
+    constructor(public activeModal: NgbActiveModal, private toasterService: ToasterService,
+        private devicemanagementApiService: DeviceManagementServiceApi) {
+        this.primaryProvider = '';
+        this.secondaryProvider = '';
+    }
+
+    ngOnInit() {
+        this.simDetails = this.selectedDeviceDetails.simDetails;
+        this.viewDetails = !(this.selectedDeviceDetails.selectedEvent === 'edit');
+        this.pageTitle = this.viewDetails ? 'View Device Details' : 'Edit Device Details';
+        // this.pageTitle += this.selectedDeviceDetails.imeiNumber;
+        // this.mobileNumber = !this.viewDetails ? [...this.simDetails] : this.mobileNumber;
+        for (let i = 0; i < this.simDetails.length; i++) {
+            this.mobileNumber.push(this.simDetails[i].mobileNumber);
+        }
+    }
+    editDeviceDetails() {
+        // we can write Array filter to remove all the null values please check it eg: list.filter((obj) => obj )
+        for (let i = 0; i < this.mobileNumber.length; i++) {
+            if (this.mobileNumber[i] !== null) {
+                this.simDetails[i].mobileNumber = this.mobileNumber[i];
+                this.simDetails[i].imeiNumber = this.selectedDeviceDetails.imeiNumber;
+            }
+        }
+        // second one
+        for (let i = 0; i < this.simDetails.length; i++) {
+            if ('' === this.simDetails[i].mobileNumber) {
+                this.mobileNumberField = false;
+            } else {
+                this.mobileNumberField = true;
+                break;
+            }
+        }
+        if (this.mobileNumberField) {
+            this.devicemanagementApiService.updateDeviceDetails(this.simDetails)
+                .subscribe((_data: any) => {
+                    this.activeModal.close('refreshContent');
+                    this.toasterService.showSuccess('bottom-right', 'Successfully updated the device details.');
+                }, (_error: any) => {
+                    this.activeModal.close('Close click');
+                    this.toasterService.showError('bottom-right', 'ERROR: Unable to update the device details.');
+                }
+            );
+        }
+    }
+
+}

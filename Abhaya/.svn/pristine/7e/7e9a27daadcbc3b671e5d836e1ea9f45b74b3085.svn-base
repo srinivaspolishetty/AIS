@@ -1,0 +1,41 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LocationMonitoringServiceApi } from "../common/services/locationmonitoring.api";
+import { LocationMonitoring } from "../common/models/locationmonitoring.model";
+import { PageModel } from "../common/models/page.model";
+
+@Component({
+  selector: 'app-locationmonitoring',
+  templateUrl: './locationmonitoring.component.html',
+  styleUrls: ['./locationmonitoring.component.css']
+})
+export class LocationmonitoringComponent implements OnInit {
+
+  private showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+  locationMonitoringdata : Array<LocationMonitoring> = [];
+  constructor(private locationApiService : LocationMonitoringServiceApi, private modalService: NgbModal) {
+    this.page = new PageModel(0, 0, 0, 0);
+   }
+
+  ngOnInit() {
+    this.getLocationMonitoringDetails(0,10,'','');
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+  pageChanged(event) {
+    this.p = event;
+    this.getLocationMonitoringDetails(this.p-1,10,'','');
+  }
+  getLocationMonitoringDetails(page:number, size:number, searchDate:string,searchValue:string) {
+    this.locationApiService.getLocationMonitoringDetails(page,size,searchValue,searchDate)
+    .subscribe((data : LocationMonitoring) => {
+      this.locationMonitoringdata = data.content;
+      this.page = data.page;
+      console.log(this.locationMonitoringdata);
+    });
+  }
+}

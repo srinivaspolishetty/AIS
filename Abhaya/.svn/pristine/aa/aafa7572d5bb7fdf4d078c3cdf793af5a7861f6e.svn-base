@@ -1,0 +1,44 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PageModel } from "../common/models/page.model";
+import { AddeditsystempropComponent } from "./addeditsystemprop/addeditsystemprop.component";
+import { SystemManagement } from "../common/models/systemmanagement.model";
+import { SystemManagementServiceApi } from "../common/services/systemmanagement.api";
+
+@Component({
+  selector: 'app-systemproperties',
+  templateUrl: './systemproperties.component.html',
+  styleUrls: ['./systemproperties.component.css']
+})
+export class SystempropertiesComponent implements OnInit {
+
+  public systemProperties : SystemManagement;
+  public showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+
+  constructor(private modalService: NgbModal, private systemPropertiesApi : SystemManagementServiceApi) { 
+    this.page = new PageModel(0, 0, 0, 0);
+  }
+  
+  ngOnInit() {
+    this.getSystemProperties(0, 10);
+  }
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+  addEditDetails(details){
+    const modalRef = this.modalService.open(AddeditsystempropComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.systemPropertiesDetails = details;
+  }
+
+  getSystemProperties(page, size){
+    this.systemPropertiesApi.getAllSystemProperties(page, size)
+    .subscribe((data : SystemManagement) => {
+      this.systemProperties = data.content;
+      this.page = data.page;
+      console.log(this.systemProperties);
+    });
+  }
+}

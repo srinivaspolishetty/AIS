@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { EmergencymonitoringComponent } from './emergencymonitoring.component';
+import { EmergencymonitoringRoutingModule } from "./emergencymonitoring-routing.module";
+
+@NgModule({
+  declarations: [EmergencymonitoringComponent],
+  imports: [
+    CommonModule,
+    NgxPaginationModule,
+    EmergencymonitoringRoutingModule
+  ]
+})
+export class EmergencymonitoringModule { }

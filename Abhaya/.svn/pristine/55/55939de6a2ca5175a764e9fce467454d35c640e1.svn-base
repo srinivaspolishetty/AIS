@@ -1,0 +1,34 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RawDataServiceApi } from "../common/services/rawdata.api";
+import { RawData } from "../common/models/rawdata.model";
+
+@Component({
+  selector: 'app-rawdata',
+  templateUrl: './rawdata.component.html',
+  styleUrls: ['./rawdata.component.css']
+})
+export class RawdataComponent implements OnInit {
+
+  private showFilters : boolean = false;
+  pageTitle = "Raw Data";
+  rawdata : Array<RawData> = [];
+  constructor(private rawdataApiService:RawDataServiceApi) { }
+
+  ngOnInit() {
+    this.getAllRawData();
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+  
+  getAllRawData() {
+    this.rawdataApiService.getrawdata()
+    .subscribe((data : RawData) => {
+      this.rawdata = data.content;
+      console.log(this.rawdata);
+    });
+  }
+
+}

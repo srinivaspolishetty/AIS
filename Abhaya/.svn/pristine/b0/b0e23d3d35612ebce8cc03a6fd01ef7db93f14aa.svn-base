@@ -1,0 +1,87 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceDetails } from "../../common/models/devicedetails.model";
+import { ToasterService } from "../../common/services/toaster.service";
+import { DeviceManagementServiceApi } from "../../common/services/devicemanagement.api";
+
+@Component({
+  selector: 'app-devicedetails',
+  templateUrl: './devicedetails.component.html',
+  styleUrls: ['./devicedetails.component.css']
+})
+export class DevicedetailsComponent implements OnInit {
+
+  @Input() selectedDeviceDetails: DeviceDetails;
+  public pageTitle: string;
+  public viewDetails: boolean = true;
+  public primaryNumber: string;
+  public primaryProvider: string;
+  public secondaryNumber: string;
+  public secondaryProvider: string;
+  public simDetails = [];;
+
+  mobileNumber = [];
+  editedSimDetails = [];
+  constructor(public activeModal: NgbActiveModal, private toasterService: ToasterService,
+    private devicemanagementApiService: DeviceManagementServiceApi) {
+    this.primaryProvider = '';
+    this.secondaryProvider = '';
+  }
+
+  ngOnInit() {
+    // if (this.selectedDeviceDetails.simDetails.length == 1) {
+    //   this.primaryNumber = this.selectedDeviceDetails.simDetails[0].mobileNumber;
+    //   this.secondaryNumber = '';
+    // }
+    // if (this.selectedDeviceDetails.simDetails.length == 2) {
+    //   this.primaryNumber = this.selectedDeviceDetails.simDetails[0].mobileNumber;
+    //   this.secondaryNumber = this.selectedDeviceDetails.simDetails[1].mobileNumber;
+    // }
+
+    this.simDetails = this.selectedDeviceDetails.simDetails;
+    console.log(this.simDetails);
+    if (this.selectedDeviceDetails.selectedEvent == 'edit') {
+      this.viewDetails = false;
+      this.pageTitle = "Edit Device Details of " + this.selectedDeviceDetails.imeiNumber;
+      for (let i = 0; i < this.simDetails.length; i++) {
+        this.mobileNumber.push(this.simDetails[i].mobileNumber);
+      }
+    }
+    else {
+      this.viewDetails = true;
+      this.pageTitle = "Device Details of " + this.selectedDeviceDetails.imeiNumber;
+    }
+  }
+  editDeviceDetails() {
+    this.editedSimDetails = [];
+    for (let i = 0; i < this.mobileNumber.length; i++) {
+      if(this.mobileNumber[i] !== null){
+        this.simDetails[i].mobileNumber = this.mobileNumber[i];
+        this.simDetails[i].imeiNumber = this.selectedDeviceDetails.imeiNumber
+        // const newSimObj = new Object(
+        //   {
+        //     imeiNumber: this.selectedDeviceDetails.imeiNumber,
+        //     mobileNumber: this.mobileNumber[i],
+        //     imsiNumber: this.simDetails[i].imsiNumber
+        //   }
+        // );
+        // this.editedSimDetails.push(newSimObj)
+      }
+    }
+    console.log(this.simDetails);
+    
+
+
+    this.devicemanagementApiService.updateDeviceDetails(this.simDetails)
+      .subscribe((data: any) => {
+        this.activeModal.close('refreshContent');
+        this.toasterService.showSuccess('bottom-right', 'Successfully Sent Activation Message.');
+      }, error => {
+        console.log('error', error);
+        this.activeModal.close('Close click');
+        this.toasterService.showError('bottom-right', 'ERROR: Unable to Sent Activation Message.');
+      }
+      );
+  }
+
+}

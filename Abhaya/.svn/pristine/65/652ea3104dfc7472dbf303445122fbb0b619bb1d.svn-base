@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { LocationmonitoringRoutingModule } from "./locationmonitoring-routing.module";
+import { LocationmonitoringComponent } from './locationmonitoring.component';
+
+@NgModule({
+  declarations: [LocationmonitoringComponent],
+  imports: [
+    CommonModule,
+    NgxPaginationModule,
+    LocationmonitoringRoutingModule
+  ]
+})
+export class LocationmonitoringModule { }

@@ -1,0 +1,17 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Commandlist } from '../../common/models/commandlist.model';
+
+@Component({
+    selector: 'app-viewcommanddetails',
+    templateUrl: './viewcommanddetails.component.html',
+    styleUrls: ['./viewcommanddetails.component.css']
+})
+export class ViewcommanddetailsComponent implements OnInit {
+    @Input() selectCommandDetails: Commandlist;
+    constructor(public activeModal: NgbActiveModal) { }
+
+    ngOnInit() {
+    }
+
+}

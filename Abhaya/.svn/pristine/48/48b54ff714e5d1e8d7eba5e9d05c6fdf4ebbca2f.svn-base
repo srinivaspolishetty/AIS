@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <h5 class="modal-title">User Details</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6">
+      <h5>ID No</h5>
+      <h4>{{user.userId}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>User Name</h5>
+      <h4>{{user.username}}</h4>
+    </div>
+  </div>
+  <div class="row p-t-4">
+    <div class="col-md-6">
+      <h5>First Name</h5>
+      <h4>{{user.firstName}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Last Name</h5>
+      <h4>{{user.lastName}}</h4>
+    </div>
+  </div>
+  <div class="row p-t-4">
+    <div class="col-md-6">
+      <h5>Mobile No</h5>
+      <h4>{{user.mobileNumber}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Email ID</h5>
+      <h4>{{user.emailId}}</h4>
+    </div>
+  </div>
+  <div class="row p-t-4">
+    <div class="col-md-6">
+      <h5>Created Date</h5>
+      <h4>{{user.createdDate}}</h4>
+    </div>
+    <!-- <div class="col-md-6">
+      <h5>Enabled</h5>
+      <h4>{{user.isEnabled}}</h4>
+    </div> -->
+  </div>
+
+</div>

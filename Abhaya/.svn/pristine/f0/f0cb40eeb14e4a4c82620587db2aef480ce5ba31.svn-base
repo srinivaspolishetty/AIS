@@ -1,0 +1,42 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { SystemManagement } from '../../common/models/systemmanagement.model';
+import { SystemManagementServiceApi } from '../../common/services/systemmanagement.api';
+import { ToasterService } from '../../common/services/toaster.service';
+
+@Component({
+    selector: 'app-addeditsystemprop',
+    templateUrl: './addeditsystemprop.component.html',
+    styleUrls: ['./addeditsystemprop.component.css']
+})
+export class AddeditsystempropComponent implements OnInit {
+    public addeditsystemprop: SystemManagement = new SystemManagement();
+    public pageTitle: string;
+
+    constructor(public activeModal: NgbActiveModal, private systemPropertiesApi: SystemManagementServiceApi,
+         private toasterService: ToasterService) { }
+    @Input() systemPropertiesDetails: SystemManagement;
+
+    ngOnInit() {
+        if (this.systemPropertiesDetails !== undefined) {
+            this.addeditsystemprop = this.systemPropertiesDetails;
+        }
+    }
+
+
+    saveSystemProperties() {
+        console.log(this.addeditsystemprop);
+
+        this.systemPropertiesApi.addeditsystemprop(JSON.stringify(this.addeditsystemprop))
+            .subscribe((_data: any) => {
+                this.activeModal.close('refreshContent');
+                this.toasterService.showSuccess('bottom-right', 'System Properties has been successfully closed ');
+            }, (_error: any) => {
+                this.activeModal.close();
+                this.activeModal.close('Close click');
+                this.toasterService.showError('bottom-right', 'ERROR: Unable to close the System Properties.');
+            }
+        );
+    }
+
+}

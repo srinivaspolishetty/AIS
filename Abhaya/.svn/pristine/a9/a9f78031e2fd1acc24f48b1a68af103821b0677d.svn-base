@@ -1,0 +1,58 @@
+import { Component, OnInit, HostListener } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ToasterService } from '../../common/services/toaster.service';
+import { Tripdetails } from "../../common/models/tripdetails.model";
+import { TripManagementServiceApi } from "../../common/services/tripnamagement.api";
+
+@Component({
+    selector: 'app-tripcreate',
+    templateUrl: './tripcreate.component.html',
+    styleUrls: ['./tripcreate.component.css']
+})
+export class TripcreateComponent implements OnInit {
+
+    public tripId: number;
+    public tripDetailsData : Tripdetails;
+    public showFilters: Boolean = false;
+    public url: SafeResourceUrl;
+    public dataFromIframe;
+    @HostListener('window:message', ['$event'])
+    onMessage(event) {
+        this.dataFromIframe = event.data.message;
+        console.log(this.dataFromIframe);
+        if (this.dataFromIframe !== undefined) {
+            if (this.dataFromIframe === 'Success') {
+                this.toasterService.showSuccess('bottom-right', 'Successfully created a Trip');
+                this.router.navigate(['tripmanagement/tripdetails']);
+            } else {
+                this.toasterService.showError('bottom-right', 'ERROR: Unable to create a Trip');
+            }
+        }
+    }
+
+
+    constructor(private sanitizer: DomSanitizer, private router: Router,
+        private toasterService: ToasterService, private activatedRoute: ActivatedRoute,
+        private tripdetailsApi: TripManagementServiceApi) { }
+
+    ngOnInit() {
+        this.activatedRoute.queryParams.subscribe(params => {
+            this.tripId = params['tripId'];
+            let dynamicUrl = 'http://14.98.164.17:8099/index.html';
+            dynamicUrl = (this.tripId !== undefined) ? `${dynamicUrl}?tripId=${this.tripId}` : dynamicUrl;
+            this.url = this.sanitizer.bypassSecurityTrustResourceUrl(dynamicUrl);
+        });
+        this.getTripDetails();
+    }
+    btnShowFilters() {
+        this.showFilters = !this.showFilters;
+    }
+    getTripDetails() {
+        this.tripdetailsApi.getTripById(this.tripId)
+            .subscribe((data: Tripdetails) => {
+                this.tripDetailsData = data.content;
+                console.log(this.tripDetailsData);
+        });
+    }
+}

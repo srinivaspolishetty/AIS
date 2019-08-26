@@ -1,0 +1,200 @@
+<div class="modal-header">
+  <h5 class="modal-title">Location Details of {{selectedLocationDetails.imei}} | {{selectedLocationDetails.date}} {{selectedLocationDetails.time}}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6">
+      <h5>ID</h5>
+      <h4>{{selectedLocationDetails.lmpPacketDataId}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>IMEI No</h5>
+      <h4>{{selectedLocationDetails.imei}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Vehicle No</h5>
+      <h4>{{selectedLocationDetails.vehicleRegNo}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Cell ID</h5>
+      <h4>{{selectedLocationDetails.cellId}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Vendor ID</h5>
+      <h4>{{selectedLocationDetails.vendorId}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Altitude</h5>
+      <h4>{{selectedLocationDetails.altitude}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Digital Input Status</h5>
+      <h4>{{selectedLocationDetails.digitalInputStatus}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Digital Output Status</h5>
+      <h4>{{selectedLocationDetails.digitalOutputStatus}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Firmware Version</h5>
+      <h4>{{selectedLocationDetails.firmwareVersion}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Frame Number</h5>
+      <h4>{{selectedLocationDetails.frameNumber}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Latitude</h5>
+      <h4>{{selectedLocationDetails.latitude}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Latitude Direction</h5>
+      <h4>{{selectedLocationDetails.latitudeDirection}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Longitude</h5>
+      <h4>{{selectedLocationDetails.longitude}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Longitude Direction</h5>
+      <h4>{{selectedLocationDetails.longitudeDirection}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>GPS Fix</h5>
+      <h4>{{selectedLocationDetails.gpsFix}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>GSM Signal Strength</h5>
+      <h4>{{selectedLocationDetails.gsmSignalStrength}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>HDoP</h5>
+      <h4>{{selectedLocationDetails.hdop}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Heading</h5>
+      <h4>{{selectedLocationDetails.heading}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Emergency Status</h5>
+      <h4>{{selectedLocationDetails.emergencyStatus}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Ignition</h5>
+      <h4>{{selectedLocationDetails.ignition}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Internal Battery Voltage</h5>
+      <h4>{{selectedLocationDetails.internalBatteryVoltage}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>No Of Satellites</h5>
+      <h4>{{selectedLocationDetails.noOfSatellites}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Main Input Voltage</h5>
+      <h4>{{selectedLocationDetails.mainInputVoltage}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Main Power Status</h5>
+      <h4>{{selectedLocationDetails.mainPowerStatus}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Network Operator Name</h5>
+      <h4>{{selectedLocationDetails.networkOperatorName}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>NMR</h5>
+      <h4>{{selectedLocationDetails.nmr}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>LAC</h5>
+      <h4>{{selectedLocationDetails.lac}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>MCC</h5>
+      <h4>{{selectedLocationDetails.mcc}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Packet Type</h5>
+      <h4>{{selectedLocationDetails.packetType}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Packet Status</h5>
+      <h4>{{selectedLocationDetails.packetStatus}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Network Date</h5>
+      <h4>{{selectedLocationDetails.networkDate}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Network Time</h5>
+      <h4>{{selectedLocationDetails.networkTime}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>PDOP</h5>
+      <h4>{{selectedLocationDetails.pdop}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Speed</h5>
+      <h4>{{selectedLocationDetails.speed}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Date</h5>
+      <h4>{{selectedLocationDetails.date}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Time</h5>
+      <h4>{{selectedLocationDetails.time}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Tamper Alert</h5>
+      <h4>{{selectedLocationDetails.tamperAlert}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Created Date</h5>
+      <h4>{{selectedLocationDetails.createdDate}}</h4>
+    </div>
+  </div>
+  <!-- <div class="modal-footer">
+  23456789
+</div> -->

@@ -1,0 +1,73 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { HealthMonitoringServiceApi } from "../common/services/healthmonitoring.api";
+import { HealthnMonitoring } from "../common/models/healthmonitoring.model";
+import { PageModel } from "../common/models/page.model";
+import { NgbDateFRParserFormatter } from "../common/directives/dateformatter";
+import { HealthdetailsComponent } from "./healthdetails/healthdetails.component";
+
+@Component({
+  selector: 'app-healthmonitoring',
+  templateUrl: './healthmonitoring.component.html',
+  styleUrls: ['./healthmonitoring.component.css']
+})
+export class HealthmonitoringComponent implements OnInit {
+
+  public showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+  model: NgbDateStruct;
+  public formatDate : string;
+  public searchValue : string;
+  public showSearchClear = false;
+  public noData : boolean = false;
+  healthMonitoringdata: Array<HealthnMonitoring> = [];
+  constructor(private healthApiService:HealthMonitoringServiceApi,
+    private modalService: NgbModal,private calendar: NgbCalendar,
+    private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+    this.page = new PageModel(0, 0, 0, 0);
+    this.searchValue = '';
+   }
+
+  ngOnInit() {
+    this.gethealthMonitoringDetails(0,10);
+  }
+
+  healthDetails(healthDetails) {
+    const modalRef = this.modalService.open(HealthdetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.selectedHealthDetails = healthDetails;
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+  changeDate() {
+    this.gethealthMonitoringDetails(0,10);
+  }
+  searchData() {
+    this.gethealthMonitoringDetails(0,10);
+    this.showSearchClear = (this.searchValue.length > 4) ? true : false;
+  }
+  clearSearch() {
+    this.searchValue = '';
+    this.showSearchClear = false;
+    this.searchData();
+  }
+  pageChanged(event) {
+    this.p = event;
+    this.gethealthMonitoringDetails(this.p-1,10);
+  }
+  gethealthMonitoringDetails(page:number, size:number) {
+    this.formatDate = this.ngbDateFRParserFormatter.format(this.model);
+    this.healthApiService.gethealthMonitoringDetails(page,size,this.formatDate,this.searchValue)
+    .subscribe((data : HealthnMonitoring) => {
+      this.healthMonitoringdata = data.content;
+      this.noData = (this.healthMonitoringdata.length > 0);
+      this.page = data.page;
+      console.log(this.healthMonitoringdata);
+    });
+  }
+
+}

@@ -1,0 +1,34 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HealthMonitoringServiceApi } from "../common/services/healthmonitoring.api";
+import { HealthnMonitoring } from "../common/models/healthmonitoring.model";
+
+@Component({
+  selector: 'app-healthmonitoring',
+  templateUrl: './healthmonitoring.component.html',
+  styleUrls: ['./healthmonitoring.component.css']
+})
+export class HealthmonitoringComponent implements OnInit {
+
+  private showFilters : boolean = false;
+  pageTitle = "Health Monitoring Page";
+  healthMonitoringdata: Array<HealthnMonitoring> = [];
+  constructor(private healthApiService:HealthMonitoringServiceApi, private modalService: NgbModal) { }
+
+  ngOnInit() {
+    this.gethealthMonitoringDetails();
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+
+  gethealthMonitoringDetails() {
+    this.healthApiService.gethealthMonitoringDetails()
+    .subscribe((data : HealthnMonitoring) => {
+      this.healthMonitoringdata = data.content;
+      console.log(this.healthMonitoringdata);
+    });
+  }
+
+}

@@ -1,0 +1,16 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { CommandexecutiveComponent } from './commandexecutive.component';
+import { CommandlistComponent } from './commandlist/commandlist.component';
+
+const routes: Routes = [
+    { path: '', redirectTo: 'commandexecute', pathMatch: 'full' },
+    { path: 'commandexecute', component: CommandexecutiveComponent, },
+    { path: 'commandlist', component: CommandlistComponent, }
+];
+
+@NgModule({
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
+})
+export class CommandmanagementRoutingModule { }

@@ -1,0 +1,85 @@
+import { Component, OnInit } from '@angular/core';
+import { DeviceCommunication } from "../common/models/devicecommunication.model";
+import { DeviceManagementServiceApi } from "../common/services/devicemanagement.api";
+import { PieChart } from "../common/models/piechart.model";
+import { Dashboard } from "../common/models/dashboard.model";
+import { DashboardServiceApi } from "../common/services/dashboard.api";
+@Component({
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
+})
+export class DashboardComponent implements OnInit {
+
+  movementStatus = [];
+  vehicleIdel: number;
+  vehicleStopped: number;
+  vehicleRunning: number;
+  vehicleTowing: number;
+  vehicleParked: number;
+  vehicleOverSpeed: number;
+  public ignition : string;
+  public mainPowerStatus : string;;
+  public tamperAlert : string;
+  public emergency : string;
+
+  pieChart: PieChart = new PieChart([400, 300], true, false, false, true, false, 'below', '0.40', '');
+  constructor(private devicemanagementApiService : DeviceManagementServiceApi,
+    private dashboardService : DashboardServiceApi) {
+    this.pieChart.colorScheme = { domain: ['#7cc142', '#ff0000'] };
+    this.ignition = '';
+    this.mainPowerStatus = '';
+    this.tamperAlert = '';
+    this.emergency = '';
+  }
+
+  ngOnInit() {
+    this.getMovementDetails('','','','');
+    this.getDashboardDetails();
+  }
+
+  getDashboardDetails(){
+    const actionsArray = ["ignition","mainPowerStatus","tamperAlert","emergency"];
+    this.dashboardService.getAllDetails(actionsArray)
+    .subscribe((data: Dashboard) => {
+      for(let i=0; i < data.length; i++){
+       this[data[i].action] = data[i];
+      }
+    });
+  }
+  getMovementDetails(stateId, districtId, cityId, searchDate) {
+    this.devicemanagementApiService.getMovementSummary(stateId, districtId, cityId, searchDate)
+      .subscribe((data: any) => {
+        this.movementStatus = data;
+        console.log(this.movementStatus);
+        this.vehicleIdel = 0;
+        this.vehicleStopped = 0;
+        this.vehicleRunning = 0;
+        this.vehicleTowing = 0;
+        this.vehicleParked = 0;
+        this.vehicleOverSpeed = 0;
+        const itemNew = this.movementStatus;
+        itemNew.forEach(element => {
+          if (element.statusType === 'Idling') {
+            this.vehicleIdel = element.count;
+          } else if (element.statusType === 'Stopped') {
+            this.vehicleStopped = element.count;
+          }  else if (element.statusType === 'Running') {
+            this.vehicleRunning = element.count;
+          } else if (element.statusType === 'Towing') {
+            this.vehicleTowing = element.count;
+          } else if (element.statusType === 'Parked') {
+            this.vehicleParked = element.count;
+          } else if (element.statusType === 'Overspeed') {
+            this.vehicleOverSpeed = element.count;
+          }
+        });
+        this.pieChart.data = [
+          { 'name': 'Communication', 'value': this.vehicleRunning },
+          { 'name': 'Not Communicating', 'value': this.vehicleStopped },
+        ];
+      });
+  }
+
+  
+}

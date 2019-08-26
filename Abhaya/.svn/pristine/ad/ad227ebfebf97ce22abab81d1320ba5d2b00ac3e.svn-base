@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{pageTitle}}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" *ngIf="viewDetails == true">
+  <div class="row">
+    <div class="col-md-6">
+      <h5>ID</h5>
+      <h4>{{selectedDeviceDetails.deviceDetailsId}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>IMEI No</h5>
+      <h4>{{selectedDeviceDetails.imeiNumber}}</h4>
+    </div>
+  </div>
+  <div class="row p-t-2">
+    <div class="col-md-6">
+      <h5>IMSI No</h5>
+      <h4>{{selectedDeviceDetails.imsiNumber}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Sim No</h5>
+      <h4>{{selectedDeviceDetails.simNumber}}</h4>
+    </div>
+  </div>
+  <div class="row p-t-2">
+    <div class="col-md-6">
+      <h5>IP Address</h5>
+      <h4>{{selectedDeviceDetails.ipAddress}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Signal Strength</h5>
+      <h4>{{selectedDeviceDetails.signalStrength}}</h4>
+    </div>
+  </div>
+  <div class="row p-t-2">
+    <div class="col-md-6">
+      <h5>Version</h5>
+      <h4>{{selectedDeviceDetails.version}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Mobile No</h5>
+      <h4>{{selectedDeviceDetails.mobileNumber}}</h4>
+    </div>
+  </div>
+  
+</div>
+<div class="modal-body" *ngIf="viewDetails == false">
+  
+  
+  <form #editDetailsForm="ngForm" name="form" novalidate (ngSubmit)="editDetailsForm.valid && editDeviceDetails()">
+    <div class="row m-a-0">
+      <div class="col-md-6 p-r-0 form-group"
+        [class.has-error]="editDetailsForm.submitted && mobileNumbercontrol.invalid">
+        <label class="required">Mobile Number</label>
+        <input type="text" class="form-control" [(ngModel)]="mobileNumber" name="mobileNumber" required
+          #mobileNumbercontrol="ngModel">
+        <span class="help-block" *ngIf="editDetailsForm.submitted && mobileNumbercontrol.invalid">
+          IMEI Number is required</span>
+      </div>
+    </div>
+
+    <div class="row m-a-0">
+      <div class="col-md-6 form-group">
+        <button type="submit" class="btn-primary m-t-1">Activate</button>
+      </div>
+    </div>
+  </form>
+
+
+</div>

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>iconfont - glyphs list</title>
+
+	<link rel="stylesheet" href="iconfont.css">
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: Helvetica, Verdana, sans-serif;
+		}
+
+		.wrap {
+			max-width: 800px;
+			margin: 0 auto;
+		}
+
+		.glyphs-list {
+			margin: 0;
+			padding: 0;
+			list-style: none
+		}
+
+		.glyphs-list li {
+			float: left;
+			width: 25%;
+			padding: 16px;
+			text-align: center;
+		}
+
+		.glyphs-list li:hover {
+			cursor: default;
+			background: #fafafa;
+		}
+
+		.glyphs-list li:nth-child(4n+1) {
+			clear: left;
+		}
+
+		.glyphs-list i {
+			font-size: 48px;
+			line-height: 1;
+		}
+
+		.glyphs-list code {
+			display: block;
+			margin: 16px 0 0;
+		}
+
+		.glyphs-list input {
+			display: block;
+			width: 100%;
+			margin: 16px 0 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<h1>iconfont - glyphs list</h1>
+		<ul class="glyphs-list">
+			
+			<li>
+				<i class="icon-ic_Admin"></i>
+				<code>\ea01</code>
+				<input type="text" value="icon-ic_Admin"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_arrow_down"></i>
+				<code>\ea02</code>
+				<input type="text" value="icon-ic_arrow_down"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_arrow_up"></i>
+				<code>\ea03</code>
+				<input type="text" value="icon-ic_arrow_up"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_close"></i>
+				<code>\ea04</code>
+				<input type="text" value="icon-ic_close"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_CommunicationDetails"></i>
+				<code>\ea05</code>
+				<input type="text" value="icon-ic_CommunicationDetails"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_dashboard"></i>
+				<code>\ea06</code>
+				<input type="text" value="icon-ic_dashboard"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_DeviceManagement"></i>
+				<code>\ea07</code>
+				<input type="text" value="icon-ic_DeviceManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_devicereport"></i>
+				<code>\ea08</code>
+				<input type="text" value="icon-ic_devicereport"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_driverduty"></i>
+				<code>\ea09</code>
+				<input type="text" value="icon-ic_driverduty"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_DriverManagement"></i>
+				<code>\ea0a</code>
+				<input type="text" value="icon-ic_DriverManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_EmergencyManagement"></i>
+				<code>\ea0b</code>
+				<input type="text" value="icon-ic_EmergencyManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_HealthManagement"></i>
+				<code>\ea0c</code>
+				<input type="text" value="icon-ic_HealthManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_LocationManagement"></i>
+				<code>\ea0d</code>
+				<input type="text" value="icon-ic_LocationManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_mapview"></i>
+				<code>\ea0e</code>
+				<input type="text" value="icon-ic_mapview"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_menu_bar"></i>
+				<code>\ea0f</code>
+				<input type="text" value="icon-ic_menu_bar"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_modemdetails"></i>
+				<code>\ea10</code>
+				<input type="text" value="icon-ic_modemdetails"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_Movement_Details"></i>
+				<code>\ea11</code>
+				<input type="text" value="icon-ic_Movement_Details"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_panicalert"></i>
+				<code>\ea12</code>
+				<input type="text" value="icon-ic_panicalert"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_profile"></i>
+				<code>\ea13</code>
+				<input type="text" value="icon-ic_profile"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_rawData"></i>
+				<code>\ea14</code>
+				<input type="text" value="icon-ic_rawData"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_Reports"></i>
+				<code>\ea15</code>
+				<input type="text" value="icon-ic_Reports"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_rootdeviation"></i>
+				<code>\ea16</code>
+				<input type="text" value="icon-ic_rootdeviation"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_search"></i>
+				<code>\ea17</code>
+				<input type="text" value="icon-ic_search"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_SuspiciousVehicles"></i>
+				<code>\ea18</code>
+				<input type="text" value="icon-ic_SuspiciousVehicles"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_tripdetails"></i>
+				<code>\ea19</code>
+				<input type="text" value="icon-ic_tripdetails"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_TripManagement"></i>
+				<code>\ea1a</code>
+				<input type="text" value="icon-ic_TripManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_user"></i>
+				<code>\ea1b</code>
+				<input type="text" value="icon-ic_user"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_UserManagement"></i>
+				<code>\ea1c</code>
+				<input type="text" value="icon-ic_UserManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_VehicleManagement"></i>
+				<code>\ea1d</code>
+				<input type="text" value="icon-ic_VehicleManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_video_streaming"></i>
+				<code>\ea1e</code>
+				<input type="text" value="icon-ic_video_streaming"/>
+			</li>
+			
+		</ul>
+	</div>
+</body>
+</html>

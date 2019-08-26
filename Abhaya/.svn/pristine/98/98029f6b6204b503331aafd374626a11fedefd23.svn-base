@@ -1,0 +1,41 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceManagementServiceApi } from "../../common/services/devicemanagement.api";
+import { Packetdetails } from "../../common/models/packetdetails.model";
+
+@Component({
+  selector: 'app-packetdetails',
+  templateUrl: './packetdetails.component.html',
+  styleUrls: ['./packetdetails.component.css']
+})
+export class PacketdetailsComponent implements OnInit {
+
+  
+  @Input() packetDetails;
+  public pageTitle : string;
+  public packetData : Array<Packetdetails>;
+  public noData : boolean = false;
+  constructor(public activeModal: NgbActiveModal,
+    private devicemanagementApiService: DeviceManagementServiceApi) { }
+
+  
+  ngOnInit() {
+    console.log(this.packetDetails.packetName)
+    this.pageTitle = this.packetDetails.packetName;
+    this.getAllPacketDetails();
+  }
+
+ 
+  getAllPacketDetails(){
+    this.devicemanagementApiService.getPackedDetails(this.packetDetails.packetType,this.packetDetails.imeiNumber)
+    .subscribe((data: Packetdetails) => {
+      this.packetData = data.content;
+      this.noData = (this.packetData.length > 0);
+      console.log(this.packetData);
+    }, error => {
+      console.log('error', error);
+    }
+    );
+  }
+
+}

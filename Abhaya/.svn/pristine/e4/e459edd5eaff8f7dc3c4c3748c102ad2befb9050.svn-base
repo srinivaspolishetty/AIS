@@ -1,0 +1,49 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EmergencyMonitoringServiceApi } from "../common/services/emergencymonitoring.api";
+import { EmergencynMonitoring } from "../common/models/emergencymonitoring.model";
+import { PageModel } from "../common/models/page.model";
+import { EmergencydetailsComponent } from "./emergencydetails/emergencydetails.component";
+
+@Component({
+  selector: 'app-emergencymonitoring',
+  templateUrl: './emergencymonitoring.component.html',
+  styleUrls: ['./emergencymonitoring.component.css']
+})
+export class EmergencymonitoringComponent implements OnInit {
+
+  private showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+  emergencyMonitoringdata : Array<EmergencynMonitoring> = [];
+  constructor(private emergencyApiService:EmergencyMonitoringServiceApi, private modalService: NgbModal) {
+    this.page = new PageModel(0, 0, 0, 0);
+   }
+
+  ngOnInit() {
+    this.getemergencyMonitoringDetails(0,10,'','');
+  }
+
+  emergencyDetails(emergencyDetails) {
+    const modalRef = this.modalService.open(EmergencydetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.selectedEmergencydata = emergencyDetails;
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+  pageChanged(event) {
+    this.p = event;
+    this.getemergencyMonitoringDetails(this.p-1,10,'','');
+  }
+  getemergencyMonitoringDetails(page:number, size:number, searchDate:string,searchValue:string) {
+    this.emergencyApiService.getemergencyMonitoringDetails(page,size,searchValue,searchDate)
+    .subscribe((data : EmergencynMonitoring) => {
+      this.emergencyMonitoringdata = data.content;
+      this.page = data.page;
+      console.log(this.emergencyMonitoringdata);
+    });
+  }
+
+}

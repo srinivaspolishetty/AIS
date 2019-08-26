@@ -1,0 +1,30 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class TripManagementServiceApi {
+
+    constructor(private httpClient: HttpClient) { }
+
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+            'Authorization': 'my-auth-token'
+        })
+    };
+
+    getAllTripDetails(page: number, size: number, searchDate: string, searchValue: string, tripClosed: Boolean, isGeoFencing: string) {
+        let url = `${environment.apiBase}${environment.version}/tripDetails`;
+        url += `?page=${page}&size=${size}&searchDate=${searchDate}&imeiNumber=${searchValue}`;
+        url += `&isTripClosed=${tripClosed}&identifier=${isGeoFencing}`;
+        return this.httpClient.get(url);
+    }
+    endTrip(tripDetails) {
+        const url = `${environment.apiBase}${environment.version}/endTrip`;
+        return this.httpClient.post(url, tripDetails, this.httpOptions);
+    }
+}

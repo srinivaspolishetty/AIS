@@ -1,0 +1,16 @@
+import { PageModel } from './page.model';
+
+export class Tripdetails {
+    public tripId: Number;
+    public createdDate: string;
+    public imeiNumber: string;
+    public sourceLocation: string;
+    public destiLocation: string;
+    public sourceLatLang: string;
+    public destiLatLang: string;
+    public tripClosed: Boolean = false;
+    public identifier: string;
+    public closeTime : string;
+    public page: PageModel;
+    public content: any;
+}

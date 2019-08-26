@@ -1,0 +1,127 @@
+<div class="row p-t-1 page-header">
+  <div class="col-md-8">
+    <h4>Device Communication</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Device Management</li>
+        <li class="breadcrumb-item active" aria-current="page">Device Communication</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-9 col-sm-10 col-md-10 p-t-3">
+    <span class="text-white">Total Records : {{page.totalElements}}</span>
+  </div>
+  <div class="col-3 col-sm-2 col-md-2 text-right">
+    <button type="button" class="btn-refresh" (click)="refreshPage()"><i class="fa fa-refresh" aria-hidden="true"></i>
+    </button>
+    <button type="button" class="btn-search" (click)="btnShowFilters()"><i class="icon-ic_searchfilter"></i></button>
+  </div>
+</div>
+<div class="row page-filters" [ngClass]="{'show': showFilters == true}">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-3"></div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search By IMEI No" [(ngModel)]="searchValue"
+            (keyup)="searchData();">
+          <!-- <button type="button" class="btn-close close" aria-label="Close">
+            <span aria-hidden="true" (click)="clearSearch();" *ngIf="showSearchClear">&times;</span>
+          </button> -->
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="input-group-append datepicker">
+            <input type="text" class="form-control" readOnly placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model"
+              (dateSelect)="changeDate();" ngbDatepicker #d="ngbDatepicker">
+            <button style="outline:none" class="btn-cal calendar" (click)="d.toggle()" type="button"> <i
+                class="fa fa-calendar" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-rect-round o-x-auto">
+      <table class="grid-table m-t-3">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>IMEI No</th>
+            <th>Status</th>
+            <th *ngIf="action == 'vehicleMode'">Vehicle Mode</th>
+            <th *ngIf="action == 'ignitionStatus'">Ignition Status</th>
+            <th *ngIf="action == 'emergencyStatus'">Emergency Status</th>
+            <th *ngIf="action == 'mainPowerStatus'">Main Power Status</th>
+            <th *ngIf="action == 'tamperAlert'">Tamper Alert</th>
+            <th *ngIf="action == 'memoryPercentage'">Memory Percentage</th>
+            <th *ngIf="action == 'batteryPercentage'">Battery Percentage</th>
+            <th>Langitude</th>
+            <th>Latitude</th>
+            <th>Network Date</th>
+            <th>Network Time</th>
+            <th>Is Over Speed</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="noData">
+          <tr [ngClass]="{'bg-row' : isDeviceOverSpeed}"
+            *ngFor="let details of deviceCommData | paginate: { id: 'devicecommdetailspage', itemsPerPage: page.size, currentPage: p, totalItems: page.totalElements }">
+            <td>{{details.deviceCommunicationId}}</td>
+            <td>{{details.imeiNumber}}</td>
+            <td>{{details.status}}</td>
+            <td *ngIf="action == 'vehicleMode'">{{details.vehicleMode}}</td>
+            <td *ngIf="action == 'ignitionStatus'">{{details.ignitionStatus == 1 ? 'ON' : 'OFF'}}</td>
+            <td *ngIf="action == 'emergencyStatus'">{{details.emergencyStatus == 1 ? 'ON' : 'OFF'}}</td>
+            <td *ngIf="action == 'mainPowerStatus'">{{details.mainPowerStatus == 1 ? 'ON' : 'OFF'}}</td>
+            <td *ngIf="action == 'tamperAlert'">{{details.tamperAlert == 'O' ? 'ON' : 'OFF'}}</td>
+            <td *ngIf="action == 'memoryPercentage'">{{details.memoryPercentage > 40 ? 'Good' : 'Critical'}} ({{details.memoryPercentage}})</td>
+            <td *ngIf="action == 'batteryPercentage'">{{details.batteryPercentage > 40 ? 'Good' : 'Critical'}} ({{details.batteryPercentage}})</td>
+            <td>{{details.langitude}}</td>
+            <td>{{details.latitude}}</td>
+            <td>{{details.networkDate}}</td>
+            <td>{{details.networkTime}}</td>
+            <td>{{details.isDeviceOverSpeed}}</td>
+            <td>
+                <div class="actions-menu dropdown-click">
+                    <button>
+                      <i class="icon-ic_more" aria-hidden="true"></i>
+                    </button>
+                    <ul>
+                      <li>
+                        <a title="View Device Communication  Details" class="icon" (click)="deviceComDetails(details)">
+                          <i class="icon-ic_view" aria-hidden="true"></i><span>View Details</span>
+                        </a>
+                      </li>
+                  
+                    </ul>
+                    </div>
+            </td>
+          </tr>
+        </tbody>
+        <div *ngIf="!noData">
+          <div class="grid-nodata text-center text-red-medium">
+            <h6>No Data Found</h6>
+          </div>
+        </div>
+      </table>
+      <div class="row">
+        <div style="margin:0px auto;">
+          <pagination-controls *ngIf="noData" id="devicecommdetailspage" class="pagination"
+            (pageChange)="pageChanged($event)" maxSize="6" directionLinks="true" autoHide="true" responsive="true"
+            previousLabel="Prev" nextLabel="Next">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

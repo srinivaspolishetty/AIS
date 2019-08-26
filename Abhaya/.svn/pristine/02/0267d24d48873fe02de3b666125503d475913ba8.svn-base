@@ -1,0 +1,85 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { CommandManagementServiceApi } from '../../common/services/commandmanagement.api';
+import { Commandlist } from '../../common/models/commandlist.model';
+import { PageModel } from '../../common/models/page.model';
+import { NgbDateFRParserFormatter } from '../../common/directives/dateformatter';
+import { ViewcommanddetailsComponent } from '../viewcommanddetails/viewcommanddetails.component';
+import { environment } from '../../../environments/environment';
+
+@Component({
+    selector: 'app-commandlist',
+    templateUrl: './commandlist.component.html',
+    styleUrls: ['./commandlist.component.css']
+})
+export class CommandlistComponent implements OnInit {
+
+    public pageSize: Number = environment.pageSize;
+    public intilPageNumber: Number = 0;
+    public showFilters: Boolean = false;
+    public page: PageModel = new PageModel();
+    public p: number;
+    model: NgbDateStruct;
+    public searchValue: string;
+    public pageSizeValues = [];
+    public showSearchClear = false;
+    public isDataExists: Boolean = false;
+    commandListData: Array<Commandlist> = [];
+    constructor(private modalService: NgbModal,
+        private ngbDateFRParserFormatter: NgbDateFRParserFormatter,
+        private commandmanagementApiService: CommandManagementServiceApi) {
+        this.searchValue = '';
+        this.pageSizeValues = [10, 50, 100, 200];
+    }
+
+    ngOnInit() {
+        this.getCommandDetails(this.intilPageNumber, this.pageSize);
+    }
+
+    refreshPage() {
+        this.searchValue = '';
+        this.model = undefined;
+        this.getCommandDetails(this.intilPageNumber, this.pageSize);
+    }
+    viewCommandlist(commandListView) {
+        const modalRef = this.modalService.open(ViewcommanddetailsComponent, {
+            size: 'lg', backdrop: 'static',
+            keyboard: false
+        });
+        modalRef.componentInstance.selectCommandDetails = commandListView;
+    }
+
+    btnShowFilters() {
+        this.showFilters = !this.showFilters;
+    }
+    changeDate() {
+        this.getCommandDetails(this.intilPageNumber, this.pageSize);
+    }
+    searchData() {
+        this.showSearchClear = (this.searchValue.length > 4);
+        this.p = 1;
+        this.getCommandDetails(this.intilPageNumber, this.pageSize);
+    }
+    clearSearch() {
+        this.searchValue = '';
+        this.searchData();
+    }
+    changePageSize() {
+        this.getCommandDetails(this.intilPageNumber, this.pageSize);
+    }
+    pageChanged(event) {
+        this.p = event;
+        this.getCommandDetails(event - 1, this.pageSize);
+    }
+    getCommandDetails(page: Number, size: Number) {
+        const formatDate = this.ngbDateFRParserFormatter.format(this.model);
+        this.commandmanagementApiService.getCommandList(page, size, formatDate, this.searchValue)
+            .subscribe((data: Commandlist) => {
+                this.commandListData = data.content;
+                this.isDataExists = (this.commandListData.length > 0);
+                this.page = data.page;
+                console.log(this.commandListData);
+            });
+    }
+}

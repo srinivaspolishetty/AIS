@@ -1,0 +1,7 @@
+export class Dashboard {
+    public total : number;
+    public on : number;
+    public off : number;
+    public action : string;
+    public length : number;
+}

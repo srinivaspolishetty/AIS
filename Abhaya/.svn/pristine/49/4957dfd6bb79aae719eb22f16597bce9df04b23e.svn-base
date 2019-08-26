@@ -1,0 +1,49 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HealthMonitoringServiceApi } from "../common/services/healthmonitoring.api";
+import { HealthnMonitoring } from "../common/models/healthmonitoring.model";
+import { PageModel } from "../common/models/page.model";
+import { HealthdetailsComponent } from "./healthdetails/healthdetails.component";
+
+@Component({
+  selector: 'app-healthmonitoring',
+  templateUrl: './healthmonitoring.component.html',
+  styleUrls: ['./healthmonitoring.component.css']
+})
+export class HealthmonitoringComponent implements OnInit {
+
+  private showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+  healthMonitoringdata: Array<HealthnMonitoring> = [];
+  constructor(private healthApiService:HealthMonitoringServiceApi, private modalService: NgbModal) {
+    this.page = new PageModel(0, 0, 0, 0);
+   }
+
+  ngOnInit() {
+    this.gethealthMonitoringDetails(0,10,'','');
+  }
+
+  healthDetails(healthDetails) {
+    const modalRef = this.modalService.open(HealthdetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.selectedHealthDetails = healthDetails;
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+  pageChanged(event) {
+    this.p = event;
+    this.gethealthMonitoringDetails(this.p-1,10,'','');
+  }
+  gethealthMonitoringDetails(page:number, size:number, searchDate:string,searchValue:string) {
+    this.healthApiService.gethealthMonitoringDetails(page,size,searchValue,searchDate)
+    .subscribe((data : HealthnMonitoring) => {
+      this.healthMonitoringdata = data.content;
+      this.page = data.page;
+      console.log(this.healthMonitoringdata);
+    });
+  }
+
+}

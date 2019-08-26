@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { DeviceManagementServiceApi } from "../common/services/devicemanagement.api";
+import { EmergencynMonitoring } from "../common/models/devicedetails.model";
+
+@Component({
+  selector: 'app-devicedetails',
+  templateUrl: './devicedetails.component.html',
+  styleUrls: ['./devicedetails.component.css']
+})
+export class DevicedetailsComponent implements OnInit {
+
+  pageTitle = "Device Management";
+  deviceData : Array<EmergencynMonitoring> = [];
+  constructor(private devicemanagementApiService : DeviceManagementServiceApi) { }
+
+  ngOnInit() {
+    this.getAllDeviceDetails();
+  }
+
+  getAllDeviceDetails() {
+    this.devicemanagementApiService.getDeviceDetails()
+    .subscribe((data : EmergencynMonitoring) => {
+      this.deviceData = data.content;
+      console.log(this.deviceData);
+    });
+  }
+
+}

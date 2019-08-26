@@ -1,0 +1,7 @@
+export class Constants {
+    public static MOBILEMINLENGTH: string = '10';
+    public static MOBILEMAXLENGTH: string = '10';
+    public static MOBILEPATTERN: string = '^[0-9]*$';
+    public static CMDEXEVALPATTERN: string = '^[a-zA-Z0-9]+$';
+    public static VEHICLEPATTERN: string = '^[a-zA-Z0-9- ]+$';
+}

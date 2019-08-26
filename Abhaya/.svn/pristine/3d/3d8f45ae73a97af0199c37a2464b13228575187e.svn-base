@@ -1,0 +1,15 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-commandexecutive',
+  templateUrl: './commandexecutive.component.html',
+  styleUrls: ['./commandexecutive.component.css']
+})
+export class CommandexecutiveComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

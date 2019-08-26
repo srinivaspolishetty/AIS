@@ -1,0 +1,22 @@
+.footer{
+	border:0;
+	&-details{
+		width:269px !important;
+		font-size:14px;
+		text-align: center;
+		position:fixed;
+		bottom:0;
+		background:$white;
+		border-top:1px solid #f8f8f8;
+
+	}
+	&-small{
+		width:89px!important;
+		font-size:12px;
+		text-align: center;
+		position:fixed;
+		bottom:0;
+		background:$white;
+		border-top:1px solid #f8f8f8;
+	}
+}

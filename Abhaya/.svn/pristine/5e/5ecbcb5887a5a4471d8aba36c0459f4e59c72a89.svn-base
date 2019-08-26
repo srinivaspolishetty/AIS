@@ -1,0 +1,101 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateFRParserFormatter } from '../../common/directives/dateformatter';
+import { PageModel } from '../../common/models/page.model';
+import { TripManagementServiceApi } from '../../common/services/tripnamagement.api';
+import { Tripdetails } from '../../common/models/tripdetails.model';
+import { ToasterService } from '../../common/services/toaster.service';
+import { environment } from '../../../environments/environment';
+
+@Component({
+    selector: 'app-tripdetails',
+    templateUrl: './tripdetails.component.html',
+    styleUrls: ['./tripdetails.component.css']
+})
+export class TripdetailsComponent implements OnInit {
+
+    public tripDetailsData: Array<Tripdetails> = [];
+    public pageSize: Number = environment.pageSize;
+    public page: PageModel = new PageModel();
+    public model: NgbDateStruct;
+    public p: Number;
+    public showSearchClear = false;
+    public showFilters: Boolean = false;
+    public noData: Boolean = false;
+    public searchValue: string;
+    private tripView: Boolean = false;
+    public tripType: string;
+
+
+    constructor(private tripdetailsApi: TripManagementServiceApi,
+        private toasterService: ToasterService, private router: Router,
+        private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+            this.searchValue = '';
+            this.tripType = 'TRIP';
+    }
+
+    ngOnInit() {
+        this.getTripDetails(0, this.pageSize);
+    }
+    refreshPage() {
+        this.searchValue = '';
+        this.model = undefined;
+        this.getTripDetails(0, this.pageSize);
+    }
+    btnShowFilters() {
+        this.showFilters = !this.showFilters;
+    }
+
+    changeDate() {
+        this.getTripDetails(0, this.pageSize);
+    }
+    clearSearch() {
+        this.searchValue = '';
+        this.showSearchClear = false;
+        this.searchData();
+    }
+    searchData() {
+        this.getTripDetails(0, this.pageSize);
+        this.showSearchClear = (this.searchValue.length > 4) ? true : false;
+    }
+    pageChanged(event) {
+        this.p = event - 1;
+        this.getTripDetails(this.p, this.pageSize);
+    }
+    viewTrip(details) {
+        this.router.navigate(['tripmanagement/tripcreate'], { queryParams: { tripId: details.tripId }, queryParamsHandling: 'merge'});
+    }
+    openclosedTrips() {
+        this.tripView = !this.tripView;
+        this.getTripDetails(0, this.pageSize);
+    }
+
+    changeTripType(triptype) {
+        this.tripType = triptype;
+        this.getTripDetails(0, this.pageSize);
+    }
+
+    endTrip(tripdetails) {
+        console.log(tripdetails);
+        const newobj = new Object({ imeiNumber: tripdetails.imeiNumber });
+        this.tripdetailsApi.endTrip(JSON.stringify(newobj)) .subscribe((_data: any) => {
+                this.getTripDetails(0, this.pageSize);
+                this.toasterService.showSuccess('bottom-right', 'Trip has been successfully closed ');
+            }, (_error: any) => {
+                this.toasterService.showError('bottom-right', 'ERROR: Unable to close the Trip.');
+            }
+            );
+    }
+    getTripDetails(page, size) {
+        const formatDate = this.ngbDateFRParserFormatter.format(this.model);
+        this.tripdetailsApi.getAllTripDetails(page, size, formatDate, this.searchValue, this.tripView, this.tripType)
+            .subscribe((data: Tripdetails) => {
+                this.tripDetailsData = data.content;
+                this.noData = (this.tripDetailsData.length > 0);
+                this.page = data.page;
+                console.log(this.tripDetailsData);
+        });
+    }
+
+}

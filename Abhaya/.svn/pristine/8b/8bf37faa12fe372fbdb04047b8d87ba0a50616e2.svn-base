@@ -1,0 +1,22 @@
+<div class="row p-t-1 ">
+    <div class="col-md-10">
+      <h4>Create Trip</h4>
+      <nav aria-label="breadcrumb" class="d-none d-sm-block">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Trip Management</li>
+          <li class="breadcrumb-item active" aria-current="page">Trip Create </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-md-12">
+        <object type="text/html" [data]="url" width="100%" height="600px">
+        </object>
+        <!-- <div class="box-rect-round m-t-3">
+          <button type="button" class="btn">View Map</button>
+            <iframe src="http://otsi.co.in/" style="height:500px;width:100%;"></iframe>
+        </div> -->
+      </div>
+    </div>

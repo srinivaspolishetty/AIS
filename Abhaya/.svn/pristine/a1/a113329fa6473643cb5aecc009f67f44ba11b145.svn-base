@@ -1,0 +1,16 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-healthmonitoring',
+  templateUrl: './healthmonitoring.component.html',
+  styleUrls: ['./healthmonitoring.component.css']
+})
+export class HealthmonitoringComponent implements OnInit {
+
+  pageTitle = "Health Monitoring Page";
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

@@ -1,0 +1,316 @@
+@font-face {
+    font-family: 'century'; 
+	src: url(assets/fonts/CenturyGothic.ttf); 
+}
+@font-face {
+    font-family: 'Muli'; 
+	src: url(assets/fonts/Muli-Regular.ttf); 
+	src: url(assets/fonts/Muli-Bold.ttf); 
+	src: url(assets/fonts/Muli-Light.ttf); 
+	src: url(assets/fonts/Muli-SemiBold.ttf); 
+}
+body{
+	background-color: $abhaya-primary-color;
+	margin:0px;
+	padding:0px;
+	font-family:'Muli'!important; 
+	// @import url('https://fonts.googleapis.com/css?family=Muli');
+}
+.container{
+	&-left{
+		margin:0;
+		padding:0;
+		float:left;
+		background-color: $white;
+		width: 269px;
+		-webkit-transition: all 0.5s ease;                  
+		-moz-transition: all 0.5s ease;                 
+		-o-transition: all 0.5s ease;   
+		-ms-transition: all 0.5s ease;          
+		transition: all 0.5s ease;
+	
+		&.collapsed{
+			width:89px!important;
+		}
+	}
+	&-right{
+		margin:0px;
+		padding-left:20px;
+		float: left;	
+		width: calc(100% - 269px);
+		background-color: $abhaya-primary-color;	
+		-webkit-transition: all 0.5s ease;                  
+		-moz-transition: all 0.5s ease;                 
+		-o-transition: all 0.5s ease;   
+		-ms-transition: all 0.5s ease;          
+		transition: all 0.5s ease;	
+		&.expand{
+			width: calc(100% - 89px)!important;
+		}
+	}
+}
+.main{
+	&-content{
+		width:100%;
+		height:calc(100vh - 70px);
+		overflow-y: auto;
+		padding-right:20px;
+		h4{
+			color:$white;
+			font-size: 25px;
+			font-weight: bold;
+			 span{
+				font-size: 14px;
+				font-weight: bold;
+				font-style: italic;
+			}
+		}
+		&::-webkit{
+			&-scrollbar{
+				width:12px;
+				&-thumb{
+					background-color:#888888;
+				}
+				&-track{
+					background-color:#f1f1f1;
+				}
+			}
+		}
+	}
+}
+.box{
+	&-rect{
+		&-round{
+			width:100%;
+			background-color: $white;
+			border-radius: 5px;
+			padding:24px;
+			padding-top: 12px;
+		}
+	}
+	&-heading{
+		display:flex;
+		border-bottom:2px solid #99F1FF;
+		& h5{
+			display: inline-block;
+			width: calc(100% - 50px);
+			color:$abhaya-primary-color;
+			font-size: $fs-16;
+			font-weight: bold;
+			float:left;
+			& img{
+				width: 35px;
+				padding-right: 5px;
+			}
+			
+		}
+		& span{
+			color:$abhaya-primary-color;
+			display: inline-block;
+			width: 50px;
+			float: right;
+			text-align: center;
+			font-size: $fs-16;
+			font-weight: bold;
+			padding-top:10px;
+		}
+	}
+	&-details{
+		padding:0;
+		margin:0;
+		text-decoration: none;
+		& li{
+			list-style: none;
+			border:none;
+			width:100%;
+			border-bottom:1px solid #F8F8F8;
+			display:flex;
+			padding-top: 20px;
+			padding-bottom: 10px;
+			& h6{
+				width: calc(100% - 50px);
+				font-size:$fs-15;
+				float:left;
+				color:#999999;
+				padding-top:3px;
+			} 
+			
+			& span{
+				color:$abhaya-primary-color;
+				display: inline-block;
+				width: 50px;
+				float: right;
+				text-align: center;
+				font-size: $fs-16;
+				font-weight: bold;
+			}
+			&:last-child{
+				border-bottom:0px solid $abhaya-primary-color;
+				padding-bottom:10px;
+			}
+		}
+	}
+	&-panic{
+		border:1px solid #F8F8F8;
+		height:138px;
+		margin-top:40px;
+		border-radius: 7px;
+		&>.box-details{
+			padding-left:10px !important;
+		}
+	}
+	&-round{
+		&-circle{
+			position: absolute;
+			width:58px;
+			height:58px;
+			background-color:#FCFCFC; 
+			border:1px solid #F8F8F8;
+			border-radius: 50%;
+			left: 39%;
+			top: 11px;
+			& img{
+				width: 54px;
+				padding: 11px;
+			}
+		}
+	}
+}
+.otsi{
+	&-logo{
+		width: auto !important;
+		height:60px;
+		background: url(assets/images/SVG/Otsi-ITS_logo.svg);
+		margin:28px auto;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center; 
+		-webkit-transition: all 0.3s ease;                  
+		-moz-transition: all 0.3s ease;                 
+		-o-transition: all 0.3s ease;   
+		-ms-transition: all 0.3s ease;          
+		transition: all 0.3s ease;
+		&.small{
+			width:65px;
+			background: url(assets/images/SVG/Otsi_small_logo.svg) !important;
+			background-repeat: no-repeat !important;
+			background-position: center !important; 
+		}
+	}
+
+}
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: transparent;
+	color:$white !important;
+	padding:0px !important;
+	&-item{
+		list-style: none;
+		font-size: 12px;
+		// padding-left:4px;
+		&.active{
+			color:#99F1FF;
+		}
+		& a{
+			color:$white;
+		}
+		&+.breadcrumb-item::before {
+			display: inline-block;
+			padding-right: .5rem;
+			color: $white;
+			content: "/";
+		}
+	}
+
+}
+.actions{
+	&-menu{
+		position:relative;
+		margin-top:-5px;
+		& button{
+			border: 0;
+			background:transparent;
+			cursor: pointer;
+			&:focus{
+				outline:none;
+			}
+		}
+		& i{
+			font-size: 16px;
+			color:$abhaya-primary-color !important;
+		}
+		& ul{
+			display: block;
+			margin: 0;
+			padding: 12px;
+			width: 195px;
+			list-style:none;
+			position:absolute;
+			display:none;
+			background-color:#fff;
+			border-radius:5px; 
+			z-index: 99;
+			box-shadow: 0px 6px 15px rgb(24, 191, 255) !important;
+			& li{
+				
+				margin:0;
+				padding:5px;
+				color:$grey;
+				display: block;
+				text-align:left;
+				
+			}
+		}
+		& a{
+			text-align: left;
+			& span{
+				font-size:12px; 
+				padding-left:10px;
+				color:$grey !important;
+				&:hover{
+					color:$abhaya-primary-color !important;
+					font-weight: 600;
+				}
+			}
+		}
+		&.dropdown-click{
+			& button:focus + ul, & ul:hover{
+				top:26px;
+				right:10px;
+				display:block;
+			}
+		}
+	}
+	& .dropdown{
+		&-menu{
+			margin-right: 30px;
+			top: 9px !important;
+			margin-top: 0px !important;
+			background-color: none !important; 
+			width: 180px;
+			 padding:none !important;
+			color: #18BFFF;
+			// box-shadow: 0px 0px 7px 0px rgba(92, 92, 92, 0.4);
+			box-shadow: 0 !important;
+			border-radius: 5px;
+			position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+     padding:0 0 !important; 
+    /* margin: .125rem 0 0; */
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: transparent !important;
+    background-clip: padding-box;
+    border:0 !important;
+    border-radius: .25rem;
+		}
+	}
+}

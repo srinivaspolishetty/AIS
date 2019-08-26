@@ -1,0 +1,162 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { GoogleMapsAPIWrapper } from '@agm/core';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { LiveVehicle } from "../common/models/livedevices.model";
+import { DeviceManagementServiceApi } from "../common/services/devicemanagement.api";
+import { DashboardServiceApi } from "../common/services/dashboard.api";
+declare var google: any;
+
+@Component({
+  selector: 'app-mapview',
+  templateUrl: './mapview.component.html',
+  styleUrls: ['./mapview.component.css']
+})
+export class MapviewComponent implements OnInit, OnDestroy {
+
+  public model: NgbDateStruct;
+  public showFilters: boolean = false;
+  public devicetrack: boolean = false;
+  public searchValue: string;
+  lat = 17.3850;
+  lng = 78.4867;
+  iconURL = '/assets/images/ic_auto_yellow.png';
+
+  public imeiNumber: string;
+  devicetracking;
+  origin: any;
+  destination: any;
+  originstr: string;
+  destinationstr: string;
+  renderOpts = { suppressMarkers: true };
+  waypoints = [];
+  markerOpts = {
+    origin: { icon: '../../../assets/images/source.png' },
+    destination: { icon: '../../../assets/images/dest.png', label: 'marker label', opacity: 0.8 }
+  };
+
+
+  liveVehicleArray: Array<LiveVehicle> = [];
+
+  gMaps;
+  map: any;
+  zoom: 12;
+  animation: string;
+
+  constructor(private calendar: NgbCalendar, private devicemanagementApiService: DeviceManagementServiceApi,
+    private deviceTrackingApi: DashboardServiceApi) {
+    this.gMaps = GoogleMapsAPIWrapper;
+    this.model = this.calendar.getToday();
+    this.searchValue = '';
+    this.imeiNumber = '';
+  }
+
+  getVehicle;
+  ngOnInit() {
+    this.getLiveVehicles();
+  }
+
+
+  btnShowFilters() {
+    this.showFilters = !this.showFilters;
+  }
+  changeDate() {
+    alert("date changed");
+  }
+  changeImei() {
+    if (this.imeiNumber !== '') {
+      this.devicetrack = true;
+      this.getdeviceTrackData();
+    }
+    else{
+      this.devicetrack = false;
+    }
+
+  }
+
+  mapReady(map) {
+    this.map = map;
+  }
+  clickedMarker(label: string, index: number, $event) {
+    this.lat = $event.latitude;
+    this.lng = $event.longitude;
+    this.map.setCenter({ lat: $event.latitude, lng: $event.longitude });
+    const position = new google.maps.LatLng($event.latitude, $event.longitude);
+    this.map.panTo(position);
+    this.map.setZoom(15);
+  }
+
+  mapClicked($event: MouseEvent) {
+  }
+
+  getLiveVehicles() {
+    this.devicemanagementApiService.getliveDevices().subscribe((data: LiveVehicle) => {
+      this.liveVehicleArray = data.content;
+      this.prepareDatatoDispaly();
+    });
+  }
+
+
+  prepareDatatoDispaly() {
+    for (let current = 0; current < this.liveVehicleArray.length; current++) {
+      const curLiveVehicle = this.liveVehicleArray[current];
+      const oldposition = new google.maps.LatLng(curLiveVehicle.prevLatitude, curLiveVehicle.prevLangitude);
+      const newposition = new google.maps.LatLng(curLiveVehicle.latitude, curLiveVehicle.langitude);
+      let angle = google.maps.geometry.spherical.computeHeading(oldposition, newposition);
+      angle = Math.round(angle);
+      angle = Math.ceil(angle / 5) * 5;
+      if (angle > 180) {
+        angle = 180;
+      }
+      if (angle < -180) {
+        angle = -180;
+      }
+    }
+  }
+
+  private calcuateDegree(oldLatitude, oldLangitude, curLatitude, curLangitude) {
+    const pi = Math.PI;
+    const lat1: number = oldLatitude * pi / 180;
+    const long1: number = oldLangitude * pi / 180;
+    const lat2: number = curLatitude * pi / 180;
+    const long2: number = curLangitude * pi / 180;
+    const dLon: number = (long2 - long1);
+    const y = Math.sin(dLon) * Math.cos(lat2);
+    const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+    let brng = Math.atan2(y, x);
+    brng = brng * (180 / pi);
+    brng = (brng + 360) % 360;
+
+    return brng;
+  }
+
+
+
+
+  getdeviceTrackData() {
+    this.originstr = '17.760183,83.318143';
+      this.destinationstr = '17.7238005,83.30703990000006';
+      this.origin = { lat: Number(this.originstr.split(',')[0]), lng: Number(this.originstr.split(',')[1]) };
+      this.destination = { lat: Number(this.destinationstr.split(',')[0]), lng: Number(this.destinationstr.split(',')[1]) };
+    this.deviceTrackingApi.getTrackingDetails()
+      .subscribe((data: any) => {
+        this.devicetracking = data.content;
+        console.log(this.devicetracking);
+        let loop: number;
+        for (loop = 0; loop < this.devicetracking.length; loop++) {
+          this.waypoints.push({
+            location: { lat: this.devicetracking[loop].latitude, lng: this.devicetracking[loop].langitude },
+            stopover: false
+          });
+        }
+      });
+  }
+
+
+
+
+  ngOnDestroy() {
+    if (this.getVehicle) {
+      clearInterval(this.getVehicle);
+    }
+  }
+}

@@ -1,0 +1,65 @@
+import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import { NgbDateFRParserFormatter } from "../../common/directives/dateformatter";
+import { PageModel } from "../../common/models/page.model";
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { RouteDeviation } from "../../common/models/routedeviation.model";
+import { RouteDeviationServiceApi } from "../../common/services/routedeviation.api";
+
+@Component({
+  selector: 'app-routedeviation',
+  templateUrl: './routedeviation.component.html',
+  styleUrls: ['./routedeviation.component.css']
+})
+export class RoutedeviationComponent implements OnInit {
+
+  routeDevDetails : Array<RouteDeviation> = [];
+  public page: PageModel = new PageModel();
+  public model: NgbDateStruct;
+  public p: number;
+  public searchValue : string = '';
+  public showSearchClear = false;
+  public formatDate : string;
+  public pageSizeValues = [];
+  public pageSizeCount : number;
+  public showFilters : boolean = false;
+  public noData : boolean = false;
+
+  constructor(private router: Router, private RouteDeviationApi: RouteDeviationServiceApi, private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+    this.pageSizeValues = [10,50,100,200];
+    this.pageSizeCount = 10;
+   }
+
+  ngOnInit() {
+    this.getAllRouteDetails(0, 10);
+  }
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+  changeDate() {
+    this.getAllRouteDetails(0,this.pageSizeCount);
+  }
+  searchData() {
+    this.getAllRouteDetails(0,10);
+    this.showSearchClear = (this.searchValue.length > 4) ? true : false;
+  }
+  clearSearch() {
+    this.searchValue = '';
+    this.showSearchClear = false;
+    this.searchData();
+  }
+  changePageSize(){
+    this.getAllRouteDetails(0,this.pageSizeCount);
+  }
+  getAllRouteDetails(page:number, size:number){
+    this.formatDate = this.ngbDateFRParserFormatter.format(this.model);
+    this.RouteDeviationApi.getrouteDetails(page, size, this.formatDate,this.searchValue)
+    .subscribe((data : RouteDeviation) =>{
+      this.routeDevDetails = data.content;
+      this.noData = (this.routeDevDetails.length > 0);
+      this.page = data.page;
+      console.log(this.routeDevDetails);
+
+    });
+  }
+}

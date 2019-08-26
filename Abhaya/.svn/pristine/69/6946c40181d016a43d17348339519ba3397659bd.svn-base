@@ -1,0 +1,51 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RawDataServiceApi } from "../common/services/rawdata.api";
+import { RawData } from "../common/models/rawdata.model";
+import { PageModel } from "../common/models/page.model";
+import { RawdatadetailsComponent } from "./rawdatadetails/rawdatadetails.component";
+
+@Component({
+  selector: 'app-rawdata',
+  templateUrl: './rawdata.component.html',
+  styleUrls: ['./rawdata.component.css']
+})
+export class RawdataComponent implements OnInit {
+
+  private showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+  pageTitle = "Raw Data";
+  rawdata : Array<RawData> = [];
+  constructor(private rawdataApiService:RawDataServiceApi, private modalService: NgbModal) {
+    this.page = new PageModel(0, 0, 0, 0);
+   }
+
+  ngOnInit() {
+    this.getAllRawData(0,10,'','');
+  }
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+
+  rawDataDetails(rawdetails) {
+    const modalRef = this.modalService.open(RawdatadetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.selectedrawdata = rawdetails;
+  }
+
+
+  pageChanged(event) {
+    this.p = event;
+    this.getAllRawData(this.p-1,10,'','');
+  }
+  getAllRawData(page:number, size:number, searchDate:string,searchValue:string) {
+    this.rawdataApiService.getrawdata(page,size,searchValue,searchDate)
+    .subscribe((data : RawData) => {
+      this.rawdata = data.content;
+      this.page = data.page;
+      console.log(this.rawdata);
+    });
+  }
+
+}

@@ -1,0 +1,25 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { APIEndPoints } from '../constants/apiendpointconstants';
+import { environment } from '../../../environments/environment';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class HealthMonitoringServiceApi {
+
+    constructor(private httpClient: HttpClient) { }
+
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+            'Authorization': 'my-auth-token'
+        })
+    };
+    gethealthMonitoringDetails(page: Number, size: Number, startDate: string, endDate: string, searchValue: string) {
+        let url = `${environment.apiBase}${environment.version}${APIEndPoints.hmpPacketData}`;
+        url += `?page=${page}&size=${size}&imeiNumber=${searchValue}&startDate=${startDate}&endDate=${endDate}`;
+        return this.httpClient.get(url);
+    }
+}

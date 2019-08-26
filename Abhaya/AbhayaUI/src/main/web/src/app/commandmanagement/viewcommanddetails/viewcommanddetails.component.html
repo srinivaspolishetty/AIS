@@ -1,0 +1,67 @@
+<div class="modal-header">
+    <h5 class="modal-title">Command History Details</h5>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <h5>Task ID</h5>
+        <h4>{{selectCommandDetails.taskId}}</h4>
+      </div>
+      <div class="col-md-6">
+        <h5>IMEI No</h5>
+        <h4>{{selectCommandDetails.imeiNumber}}</h4>
+      </div>
+      <div class="col-md-6 p-t-2">
+          <h5>Header</h5>
+          <h4>{{selectCommandDetails.header}}</h4>
+        </div>
+        <div class="col-md-6 p-t-2">
+            <h5>Random Code</h5>
+            <h4>{{selectCommandDetails.randomCode}}</h4>
+          </div>
+          <div class="col-md-6 p-t-2">
+              <h5>Reply Gateway No</h5>
+              <h4>{{selectCommandDetails.replyGatewayNumber}}</h4>
+            </div>
+            <div class="col-md-6 p-t-2">
+                <h5>Request Description</h5>
+                <h4>{{selectCommandDetails.description}}</h4>
+              </div>
+              <div class="col-md-6 p-t-2">
+                  <h5>SMS Status</h5>
+                  <h4>{{selectCommandDetails.smsStatus}}</h4>
+                </div>
+                <div class="col-md-6 p-t-2">
+                    <h5>Device Response Status</h5>
+                    <h4>{{selectCommandDetails.deviceResponseStatus}}</h4>
+                  </div>
+          <div class="col-md-6 p-t-2">
+              <h5>Created Date</h5>
+              <h4>{{selectCommandDetails.createdDate}}</h4>
+            </div>
+          <div class="col-md-6 p-t-2">
+              <h5>Request Command Name</h5>
+              <h4>{{selectCommandDetails.requestCommandName}}</h4>
+            </div>
+            <div class="col-md-6 p-t-2">
+              <h5>Payload</h5>
+              <h4>{{selectCommandDetails.payload}}</h4>
+            </div>
+            <div class="col-md-6 p-t-2">
+                <h5>Response Command Name</h5>
+                <h4>{{selectCommandDetails.responseCommandName}}</h4>
+              </div>
+          <div class="col-md-6 p-t-2">
+            <h5>Device Response Time</h5>
+            <h4>{{selectCommandDetails.deviceResponseTime}}</h4>
+          </div>      
+          <div class="col-md-10 p-t-2">
+              <h5>Device Response</h5>
+              <h4>{{selectCommandDetails.deviceResponse}}</h4>
+            </div> 
+    </div>
+    </div>
+    

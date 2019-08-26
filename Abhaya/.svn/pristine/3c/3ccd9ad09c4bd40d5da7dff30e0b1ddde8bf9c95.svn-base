@@ -1,0 +1,22 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { SystempropertiesComponent } from "../systemproperties.component";
+import { SystemManagement } from "../../common/models/systemmanagement.model";
+import { SystemManagementServiceApi } from "../../common/services/systemmanagement.api";
+
+@Component({
+  selector: 'app-addeditsystemprop',
+  templateUrl: './addeditsystemprop.component.html',
+  styleUrls: ['./addeditsystemprop.component.css']
+})
+export class AddeditsystempropComponent implements OnInit {
+
+  constructor(public activeModal: NgbActiveModal, private systemPropertiesApi : SystemManagementServiceApi) { }
+  @Input () systemPropertiesDetails : SystemManagement;
+  ngOnInit() {
+  }
+  onSubmit() {
+    this.activeModal.close();
+  }
+
+}

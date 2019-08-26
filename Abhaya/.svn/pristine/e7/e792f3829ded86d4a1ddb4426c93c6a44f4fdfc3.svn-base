@@ -1,0 +1,28 @@
+import { PageModel } from './page.model';
+
+export class DeviceCommunication {
+    public batteryStatus: string;
+    public createdDate: string;
+    public deviceCommunicationId: Number;
+    public engineStatus: string;
+    public ignitionStatus: string;
+    public imeiNumber: string;
+    public langitude: string;
+    public latitude: string;
+    public location: string;
+    public movement: string;
+    public networkDate: string;
+    public networkTime: string;
+    public panicButtonStatus: string;
+    public prevLangitude: string;
+    public prevLatitude: string;
+    public prevNetworkDate: string;
+    public prevNetworkTime: string;
+    public serialNumber: string;
+    public status: string;
+    public tamperStatus: string;
+    public tamperAlert: string;
+    public page: PageModel;
+    public content: any;
+    public isDeviceOverSpeed: string;
+}

@@ -1,0 +1,13 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RawdataComponent } from './rawdata.component';
+import { RawdataRoutingModule } from "./rawdata-routing.module";
+
+@NgModule({
+  declarations: [RawdataComponent],
+  imports: [
+    CommonModule,
+    RawdataRoutingModule
+  ]
+})
+export class RawdataModule { }

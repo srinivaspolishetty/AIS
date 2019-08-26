@@ -1,0 +1,5 @@
+export class Constants {
+    public static MOBILEMINLENGTH:string="10";
+    public static MOBILEMAXLENGTH:string="10";
+    public static MOBILEPATTERN:string="^[0-9]*$";   
+}

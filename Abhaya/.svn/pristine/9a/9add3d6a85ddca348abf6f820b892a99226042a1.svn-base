@@ -1,0 +1,167 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { GoogleMapsAPIWrapper } from '@agm/core';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { LiveVehicle } from "../common/models/livedevices.model";
+import { DeviceManagementServiceApi } from "../common/services/devicemanagement.api";
+import { DashboardServiceApi } from "../common/services/dashboard.api";
+import { NgbDateFRParserFormatter } from "../common/directives/dateformatter";
+import { ToasterService } from "../common/services/toaster.service";
+declare var google: any;
+
+@Component({
+  selector: 'app-mapview',
+  templateUrl: './mapview.component.html',
+  styleUrls: ['./mapview.component.css']
+})
+export class MapviewComponent implements OnInit, OnDestroy {
+
+  public model: NgbDateStruct;
+  public formatDate: string;
+  public showFilters: boolean = false;
+  public devicetrack: boolean = false;
+  public searchValue: string;
+  // lat = 17.3850;
+  // lng = 78.4867;
+
+  lat = 17.419545;
+  lng = 78.401008;
+  iconURL = '/assets/images/ic_auto_yellow.png';
+
+  public imeiNumber: string;
+  marker;
+  devicetracking;
+  origin: any;
+  destination: any;
+  originstr: string;
+  destinationstr: string;
+  renderOpts = { suppressMarkers: true };
+  waypoints = [];
+  markerOpts = {
+    origin: { icon: '../../../assets/images/source.png' },
+    destination: { icon: '../../../assets/images/dest.png', label: 'marker label', opacity: 0.8 }
+  };
+
+
+  liveVehicleArray: Array<LiveVehicle> = [];
+
+  gMaps;
+  map: any;
+  zoom: 12;
+  animation: string;
+
+  constructor(private calendar: NgbCalendar, private devicemanagementApiService: DeviceManagementServiceApi,
+    private deviceTrackingApi: DashboardServiceApi, private ngbDateFRParserFormatter: NgbDateFRParserFormatter,
+    private toasterService: ToasterService) {
+    this.gMaps = GoogleMapsAPIWrapper;
+    this.model = this.calendar.getToday();
+    this.searchValue = '';
+    this.imeiNumber = '';
+  }
+
+  getVehicle;
+  ngOnInit() {
+    this.getLiveVehicles();
+    this.origin = { lat: .0000, lng: .0000 };
+        this.destination = { lat: .0000, lng: .0000 };
+  }
+
+
+  btnShowFilters() {
+    this.showFilters = !this.showFilters;
+  }
+  changeDate() {
+  }
+  changeImei() {
+    if (this.imeiNumber !== '') {
+      this.getdeviceTrackData();
+    }
+    else {
+      this.devicetrack = false;
+    }
+
+  }
+
+  mapReady(map) {
+    this.map = map;
+  }
+
+  clickedMarker(label: string, index: number, $event) {
+    this.lat = $event.latitude;
+    this.lng = $event.longitude;
+    this.map.setCenter({ lat: $event.latitude, lng: $event.longitude });
+    const position = new google.maps.LatLng($event.latitude, $event.longitude);
+    this.map.panTo(position);
+    this.map.setZoom(22);
+  }
+
+  mapClicked($event: MouseEvent) {
+  }
+  getLiveVehicles() {
+    this.devicemanagementApiService.getliveDevices().subscribe((data: LiveVehicle) => {
+      this.liveVehicleArray = data.content;
+      console.log(this.liveVehicleArray);
+      this.prepareDatatoDispaly();
+    });
+  }
+
+
+  prepareDatatoDispaly() {
+    for (let current = 0; current < this.liveVehicleArray.length; current++) {
+      const curLiveVehicle = this.liveVehicleArray[current];
+      const oldposition = new google.maps.LatLng(curLiveVehicle.prevLatitude, curLiveVehicle.prevLangitude);
+      const newposition = new google.maps.LatLng(curLiveVehicle.latitude, curLiveVehicle.langitude);
+      let angle = google.maps.geometry.spherical.computeHeading(oldposition, newposition);
+      angle = Math.round(angle);
+      angle = Math.ceil(angle / 5) * 5;
+      if (angle > 180) {
+        angle = 180;
+      }
+      if (angle < -180) {
+        angle = -180;
+      }
+    }
+  }
+
+  getdeviceTrackData() {
+    this.formatDate = this.ngbDateFRParserFormatter.format(this.model);
+    this.deviceTrackingApi.getTrackingDetails(this.imeiNumber, this.formatDate)
+      .subscribe((data: any) => {
+        this.devicetracking = data.content;
+        console.log(this.devicetracking);
+        const lastobj = this.devicetracking.length - 1;
+        this.waypoints = [];
+        let loop: number;
+       if(this.devicetracking.length !== 0){
+        this.origin = { lat: Number(this.devicetracking[lastobj].latitude), lng: Number(this.devicetracking[lastobj].langitude) };
+        this.destination = { lat: Number(this.devicetracking[0].latitude), lng: Number(this.devicetracking[0].langitude) };
+        if(this.origin.lat !== 0 && this.origin.lng !== 0 && this.destination.lat !== 0 && this.destination.lng !== 0){
+          for (loop = 0; loop < 23; loop++) {
+            this.waypoints.push({
+              location: { lat: Number(this.devicetracking[loop].latitude), lng: Number(this.devicetracking[loop].langitude) },
+              stopover: true
+            });
+            
+          }
+          this.devicetrack = true;
+        }
+        else{
+          this.devicetrack = false;
+          this.toasterService.showError('bottom-right', 'ERROR: No Tracking Data available for this IMEI Number : '+this.imeiNumber);
+        }
+       
+        
+       }
+       else{
+        this.devicetrack = false;
+        this.toasterService.showError('bottom-right', 'ERROR: No Tracking Data available for this IMEI Number : '+this.imeiNumber);
+       }
+        
+
+      });
+  }
+  ngOnDestroy() {
+    if (this.getVehicle) {
+      clearInterval(this.getVehicle);
+    }
+  }
+}

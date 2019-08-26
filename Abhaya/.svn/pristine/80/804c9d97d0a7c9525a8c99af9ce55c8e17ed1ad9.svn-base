@@ -1,0 +1,24 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { TrackdeviceComponent } from './trackdevice.component';
+import { TrackmanagementRoutingModule } from "./trackmanagement-routing.module";
+import { TripcreateComponent } from "./tripcreate/tripcreate.component";
+import { TripdetailsComponent } from './tripdetails/tripdetails.component';
+
+@NgModule({
+  declarations: [TrackdeviceComponent, TripcreateComponent, TripdetailsComponent],
+  imports: [
+    CommonModule,
+    NgbModule,
+    FormsModule,
+    AgmDirectionModule,
+    AgmCoreModule,
+    TrackmanagementRoutingModule
+  ]
+})
+export class TrackmanagementModule { }

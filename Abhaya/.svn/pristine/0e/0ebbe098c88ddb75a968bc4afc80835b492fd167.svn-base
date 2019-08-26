@@ -1,0 +1,34 @@
+<div class="login-main">
+  <div class="row login-height">
+    <div class="col-md-7">
+      <div class="login-banner img-fluid">
+      </div>
+    </div>
+    <!-- <ng-http-loader backgroundColor="#ff0000" [spinner]="spinkit.skChasingDots"></ng-http-loader> -->
+    <div class="col-md-5">
+      <div class="row">
+        <div class="login-logo">
+          <img style="float:right;" src="assets/images/SVG/Otsi-ITS_logo.svg">
+        </div>
+        <form class="form-horizontal login-block" [formGroup]="loginForm">
+          <div class="form-group">
+            <div class="login-leftline login-content">
+              <h3>LOGIN</h3>
+            </div>
+            <input type="text" class="login-form" placeholder="USER NAME" formControlName="userName">
+            <input type="password" class="login-form" placeholder="PASSWORD" formControlName="password">
+            <div class="row p-l-3">
+              <button type="submit" (click)="login();" class="btn-primary">Login</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- <footer class="footer">
+    <div class=" footer-details">
+      <span>Developed By</span>
+      <img src="assets/images/logo_otsi.png">
+    </div>
+  </footer> -->
+</div>

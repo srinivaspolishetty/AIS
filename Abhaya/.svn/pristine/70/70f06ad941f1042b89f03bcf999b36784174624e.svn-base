@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { RawdataComponent } from './rawdata.component';
+import { RawdataRoutingModule } from "./rawdata-routing.module";
+
+@NgModule({
+  declarations: [RawdataComponent],
+  imports: [
+    CommonModule,
+    NgxPaginationModule,
+    RawdataRoutingModule
+  ]
+})
+export class RawdataModule { }

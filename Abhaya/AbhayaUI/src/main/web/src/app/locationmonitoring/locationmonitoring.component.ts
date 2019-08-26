@@ -1,0 +1,122 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { LocationMonitoringServiceApi } from '../common/services/locationmonitoring.api';
+import { LocationMonitoring } from '../common/models/locationmonitoring.model';
+import { PageModel } from '../common/models/page.model';
+import { NgbDateFRParserFormatter } from '../common/directives/dateformatter';
+import { LocationdetailsComponent } from './locationdetails/locationdetails.component';
+import { environment } from '../../environments/environment';
+import { Validations } from './../common/constants/validationconstants';
+
+@Component({
+    selector: 'app-locationmonitoring',
+    templateUrl: './locationmonitoring.component.html',
+    styleUrls: ['./locationmonitoring.component.css']
+})
+export class LocationmonitoringComponent implements OnInit, OnDestroy {
+
+    public showFilters: Boolean = false;
+    public page: PageModel = new PageModel();
+    public pageSize: Number = environment.pageSize;
+    public intilPageNumber: Number = 0;
+    public p: number;
+    startDateModel: NgbDateStruct;
+    endDateModel: NgbDateStruct;
+    public searchValue: string;
+    public pageSizeValues = [];
+    public showSearchClear = false;
+    public isDataExists: Boolean = false;
+     public Validations: Object = Validations;
+    locationMonitoringdata: Array<LocationMonitoring> = [];
+    updateLocationDetails;
+    intervalTime: number = environment.setIntervalTime;
+    public validations : any = Validations;
+
+    constructor(private locationApiService: LocationMonitoringServiceApi, private router: Router,
+        private modalService: NgbModal, private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+            this.searchValue = '';
+            this.pageSizeValues = [10, 50, 100, 200];
+    }
+
+    ngOnInit() {
+        this.getLocationMonitoringDetails(this.intilPageNumber, this.pageSize);
+        this.updateLocationDetails = setInterval(() => {
+            this.p = 1;
+            this.getLocationMonitoringDetails(this.intilPageNumber, this.pageSize);
+        }, this.intervalTime);
+    }
+
+    locationDetails(locationDetails) {
+        const modalRef = this.modalService.open(LocationdetailsComponent, {
+            size: 'lg', backdrop: 'static',
+            keyboard: false
+        });
+        modalRef.componentInstance.selectedLocationDetails = locationDetails;
+    }
+
+    viewTracking(curLocation) {
+        this.router.navigate(['/trackdevice'],
+            {
+                queryParams: { imeiNumber: curLocation.imei },
+                queryParamsHandling: 'merge'
+            });
+    }
+
+    btnShowFilters() {
+        this.showFilters = !this.showFilters;
+    }
+    changeDate() {
+        this.getLocationMonitoringDetails(this.intilPageNumber, this.pageSize);
+    }
+    searchData() {
+        this.showSearchClear = (this.searchValue.length > 4);
+        this.p = 1;
+        this.getLocationMonitoringDetails(this.intilPageNumber, this.pageSize);
+    }
+    refreshPage() {
+        this.searchValue = '';
+        this.startDateModel = undefined;
+        this.endDateModel = undefined;
+        this.p = 1;
+        this.getLocationMonitoringDetails(this.intilPageNumber, this.pageSize);
+    }
+    clearSearch() {
+        this.searchValue = '';
+        this.searchData();
+    }
+    changePageSize() {
+        this.getLocationMonitoringDetails(this.intilPageNumber, this.pageSize);
+      }
+    pageChanged(event) {
+        this.p = event;
+        this.getLocationMonitoringDetails(event - 1, this.pageSize);
+        if(this.p != 1){
+            clearInterval(this.updateLocationDetails);
+        } else {
+            this.updateLocationDetails = setInterval(() => {
+            this.p = 1;
+            this.getLocationMonitoringDetails(this.intilPageNumber, this.pageSize);
+        }, this.intervalTime);
+        }
+    }
+    getLocationMonitoringDetails(page: Number, size: Number) {
+        const formatStartDate = this.ngbDateFRParserFormatter.format(this.startDateModel);
+        const formatEndDate = this.ngbDateFRParserFormatter.format(this.endDateModel);
+        this.locationApiService.getLocationMonitoringDetails(page, size, formatStartDate, formatEndDate, this.searchValue)
+            .subscribe((data: LocationMonitoring) => {
+                this.locationMonitoringdata = data.content;
+                this.isDataExists = (this.locationMonitoringdata.length > 0);
+                this.page = data.page;
+                console.log(this.locationMonitoringdata);
+            });
+    }
+
+    ngOnDestroy() {
+        if (this.updateLocationDetails) {
+            clearInterval(this.updateLocationDetails);
+        }
+    }
+
+}

@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <h5 class="modal-title">Raw Data Details of {{selectedrawdata.imeiNumber}} | {{selectedrawdata.networkDate}} {{selectedrawdata.networkTime}}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6">
+      <h5>ID No</h5>
+      <h4>{{selectedrawdata.rawDataId}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>IMEI No</h5>
+      <h4>{{selectedrawdata.imeiNumber}}</h4>
+    </div>
+  </div>
+  <div class="row p-t-4">
+    <div class="col-md-6">
+      <h5>Vehicle No</h5>
+      <h4>{{selectedrawdata.vehicleRegNo}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>CVP Type</h5>
+      <h4>{{selectedrawdata.cvpType}}</h4>
+    </div>
+  </div>
+  <div class="row p-t-4">
+    <div class="col-md-6">
+      <h5>Network Date</h5>
+      <h4>{{selectedrawdata.networkDate}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Network Time</h5>
+      <h4>{{selectedrawdata.networkTime}}</h4>
+    </div>
+  </div>
+  <div class="row p-t-4">
+    <div class="col-md-12">
+      <h5>Raw Data</h5>
+      <h4>{{selectedrawdata.rawData}}</h4>
+    </div>
+  </div>
+</div>
+<!-- <div class="modal-footer">
+  23456789
+</div> -->

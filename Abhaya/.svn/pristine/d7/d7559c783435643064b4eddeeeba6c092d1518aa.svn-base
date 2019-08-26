@@ -1,0 +1,28 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CoreComponent } from './core.component';
+import { CoreRoutingModule } from "./core-routing.module";
+import { LoginComponent } from "../login/login.component";
+import { SidemenuComponent } from "../common/sidemenu/sidemenu.component";
+import { HeaderComponent } from '../common/header/header.component';
+import { DeviceactivationComponent } from "../devicemanagement/deviceactivation/deviceactivation.component";
+import { EmergencydetailsComponent } from "../emergencymonitoring/emergencydetails/emergencydetails.component";
+import { HealthdetailsComponent } from "../healthmonitoring/healthdetails/healthdetails.component";
+import { LocationdetailsComponent } from "../locationmonitoring/locationdetails/locationdetails.component";
+import { RawdatadetailsComponent } from "../rawdata/rawdatadetails/rawdatadetails.component";
+import { DevicecomdetailsComponent } from "../devicemanagement/devicecommunication/devicecomdetails/devicecomdetails.component";
+
+@NgModule({
+  declarations: [CoreComponent, LoginComponent, SidemenuComponent, HeaderComponent, 
+    DeviceactivationComponent, EmergencydetailsComponent, 
+    HealthdetailsComponent, LocationdetailsComponent, RawdatadetailsComponent, DevicecomdetailsComponent],
+  imports: [
+    CommonModule,
+    CoreRoutingModule,
+    ReactiveFormsModule
+  ],
+  entryComponents:[DeviceactivationComponent, EmergencydetailsComponent, 
+    HealthdetailsComponent, LocationdetailsComponent, RawdatadetailsComponent, DevicecomdetailsComponent]
+})
+export class CoreModule { }

@@ -1,0 +1,76 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PageModel } from '../common/models/page.model';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { AddeditsystempropComponent } from './addeditsystemprop/addeditsystemprop.component';
+import { SystemManagement } from '../common/models/systemmanagement.model';
+import { SystemManagementServiceApi } from '../common/services/systemmanagement.api';
+import { NgbDateFRParserFormatter } from '../common/directives/dateformatter';
+import { environment } from '../../environments/environment';
+
+@Component({
+    selector: 'app-systemproperties',
+    templateUrl: './systemproperties.component.html',
+    styleUrls: ['./systemproperties.component.css']
+})
+export class SystempropertiesComponent implements OnInit {
+
+    public systemProperties: SystemManagement;
+    public pageSize: Number = environment.pageSize;
+    public showFilters: Boolean = false;
+    public page: PageModel = new PageModel();
+    public p: Number;
+    model: NgbDateStruct;
+    public showSearchClear: Boolean = false;
+    public searchValue: string;
+    constructor(private modalService: NgbModal, private systemPropertiesApi: SystemManagementServiceApi,
+         private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+        this.searchValue = '';
+    }
+
+    ngOnInit() {
+        this.getSystemProperties(0, this.pageSize);
+    }
+    changeDate() {
+        this.getSystemProperties(0, this.pageSize);
+    }
+    searchData() {
+        this.getSystemProperties(0, this.pageSize);
+        this.showSearchClear = (this.searchValue.length > 4) ? true : false;
+    }
+    clearSearch() {
+        this.searchValue = '';
+        this.showSearchClear = false;
+        this.searchData();
+    }
+    pageChanged(event) {
+        this.p = event - 1;
+        this.getSystemProperties(this.p, this.pageSize);
+    }
+    btnShowFilters() {
+        this.showFilters = !this.showFilters;
+    }
+    addEditDetails(details) {
+        const modalRef = this.modalService.open(AddeditsystempropComponent, {
+            size: 'lg', backdrop: 'static',
+            keyboard: false
+        });
+        modalRef.componentInstance.systemPropertiesDetails = details;
+        modalRef.result.then((_result) => {
+            if (_result === 'refreshContent') {
+                this.getSystemProperties(0, this.pageSize);
+            }
+        }).catch((_error) => {
+        });
+    }
+
+    getSystemProperties(page, size) {
+        const formatDate = this.ngbDateFRParserFormatter.format(this.model);
+        this.systemPropertiesApi.getAllSystemProperties(page, size, formatDate, this.searchValue)
+            .subscribe((data: SystemManagement) => {
+                this.systemProperties = data.content;
+                this.page = data.page;
+                console.log(this.systemProperties);
+            });
+    }
+}

@@ -1,0 +1,16 @@
+export class Deviceactivation {
+    public header : string;
+    public separator : string;
+    public randomCode : string;
+    public replyGatewaynumber : string;
+    public endOfThePacket : string;
+    public content : any;
+    constructor(header : string, separator : string, randomCode : string, replyGatewaynumber : string,
+        endOfThePacket : string) {
+            this.header = header;
+            this.separator = separator;
+            this.randomCode = randomCode;
+            this.replyGatewaynumber = replyGatewaynumber;
+            this.endOfThePacket = endOfThePacket
+    }
+}

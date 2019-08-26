@@ -1,0 +1,16 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { DevicesComponent } from './devices.component';
+import { DevicecommunicationComponent } from './devicecommunication/devicecommunication.component';
+
+const routes: Routes = [
+    { path: '', redirectTo: 'devicedetails', pathMatch: 'full' },
+    { path: 'devicedetails', component: DevicesComponent, },
+    { path: 'devicecommunication', component: DevicecommunicationComponent, }
+];
+
+@NgModule({
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
+})
+export class DevicemanagementRoutingModule { }

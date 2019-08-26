@@ -1,0 +1,133 @@
+<div class="row p-t-1 page-header">
+  <div class="col-md-10">
+    <h4>Vehicle Management</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Vehicle Management</li>
+        <li class="breadcrumb-item active" aria-current="page">Vehicle Details</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6 col-md-8 p-t-3">
+        <span class="text-white">Total Records : {{page.totalElements}}</span>
+      </div>
+  <div class="col-md-4 m-b-1 text-right">
+    <button type="button" class="btn-round" (click)="addVehicleDetails('','')">+ Add Vehicle</button>
+    <span>
+        <button type="button" class="btn-refresh p-l-4" (click)="refreshPage()"><i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn-search" (click)="btnShowFilters()"><i class="icon-ic_searchfilter"></i></button>
+     </span>
+  </div>
+</div>
+<div class="row page-filters" [ngClass]="{'show': showFilters}">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+          <form #vechiledetailsForm="ngForm">
+          <div class="form-group">
+              <input type="text" class="form-control" 
+              placeholder="Search Vehicle Reg No" 
+              [(ngModel)]="searchValue"  name="IMEIcontrol"
+              #IMEIcontrol="ngModel"
+              (keyup)="vechiledetailsForm.valid && searchData()"
+              pattern="{{ validations.CMDEXE_VAL_PATTERN }}">
+              <span class="text-red help-block" *ngIf="IMEIcontrol.errors?.pattern">Special Characters are not allowed</span>
+          </div>
+          </form>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group-append datepicker">
+              <input type="text" class="form-control" readonly placeholder="Select Date" name="dp" 
+              [(ngModel)]="model" (dateSelect)="changeDate();" ngbDatepicker #d="ngbDatepicker">
+              <button style="outline:none" class="btn-cal calendar" (click)="d.toggle()" type="button"> <i class="fa fa-calendar"
+                  aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-rect-round">
+      <table class="grid-table m-t-3">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Vehicle Number</th>
+            <!-- <th>IMEI Number</th> -->
+            <th>Chassis Number</th>
+            <th>Engine Number</th>
+            <th>Vehicle Make</th>
+            <th>Vehicle Model</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="isDataExists">
+          <tr *ngFor="let details of vehicleDetailsData | paginate: { id: 'vehicledetailspage', itemsPerPage: page.size, currentPage: p, totalItems: page.totalElements }">
+            <td>{{details.vehicleId}}</td>
+            <td>{{details.vehicleRegNumber}}</td>
+            <!-- <td>{{details.imeiNumber}}</td> -->
+            <td>{{details.chassisNumber}}</td>
+            <td>{{details.engineNumber}}</td>
+            <td>{{details.vehicleMake}}</td>
+            <td>{{details.vehicleModel}}</td>
+            <td>
+              <div class="actions-menu dropdown-click">
+                <button>
+                  <i class="icon-ic_more" aria-hidden="true"></i>
+                </button>
+                <ul>
+                   
+                  <li>
+                    <a title="View Vehicle" class="icon" (click)="addVehicleDetails(details, 'view')">
+                      <i class="icon-ic_view" aria-hidden="true"></i><span>View Details</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a title="Edit Vehicle" class="icon" (click)="addVehicleDetails(details, 'edit')">
+                      <i class="icon-ic_edit" aria-hidden="true"></i><span>Edit Vehicle</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a title="Vehicle Map" class="icon" (click)="viewVehicleMap(details)">
+                      <i class="icon-ic_vehicle_mapping" aria-hidden="true"></i><span>Vehicle Mapping</span>
+                    </a>
+                  </li>
+                              
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <div *ngIf="!isDataExists">
+          <div class="grid-nodata text-center text-red-medium">
+            <h6>No Data Found</h6>
+          </div>
+        </div>
+      </table>
+      <div class="row">
+          <div *ngIf="isDataExists" style="margin:0px auto;">
+            <pagination-controls id="vehicledetailspage" class="pagination float-right" (pageChange)="pageChanged($event)" maxSize="6"
+              directionLinks="true" autoHide="true" responsive="true" previousLabel="Prev" nextLabel="Next">
+            </pagination-controls>
+            <div class="float-left p-t-1">
+                Page size :
+                <select (change)="changePageSize()" [(ngModel)]="pageSize">
+                  <option *ngFor="let number of pageSizeValues" value="{{number}}">{{number}}</option>
+                </select>
+              </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

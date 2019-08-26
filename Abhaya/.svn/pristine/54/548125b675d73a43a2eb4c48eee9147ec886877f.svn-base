@@ -1,0 +1,42 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceManagementServiceApi } from "../../common/services/devicemanagement.api";
+import { DeviceCommunication } from "../../common/models/devicecommunication.model";
+import { PageModel } from "../../common/models/page.model";
+
+@Component({
+  selector: 'app-devicecommunication',
+  templateUrl: './devicecommunication.component.html',
+  styleUrls: ['./devicecommunication.component.css']
+})
+export class DevicecommunicationComponent implements OnInit {
+  private showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+  deviceCommData : Array<DeviceCommunication> = [];
+  constructor(private devicemanagementApiService : DeviceManagementServiceApi, private modalService: NgbModal) { 
+    this.page = new PageModel(0, 0, 0, 0);
+  }
+
+  ngOnInit() {
+    this.getAllDeviceCommunication(0,10,'','');
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+
+  pageChanged(event) {
+    this.p = event;
+    this.getAllDeviceCommunication(this.p-1,10,'','');
+  }
+  getAllDeviceCommunication(page:number, size:number, searchDate:string,searchValue:string) {
+    this.devicemanagementApiService.getDeviceCommDetails(page,size,searchValue,searchDate)
+    .subscribe((data : DeviceCommunication) => {
+      this.deviceCommData = data.content;
+      this.page = data.page;
+      console.log(this.deviceCommData);
+    });
+  }
+
+}

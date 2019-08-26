@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { VehicledetailsComponent } from './vehicledetails.component';
+import { VehiclemanagementRoutingModule } from "./vehiclemanagement-routing.module";
+
+@NgModule({
+  declarations: [VehicledetailsComponent],
+  imports: [
+    CommonModule,
+    NgbModule,
+    VehiclemanagementRoutingModule,
+  ],
+})
+export class VehiclemanagementModule { }

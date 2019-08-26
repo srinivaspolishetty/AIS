@@ -1,0 +1,38 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router, ActivatedRoute } from '@angular/router';
+import { PageModel } from "../common/models/page.model";
+import { VehicleManagementServiceApi } from "../common/services/vehiclemanagement.api";
+import { Vehicledetails } from "../common/models/vehicle.model";
+import { AddeditvehicleComponent } from "./addeditvehicle/addeditvehicle.component";
+
+@Component({
+  selector: 'app-vehicledetails',
+  templateUrl: './vehicledetails.component.html',
+  styleUrls: ['./vehicledetails.component.css']
+})
+export class VehicledetailsComponent implements OnInit {
+  public vehicleDetailsData : Vehicledetails;
+  public page : PageModel;
+  constructor(private vehicleDetailsApi : VehicleManagementServiceApi,  private router: Router,
+    private modalService: NgbModal) {
+    this.page = new PageModel(0, 0, 0, 0);
+   }
+
+  ngOnInit() {
+    this.getVehicleDetails(0, 10);
+  }
+  addVehicleDetails(){
+    const modalRef = this.modalService.open(AddeditvehicleComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    
+  }
+  getVehicleDetails(page, size){
+    this.vehicleDetailsApi. getAllVehicleDetails(page, size)
+    .subscribe((data : Vehicledetails) => {
+      this.getVehicleDetails = data.content;
+      this.page = data.page;
+      console.log(this.getVehicleDetails);
+    });
+  }
+}

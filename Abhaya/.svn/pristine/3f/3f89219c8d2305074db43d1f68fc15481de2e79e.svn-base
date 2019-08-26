@@ -1,0 +1,21 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CoreComponent } from './core.component';
+import { CoreRoutingModule } from "./core-routing.module";
+import { LoginComponent } from "../login/login.component";
+import { ReactiveFormsModule } from '@angular/forms';
+import { SidemenuComponent } from "../common/sidemenu/sidemenu.component";
+import { HeaderComponent } from '../common/header/header.component';
+import { DeviceactivationComponent } from "../devicemanagement/deviceactivation/deviceactivation.component";
+
+@NgModule({
+  declarations: [CoreComponent, LoginComponent, SidemenuComponent, HeaderComponent, DeviceactivationComponent
+  ],
+  imports: [
+    CommonModule,
+    CoreRoutingModule,
+    ReactiveFormsModule
+  ],
+  entryComponents:[DeviceactivationComponent]
+})
+export class CoreModule { }

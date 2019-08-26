@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { HealthmonitoringComponent } from './healthmonitoring.component';
+import { HealthmonitoringRoutingModule } from "./Healthmonitoring-routing.module";
+
+@NgModule({
+  declarations: [HealthmonitoringComponent],
+  imports: [
+    CommonModule,
+    NgxPaginationModule,
+    HealthmonitoringRoutingModule
+  ]
+})
+export class HealthmonitoringModule { }

@@ -1,0 +1,22 @@
+<div class="header">
+  <div class="row m-a-0 p-a-0">
+    <div class="col-md-1"></div>
+    <div class="col-md-11 p-r-3">
+      <div class="header-profile dropdown-toggle" data-toggle="dropdown">
+        <i class="icon-ic_profile"></i>
+        <h5 class="d-none d-sm-block">{{userDetails.username}}
+          <br>
+          <span>{{userDetails.mobileNumber}}</span>
+        </h5>
+        <span class="d-none d-sm-block arrow-down dropdown-toggle" data-toggle="dropdown">
+          <i class="icon-ic_arrow_down" aria-hidden="true"></i>
+        </span>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item cursor-hand"> Change Password</a></li>
+          <li><a class="dropdown-item cursor-hand"> Settings</a></li>
+          <li><a class="dropdown-item cursor-hand" [routerLink]="['/login']"> Sign Out</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

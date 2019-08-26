@@ -1,0 +1,18 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { RawData } from '../../common/models/rawdata.model';
+
+@Component({
+    selector: 'app-rawdatadetails',
+    templateUrl: './rawdatadetails.component.html',
+    styleUrls: ['./rawdatadetails.component.css']
+})
+export class RawdatadetailsComponent implements OnInit {
+
+    @Input() selectedrawdata: RawData;
+    constructor(public activeModal: NgbActiveModal) { }
+
+    ngOnInit() {
+    }
+
+}

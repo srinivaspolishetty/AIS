@@ -1,0 +1,111 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { RawDataServiceApi } from '../common/services/rawdata.api';
+import { RawData } from '../common/models/rawdata.model';
+import { PageModel } from '../common/models/page.model';
+import { NgbDateFRParserFormatter } from '../common/directives/dateformatter';
+import { RawdatadetailsComponent } from './rawdatadetails/rawdatadetails.component';
+import { environment } from '../../environments/environment';
+
+@Component({
+    selector: 'app-rawdata',
+    templateUrl: './rawdata.component.html',
+    styleUrls: ['./rawdata.component.css']
+})
+export class RawdataComponent implements OnInit, OnDestroy {
+
+    intervalTime: number = environment.setIntervalTime;
+    public intilPageNumber: Number = 0;
+    public showFilters: Boolean = false;
+    public page: PageModel = new PageModel();
+    public p: Number;
+    startDateModel: NgbDateStruct;
+    endDateModel: NgbDateStruct;
+    public searchValue: string;
+    public cvpType: string;
+    public packetType: string;
+    public showSearchClear = false;
+    public noData: Boolean = false;
+    public pageSizeValues = [];
+    rawdata: Array<RawData> = [];
+    public pageSizeCount: Number;
+    updateRawdata: any;
+
+
+    constructor(private rawdataApiService: RawDataServiceApi, private modalService: NgbModal,
+        private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+        this.cvpType = '';
+        this.packetType = '';
+        this.searchValue = '';
+        this.pageSizeValues = [10, 50, 100, 200];
+        this.pageSizeCount = 10;
+  }
+
+    ngOnInit() {
+        this.getAllRawData(this.intilPageNumber, this.pageSizeCount);
+        this.updateRawdata = setInterval(() => {
+            this.p = 1;
+            this.getAllRawData(this.intilPageNumber, this.pageSizeCount);
+        }, this.intervalTime);
+    }
+    btnShowFilters() {
+        this.showFilters = !this.showFilters;
+    }
+
+    changeDate() {
+        this.getAllRawData(this.intilPageNumber, this.pageSizeCount);
+    }
+    cvpChange() {
+        this.getAllRawData(this.intilPageNumber, this.pageSizeCount);
+    }
+    packetChange() {
+        this.getAllRawData(this.intilPageNumber, this.pageSizeCount);
+    }
+    searchData() {
+        this.showSearchClear = (this.searchValue.length > 4);
+        this.p = 1;
+        this.getAllRawData(this.intilPageNumber, this.pageSizeCount);
+    }
+    refreshPage() {
+        this.searchValue = '';
+        this.cvpType = '';
+        this.packetType = '';
+        this.startDateModel = undefined;
+        this.endDateModel = undefined;
+        this.getAllRawData(this.intilPageNumber, this.pageSizeCount);
+    }
+    clearSearch() {
+        this.searchValue = '';
+        this.searchData();
+    }
+    changePageSize() {
+        this.getAllRawData(this.intilPageNumber, this.pageSizeCount);
+    }
+    rawDataDetails(rawdetails) {
+        const modalRef = this.modalService.open(RawdatadetailsComponent, {
+            size: 'lg', backdrop: 'static',
+            keyboard: false
+        });
+        modalRef.componentInstance.selectedrawdata = rawdetails;
+    }
+    pageChanged(event) {
+        this.p = event - 1;
+        this.getAllRawData(this.p, this.pageSizeCount);
+    }
+    getAllRawData(page: Number, size: Number) {
+        const formatStartDate = this.ngbDateFRParserFormatter.format(this.startDateModel);
+        const formatEndDate = this.ngbDateFRParserFormatter.format(this.endDateModel);
+        this.rawdataApiService.getrawdata(page, size, formatStartDate, formatEndDate, this.searchValue, this.cvpType, this.packetType)
+            .subscribe((data: RawData) => {
+                this.rawdata = data.content;
+                this.noData = (this.rawdata.length > 0);
+                this.page = data.page;
+            });
+    }
+    ngOnDestroy() {
+        if (this.updateRawdata) {
+            clearInterval(this.updateRawdata);
+        }
+    }
+}

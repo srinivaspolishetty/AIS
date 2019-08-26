@@ -1,0 +1,75 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { EmergencyMonitoringServiceApi } from "../common/services/emergencymonitoring.api";
+import { EmergencynMonitoring } from "../common/models/emergencymonitoring.model";
+import { PageModel } from "../common/models/page.model";
+import { NgbDateFRParserFormatter } from "../common/directives/dateformatter";
+import { EmergencydetailsComponent } from "./emergencydetails/emergencydetails.component";
+
+@Component({
+  selector: 'app-emergencymonitoring',
+  templateUrl: './emergencymonitoring.component.html',
+  styleUrls: ['./emergencymonitoring.component.css']
+})
+export class EmergencymonitoringComponent implements OnInit {
+
+  public showFilters : boolean = false;
+  public page: PageModel = new PageModel();
+  public p : number;
+  startDateModel: NgbDateStruct;
+  endDateModel: NgbDateStruct;
+  public formatStartDate : string;
+  public formatEndDate : string;
+  public searchValue : string = '';
+  public showSearchClear = false;
+  public noData : boolean = false;
+  emergencyMonitoringdata : Array<EmergencynMonitoring> = [];
+  constructor(private emergencyApiService:EmergencyMonitoringServiceApi,
+    private modalService: NgbModal, private calendar: NgbCalendar,
+    private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+   }
+
+  ngOnInit() {
+    this.getemergencyMonitoringDetails(0,10);
+  }
+
+  emergencyDetails(emergencyDetails) {
+    const modalRef = this.modalService.open(EmergencydetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.selectedEmergencydata = emergencyDetails;
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+  changeDate() {
+    this.getemergencyMonitoringDetails(0,10);
+  }
+  searchData() {
+    this.getemergencyMonitoringDetails(0,10);
+    this.showSearchClear = (this.searchValue.length > 4) ? true : false;
+  }
+  clearSearch() {
+    this.searchValue = '';
+    this.showSearchClear = false;
+    this.searchData();
+  }
+  pageChanged(event) {
+    this.p = event;
+    this.getemergencyMonitoringDetails(this.p-1,10);
+  }
+  getemergencyMonitoringDetails(page:number, size:number) {
+    
+    this.formatStartDate = this.ngbDateFRParserFormatter.format(this.startDateModel);
+    this.formatEndDate = this.ngbDateFRParserFormatter.format(this.endDateModel);
+    this.emergencyApiService.getemergencyMonitoringDetails(page,size,this.formatStartDate, this.formatEndDate,this.searchValue)
+    .subscribe((data : EmergencynMonitoring) => {
+      this.emergencyMonitoringdata = data.content;
+      this.noData = (this.emergencyMonitoringdata.length > 0);
+      this.page = data.page;
+      console.log(this.emergencyMonitoringdata);
+    });
+  }
+
+}

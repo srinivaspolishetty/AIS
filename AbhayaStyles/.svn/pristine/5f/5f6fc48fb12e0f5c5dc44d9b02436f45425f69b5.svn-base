@@ -1,0 +1,100 @@
+agm-map {
+		height: calc(100vh - 163px);
+	}
+	.agm-map-container-inner{
+		border-radius:8px!important;
+	}
+.legend-options{
+	width:100%;
+	text-align:center;
+	font-size:14px;
+	& a{
+		margin:0px 5px;
+		color:$grey-light!important;
+	}
+	&-box{
+		margin:0px 5px;
+		padding:5px;
+		display:inline-block;
+	}
+}
+.google_map_align {
+    width: 100%;
+    margin-bottom: 5px;
+	}
+	
+.chart{
+	&-pie{
+		& ngx-charts-pie-chart{
+			margin:auto;
+		}
+	}
+}
+.chart-legend{
+	& .legend-labels{
+		background-color:transparent!important;
+		text-align:center!important;
+		padding-bottom:8px;
+	}
+}
+.message{
+	padding:82px 10px 82px 10px;
+	text-align: center;
+	font-size: 16px;
+	& i{
+	font-size: 40px;
+	}
+	&.warning{
+		& i{
+			color:$yellow-light!important;
+		}
+	}
+}
+.bg{
+	&-light{
+		background-color: $abhaya-primary-color !important;
+	}
+	&-primary{
+		background-color: $abhaya-primary-color !important;
+	}
+}
+
+.ngb{
+	&-dp{
+		&-weekday{
+			color:$white !important;
+		}
+		&-navigation{
+			&-select{
+				& .custom{
+					&-select{
+						background-color:transparent!important;
+						border:1px solid $white !important;
+							color:$white !important;
+						& option{
+							color:$grey !important;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+.ngx-pagination{
+	padding-left:5px !important;
+}
+
+@media (max-width:1070px){
+	.chart-legend .horizontal-legend li {
+		display: block !important;
+	}
+}
+@media (min-width:1075px){
+	.chart-legend .horizontal-legend{
+		max-height: 160px;
+		min-width: 266px !important;
+		text-align: center !important;
+		left: 0px;
+		margin-left: -28px !important;
+	}
+}

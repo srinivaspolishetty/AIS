@@ -1,0 +1,18 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+@Component({
+  selector: 'app-tripcreate',
+  templateUrl: './tripcreate.component.html',
+  styleUrls: ['./tripcreate.component.css']
+})
+export class TripcreateComponent implements OnInit {
+  public showFilters : boolean = false;
+  constructor() { }
+
+  ngOnInit() {
+  }
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+}

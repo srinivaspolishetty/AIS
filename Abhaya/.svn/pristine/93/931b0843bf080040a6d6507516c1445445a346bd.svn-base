@@ -1,0 +1,12 @@
+export class Dashboard {
+    public total: Number;
+    public on: Number;
+    public off: Number;
+    public action: string;
+    public length: Number;
+    constructor(total: Number, on: Number, off: Number) {
+        this.total = total;
+        this.on = on;
+        this.off = off;
+    }
+}

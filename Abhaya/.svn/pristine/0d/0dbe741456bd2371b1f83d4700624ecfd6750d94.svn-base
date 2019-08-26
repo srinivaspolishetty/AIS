@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { DevicesComponent } from './devices.component';
+import { DevicemanagementRoutingModule } from "./devicemanagement-routing.module";
+import { DevicecommunicationComponent } from './devicecommunication/devicecommunication.component';
+@NgModule({
+  declarations: [DevicesComponent, DevicecommunicationComponent],
+  imports: [
+    CommonModule,
+    NgxPaginationModule,
+    DevicemanagementRoutingModule
+  ]
+})
+export class DevicemanagementModule { }

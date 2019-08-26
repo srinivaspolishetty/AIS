@@ -1,0 +1,127 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{pageTitle}} Packet Details</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body row-m-b">
+  <div class="row" *ngIf="noData">
+    <div class="col-md-6" *ngIf="packetDetails.packetName == 'Activation'">
+      <h5>Activation ID</h5>
+      <h4>{{packetData.activationPacketDataId}}</h4>
+    </div>
+    <div class="col-md-6" *ngIf="packetDetails.packetName !== 'Activation'">
+      <h5>Health ID</h5>
+      <h4>{{packetData.healthPacketDataId}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Header</h5>
+      <h4>{{packetData.header}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Random Code</h5>
+      <h4>{{packetData.randomCode}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Vendor ID</h5>
+      <h4>{{packetData.vendorId}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Firmware Version</h5>
+      <h4>{{packetData.firmwareVersion}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>IMEI No</h5>
+      <h4>{{packetData.imeiNumber}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Alter ID</h5>
+      <h4>{{packetData.alertId}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Latitude</h5>
+      <h4>{{packetData.latitude}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Latitude Direction</h5>
+      <h4>{{packetData.latitudeDirection}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Longnitude</h5>
+      <h4>{{packetData.longnitude}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Longnitude Direction</h5>
+      <h4>{{packetData.longnitudeDirection}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>GPS Fix</h5>
+      <h4>{{packetData.gpsFix}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Date</h5>
+      <h4>{{packetData.date}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Time</h5>
+      <h4>{{packetData.time}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Heading</h5>
+      <h4>{{packetData.heading}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Speed</h5>
+      <h4>{{packetData.speed}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>GSM Strength</h5>
+      <h4>{{packetData.gsmStrength}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Country Code</h5>
+      <h4>{{packetData.countryCode}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Network Code</h5>
+      <h4>{{packetData.networkCode}}</h4>
+    </div>
+    <div class="col-md-6">
+        <h5>LAC</h5>
+        <h4>{{packetData.lac}}</h4>
+      </div>
+      <div class="col-md-6">
+        <h5>Main Power</h5>
+        <h4>{{packetData.mainPower}}</h4>
+      </div>
+      <div class="col-md-6">
+          <h5>Ignition Status</h5>
+          <h4>{{packetData.ignStatus}}</h4>
+        </div>
+        <div class="col-md-6">
+          <h5>Battery Voltage</h5>
+          <h4>{{packetData.batteryVoltage}}</h4>
+        </div>
+        <div class="col-md-6">
+            <h5>Frame Number</h5>
+            <h4>{{packetData.frameNumber}}</h4>
+          </div>
+          <div class="col-md-6">
+            <h5>Vehicle Mode</h5>
+            <h4>{{packetData.vehicleMode}}</h4>
+          </div>
+          <div class="col-md-6"  *ngIf="packetDetails.packetName == 'Activation'">
+              <h5>Ntwork Date</h5>
+              <h4>{{packetData.networkDate}}</h4>
+            </div>
+            <div class="col-md-6"  *ngIf="packetDetails.packetName == 'Activation'">
+              <h5>Network Time</h5>
+              <h4>{{packetData.networkTime}}</h4>
+            </div>
+  </div>
+  <div *ngIf="!noData">
+      <div class="grid text-center text-red-medium">
+        <h6>No Data Found</h6>
+      </div>
+    </div>
+</div>

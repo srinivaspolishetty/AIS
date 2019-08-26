@@ -1,0 +1,15 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-addeditvehicle',
+  templateUrl: './addeditvehicle.component.html',
+  styleUrls: ['./addeditvehicle.component.css']
+})
+export class AddeditvehicleComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

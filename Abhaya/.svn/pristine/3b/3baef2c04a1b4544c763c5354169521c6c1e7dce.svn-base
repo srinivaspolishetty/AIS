@@ -1,0 +1,192 @@
+<div class="row p-t-1">
+  <div class="col-md-10">
+    <h4>Dashboard</h4>
+    <!-- <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+      </ol>
+    </nav> -->
+  </div>
+  <div class="col-md-2 text-right">
+    <!-- <button type="button" class="active btn-left btn">Today</button>
+    <button type="button" class="btn-right btn">All</button> -->
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-6 m-b-4">
+    <div class="box-rect-round">
+      <div class="box-heading">
+        <h5><img src="../../../assets/images/SVG/ic_ActivationStatus.svg">Device Health</h5>
+        <span>
+          <a (click)="showDetails()" class="cursor-hand">{{COMMUNICATING.total}}</a>
+        </span>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <ul class="box-details">
+            <li>
+              <h6>Battery % Good</h6> <span class="text-green">
+                <a (click)="showDetails('batteryPercentage','GOOD')" class="cursor-hand">{{BATTERY_PERCENTAGE.on}}</a>
+              </span>
+            </li>
+            <li>
+              <h6>Battery % Critical</h6> <span class="text-red">
+                <a (click)="showDetails('batteryPercentage','CRITICAL')"
+                  class="cursor-hand">{{BATTERY_PERCENTAGE.off}}</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-6">
+          <ul class="box-details">
+            <li>
+              <h6>Memory % Good</h6> <span class="text-green">
+                <a (click)="showDetails('memoryPercentage','GOOD')" class="cursor-hand">{{MEMORY_PERCENTAGE.on}}</a>
+              </span>
+            </li>
+            <li>
+              <h6>Memory % Critical</h6> <span class="text-red">
+                <a (click)="showDetails('memoryPercentage','CRITICAL')" class="cursor-hand">{{MEMORY_PERCENTAGE.off}}</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 m-b-4">
+    <div class="box-rect-round">
+      <div class="box-heading">
+        <h5><img src="../../../assets/images/SVG/ic_VehicleHealth.svg">Vehicle Movement</h5>
+        <span>
+          <a (click)="showDetails()" class="cursor-hand">{{deviceHealthTotal}}</a>
+        </span>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="box-details">
+            <li>
+              <h6>Running</h6> <span class="text-orange-light">
+                <a (click)="showDetails('vehicleMode','RUNNINGMODE')" class="cursor-hand">{{Running}}</a>
+              </span>
+            </li>
+            <li>
+              <h6>Sleep</h6> <span class="text-orange-light">
+                <a (click)="showDetails('vehicleMode','SLEEPMODE')" class="cursor-hand">{{Sleep}}</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="row">
+  <div class="col-md-6 m-b-4">
+    <div class="box-rect-round">
+      <div class="box-heading">
+        <h5><img src="../../../assets/images/SVG/ic_DeviceStatus.svg">Device Status</h5>
+        <span>
+          <a (click)="showDetails()" class="cursor-hand">{{COMMUNICATING.total}}</a>
+        </span>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <ul class="box-details">
+            <li>
+              <h6>Ignition ON</h6> <span class="text-green">
+                <a (click)="showDetails('ignitionStatus','ON')" class="cursor-hand">{{IGNITION.on}}</a>
+              </span>
+            </li>
+            <li>
+              <h6>Ignition OFF</h6> <span class="text-orange-light">
+                <a (click)="showDetails('ignitionStatus','OFF')" class="cursor-hand">{{IGNITION.off}}</a>
+              </span>
+            </li>
+            <li>
+              <h6>Main Power ON</h6> <span class="text-red-medium">
+                <a (click)="showDetails('mainPowerStatus','ON')" class="cursor-hand">{{MAIN_POWER_STATUS.on}}</a>
+              </span>
+            </li>
+            <li>
+              <h6>Main Power OFF</h6> <span class="text-green">
+                <a (click)="showDetails('mainPowerStatus','OFF')" class="cursor-hand">{{MAIN_POWER_STATUS.off}}</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-6">
+          <ul class="box-details">
+            <li>
+              <h6>Emergency ON</h6> <span class="text-orange-light">
+                <a (click)="showDetails('emergencyStatus','ON')" class="cursor-hand">{{EMERGENCY.on}}</a>
+              </span>
+            </li>
+            <li>
+              <h6>Emergency OFF</h6> <span class="text-orange-light">
+                <a (click)="showDetails('emergencyStatus','OFF')" class="cursor-hand">{{EMERGENCY.off}}</a>
+              </span>
+            </li>
+            <li>
+              <h6>Tamper Alert ON</h6> <span class="text-green">
+                <a (click)="showDetails('tamperAlert','TAMPERON')" class="cursor-hand">{{TAMPER_ALERT.on}}</a>
+              </span>
+            </li>
+            <li>
+              <h6>Tamper Alert OFF</h6> <span class="text-orange-light">
+                <a (click)="showDetails('tamperAlert','TAMPEROFF')" class="cursor-hand">{{TAMPER_ALERT.off}}</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 m-b-4">
+    <div class="box-rect-round p-b-2">
+      <div class="box-heading">
+        <h5><img src="../../../assets/images/SVG/ic_DeviceCommunicatoin.svg">Communicating Status</h5>
+        <span *ngIf="showPieChart == true">
+          <a (click)="showDetails()" class="cursor-hand">{{COMMUNICATING.total}}</a>
+        </span>
+        <span *ngIf="showPieChart == false">
+          <a (click)="showDetails()" class="cursor-hand">0</a>
+        </span>
+      </div>
+      <div class="message warning" *ngIf="showPieChart == false">
+        <i class="icon-ic_warning"></i>
+        <h6>Currently there are no Device Communicating</h6>
+      </div>
+      <div class="row chart-pie" *ngIf="showPieChart == true">
+        <ngx-charts-pie-chart [view]="pieChart.view" [scheme]="pieChart.colorScheme" [results]="pieChart.data"
+          [legend]="pieChart.showLegend" [explodeSlices]="pieChart.explodeSlices" [labels]="pieChart.showLabels"
+          [doughnut]="pieChart.doughnut" [gradient]="pieChart.gradient" [legendPosition]="pieChart.legendPosition"
+          [arcWidth]="pieChart.arcWidth" [legendTitle]="pieChart.legendTitle" (legendLabelClick)="legendclick()">
+        </ngx-charts-pie-chart>
+        <div class="legend-options">
+          <a (click)="showDetails('status','COMMUNICATING')" class="cursor-hand">
+            <span class="legend-options-box bg-green"></span>Communication
+          </a>
+          <a (click)="showDetails('status','NOTCOMMUNICATING')" class="cursor-hand">
+            <span class="legend-options-box bg-red"></span>Not Communication
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,100 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { GoogleMapsAPIWrapper } from '@agm/core';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { LiveVehicle } from "../common/models/livedevices.model";
+import { DeviceManagementServiceApi } from "../common/services/devicemanagement.api";
+declare var google: any;
+
+@Component({
+  selector: 'app-mapview',
+  templateUrl: './mapview.component.html',
+  styleUrls: ['./mapview.component.css']
+})
+export class MapviewComponent implements OnInit, OnDestroy {
+
+  lat = 17.3850;
+  lng = 78.4867;
+  iconURL = '/assets/images/ic_auto_yellow.png';
+
+  liveVehicleArray: Array<LiveVehicle> = [];
+
+  gMaps;
+  map: any;
+  zoom: 12;
+  animation: string;
+
+  constructor(private calendar: NgbCalendar, private devicemanagementApiService : DeviceManagementServiceApi) {
+    this.gMaps = GoogleMapsAPIWrapper;
+  }
+
+  getVehicle;
+  ngOnInit() {
+    this.getLiveVehicles();
+  }
+
+
+
+
+  mapReady(map) {
+    this.map = map;
+  }
+  clickedMarker(label: string, index: number, $event) {
+    this.lat = $event.latitude;
+    this.lng = $event.longitude;
+    this.map.setCenter({ lat: $event.latitude, lng: $event.longitude });
+    const position = new google.maps.LatLng($event.latitude, $event.longitude);
+    this.map.panTo(position);
+    this.map.setZoom(15);
+  }
+
+  mapClicked($event: MouseEvent) {
+  }
+
+  getLiveVehicles() {
+    this.devicemanagementApiService.getliveDevices().subscribe((data: LiveVehicle) => {
+      this.liveVehicleArray = data.content;
+      this.prepareDatatoDispaly();
+    });
+  }
+
+
+  prepareDatatoDispaly() {
+    for (let current = 0; current < this.liveVehicleArray.length; current++) {
+      const curLiveVehicle = this.liveVehicleArray[current];
+      const oldposition = new google.maps.LatLng(curLiveVehicle.prevLatitude, curLiveVehicle.prevLangitude);
+      const newposition = new google.maps.LatLng(curLiveVehicle.latitude, curLiveVehicle.langitude);
+      let angle = google.maps.geometry.spherical.computeHeading(oldposition, newposition);
+      angle = Math.round(angle);
+      angle = Math.ceil(angle / 5) * 5;
+      if (angle > 180) {
+        angle = 180;
+      }
+      if (angle < -180) {
+        angle = -180;
+      }
+      // curLiveVehicle.image = `/assets/images/auto_icons/${angle}deg.svg`;
+    }
+  }
+
+  private calcuateDegree(oldLatitude, oldLangitude, curLatitude, curLangitude) {
+    const pi = Math.PI;
+    const lat1: number = oldLatitude * pi / 180;
+    const long1: number = oldLangitude * pi / 180;
+    const lat2: number = curLatitude * pi / 180;
+    const long2: number = curLangitude * pi / 180;
+    const dLon: number = (long2 - long1);
+    const y = Math.sin(dLon) * Math.cos(lat2);
+    const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+    let brng = Math.atan2(y, x);
+    brng = brng * (180 / pi);
+    brng = (brng + 360) % 360;
+
+    return brng;
+  }
+
+  ngOnDestroy() {
+    if (this.getVehicle) {
+      clearInterval(this.getVehicle);
+    }
+  }
+}

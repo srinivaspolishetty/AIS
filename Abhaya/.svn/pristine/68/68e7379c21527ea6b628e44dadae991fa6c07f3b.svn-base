@@ -1,0 +1,82 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { LocationMonitoringServiceApi } from "../common/services/locationmonitoring.api";
+import { LocationMonitoring } from "../common/models/locationmonitoring.model";
+import { PageModel } from "../common/models/page.model";
+import { NgbDateFRParserFormatter } from "../common/directives/dateformatter";
+import { LocationdetailsComponent } from "./locationdetails/locationdetails.component";
+
+@Component({
+  selector: 'app-locationmonitoring',
+  templateUrl: './locationmonitoring.component.html',
+  styleUrls: ['./locationmonitoring.component.css']
+})
+export class LocationmonitoringComponent implements OnInit {
+
+  public showFilters : boolean = false;
+  public page: PageModel = new PageModel();
+  public p : number;
+  startDateModel: NgbDateStruct;
+  endDateModel: NgbDateStruct;
+  public formatStartDate : string;
+  public formatEndDate : string;
+  public searchValue : string = '';
+  public showSearchClear = false;
+  public noData : boolean = false;
+  locationMonitoringdata : Array<LocationMonitoring> = [];
+  constructor(private locationApiService : LocationMonitoringServiceApi, private router: Router,
+    private modalService: NgbModal, private calendar: NgbCalendar,
+    private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+   }
+
+  ngOnInit() {
+    this.getLocationMonitoringDetails(0,10);
+  }
+
+  locationDetails(locationDetails) {
+    const modalRef = this.modalService.open(LocationdetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.selectedLocationDetails = locationDetails;
+  }
+
+  viewTracking(curLocation){
+    this.router.navigate(['/trackdevice'],
+      {
+        queryParams: { imeiNumber: curLocation.imei},
+        queryParamsHandling: 'merge'
+      });
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+  changeDate() {
+    this.getLocationMonitoringDetails(0,10);
+  }
+  searchData() {
+    this.getLocationMonitoringDetails(0,10);
+    this.showSearchClear = (this.searchValue.length > 4) ? true : false;
+  }
+  clearSearch() {
+    this.searchValue = '';
+    this.showSearchClear = false;
+    this.searchData();
+  }
+  pageChanged(event) {
+    this.p = event;
+    this.getLocationMonitoringDetails(this.p-1,10);
+  }
+  getLocationMonitoringDetails(page:number, size:number) {
+    this.formatStartDate = this.ngbDateFRParserFormatter.format(this.startDateModel);
+    this.formatEndDate = this.ngbDateFRParserFormatter.format(this.endDateModel);
+    this.locationApiService.getLocationMonitoringDetails(page,size,this.formatStartDate, this.formatEndDate, this.searchValue)
+    .subscribe((data : LocationMonitoring) => {
+      this.locationMonitoringdata = data.content;
+      this.noData = (this.locationMonitoringdata.length > 0);
+      this.page = data.page;
+      console.log(this.locationMonitoringdata);
+    });
+  }
+}

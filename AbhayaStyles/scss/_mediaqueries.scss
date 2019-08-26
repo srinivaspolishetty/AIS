@@ -1,0 +1,54 @@
+@media (min-width:320px) and (max-width:568px){
+	// .container-left.collapsed {
+	// 	width: 89px !important;
+	// }
+	// .container-left {
+	// 	margin: 0;
+	// 	padding: 0;
+	// 	float: left;
+	// 	background-color: #ffffff;
+	// 	width: 89px;
+	// 	transition: all 0.5s ease;
+	// }
+	// .container-right {
+	// 	margin: 0px;
+	// 	padding-left: 20px;
+	// 	float: left;
+	// 	width: calc(100% - 89px);
+	// 	background-color: #18BFFF;
+	// 	transition: all 0.5s ease;
+	// }
+	// .otsi{
+	// 	&-logo{
+	// 		width:65px;
+	// 		background: url(assets/images/SVG/Otsi_small_logo.svg) !important;
+	// 		background-repeat: no-repeat !important;
+	// 		background-position: center !important; 
+	// 	}
+	// }
+	.main{
+		&-content{
+			h4{
+				color:$white;
+				font-size: 20px;
+				font-weight: bold;
+				 span{
+					font-size: 12px !important;
+					font-weight: bold;
+					font-style: italic;
+				}
+			}
+		}
+	}
+	.page-header{
+		height:35px !important;
+	}
+	
+	.grid-nodata h6 {
+		padding-left: 15%;
+		padding-top: 3%;
+		position: absolute;
+		font-size: 12px;
+	}
+
+}

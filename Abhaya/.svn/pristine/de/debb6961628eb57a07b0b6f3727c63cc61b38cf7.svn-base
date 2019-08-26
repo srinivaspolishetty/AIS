@@ -1,0 +1,88 @@
+<div class="row p-t-1 page-header">
+  <div class="col-md-10">
+    <h4>System Management</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">System Properties</li>
+        </ol>
+      </nav>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-9 col-sm-8 col-md-9 p-t-3">
+   <span class="text-white">Total Records : {{page.totalElements}} </span>
+  </div>
+  
+  <div class="col-md-3 p-b-1 text-right">
+    <button type="button" class="btn-round" (click)="addEditDetails(undefined)">+ Add Properties</button>
+    <span>
+        <button type="button" class="btn-search" (click)="btnShowFilters()"><i class="icon-ic_searchfilter"></i></button>
+     </span>
+  </div>
+</div>
+
+<div class="row page-filters" [ngClass]="{'show': showFilters == true}">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-3"></div>
+         <div class="col-md-3">
+        <div class="form-group">
+          <div class="input-group-append">
+            <input type="text" class="form-control" placeholder="Search System..." [(ngModel)]="searchValue"
+            (keyup)="searchData();">
+           
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="input-group-append datepicker">
+            <input type="text" class="form-control" readonly placeholder="Select Date" name="dp" 
+            [(ngModel)]="model" (dateSelect)="changeDate();" ngbDatepicker #d="ngbDatepicker">
+            <button style="outline:none" class="btn-cal calendar" (click)="d.toggle()" type="button"> <i class="fa fa-calendar"
+                aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-rect-round o-x-auto">
+      <table class="grid-table m-t-3">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let details of systemProperties | paginate: { id: 'systemPropertiespage', itemsPerPage: page.size, currentPage: p, totalItems: page.totalElements }">
+            <td>{{details.systemPropertiesId}}</td>
+            <td>{{details.propertyName}}</td>
+            <td>{{details.propertyValue}}</td>
+            <td>{{details.createdDate}}</td>
+            <td>
+                <div class="actions-menu dropdown-click" (click)="addEditDetails(details)">
+                    <button>
+                      <i class="icon-ic_more" aria-hidden="true"></i>
+                    </button>
+                  </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+     </div>
+   </div>
+</div>
+
+      

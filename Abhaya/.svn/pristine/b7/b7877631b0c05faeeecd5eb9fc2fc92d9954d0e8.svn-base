@@ -1,0 +1,64 @@
+import { Component, OnInit } from '@angular/core';
+import { DeviceCommunication } from "../common/models/devicecommunication.model";
+import { DeviceManagementServiceApi } from "../common/services/devicemanagement.api";
+import { PieChart } from "../common/models/piechart.model";
+@Component({
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
+})
+export class DashboardComponent implements OnInit {
+
+  movementStatus = [];
+  vehicleIdel: number;
+  vehicleStopped: number;
+  vehicleRunning: number;
+  vehicleTowing: number;
+  vehicleParked: number;
+  vehicleOverSpeed: number;
+
+  pieChart: PieChart = new PieChart([400, 300], true, false, false, true, false, 'below', '0.40', '');
+  constructor(private devicemanagementApiService : DeviceManagementServiceApi) {
+    this.pieChart.colorScheme = { domain: ['#7cc142', '#ff0000'] };
+  }
+
+  ngOnInit() {
+    this.getMovementDetails('','','','');
+  }
+
+  getMovementDetails(stateId, districtId, cityId, searchDate) {
+    this.devicemanagementApiService.getMovementSummary(stateId, districtId, cityId, searchDate)
+      .subscribe((data: any) => {
+        this.movementStatus = data;
+        console.log(this.movementStatus);
+        this.vehicleIdel = 0;
+        this.vehicleStopped = 0;
+        this.vehicleRunning = 0;
+        this.vehicleTowing = 0;
+        this.vehicleParked = 0;
+        this.vehicleOverSpeed = 0;
+        const itemNew = this.movementStatus;
+        itemNew.forEach(element => {
+          if (element.statusType === 'Idling') {
+            this.vehicleIdel = element.count;
+          } else if (element.statusType === 'Stopped') {
+            this.vehicleStopped = element.count;
+          }  else if (element.statusType === 'Running') {
+            this.vehicleRunning = element.count;
+          } else if (element.statusType === 'Towing') {
+            this.vehicleTowing = element.count;
+          } else if (element.statusType === 'Parked') {
+            this.vehicleParked = element.count;
+          } else if (element.statusType === 'Overspeed') {
+            this.vehicleOverSpeed = element.count;
+          }
+        });
+        this.pieChart.data = [
+          { 'name': 'Communication', 'value': this.vehicleRunning },
+          { 'name': 'Not Communicating', 'value': this.vehicleStopped },
+        ];
+      });
+  }
+
+  
+}

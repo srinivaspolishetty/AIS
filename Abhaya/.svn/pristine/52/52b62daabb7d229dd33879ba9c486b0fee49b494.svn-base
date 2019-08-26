@@ -1,0 +1,16 @@
+<div class="row p-t-1">
+  <div class="col-md-10">
+    <h4>Trip Details</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Vehicle Management</li>
+        <li class="breadcrumb-item active" aria-current="page">Vehicle Details</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="col-md-1 text-right">
+  <button type="button" class="btn-search" (click)="addVehicleDetails()"><i class="icon-ic_searchfilter"></i> edit</button>
+</div>

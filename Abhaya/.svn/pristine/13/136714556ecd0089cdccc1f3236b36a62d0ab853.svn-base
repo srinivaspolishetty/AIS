@@ -1,0 +1,79 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { PieChart } from '../common/models/piechart.model';
+import { Dashboard } from '../common/models/dashboard.model';
+import { DashboardServiceApi } from '../common/services/dashboard.api';
+@Component({
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css']
+})
+export class DashboardComponent implements OnInit {
+
+    public Parking: Number = 0;
+    public Idle: Number = 0;
+    public Sleep: Number = 0;
+    public Running: Number = 0;
+    public deviceHealthTotal: Number = 0;
+    public showPieChart: Boolean = false;
+    public IGNITION: Dashboard;
+    public MAIN_POWER_STATUS: Dashboard;
+    public TAMPER_ALERT: Dashboard;
+    public EMERGENCY: Dashboard;
+    public COMMUNICATING: Dashboard;
+    public MEMORY_PERCENTAGE: Dashboard;
+    public BATTERY_PERCENTAGE: Dashboard;
+
+    pieChart: PieChart = new PieChart([205, 205], false, false, false, true, false, 'below', '0.38', '');
+    constructor(private dashboardService: DashboardServiceApi, private router: Router) {
+        this.pieChart.colorScheme = { domain: ['#00ff00', '#ff0000'] };
+        this.IGNITION = new Dashboard(0, 0, 0);
+        this.MAIN_POWER_STATUS = new Dashboard(0, 0, 0);
+        this.TAMPER_ALERT = new Dashboard(0, 0, 0);
+        this.EMERGENCY = new Dashboard(0, 0, 0);
+        this.COMMUNICATING = new Dashboard(0, 0, 0);
+        this.MEMORY_PERCENTAGE = new Dashboard(0, 0, 0);
+        this.BATTERY_PERCENTAGE = new Dashboard(0, 0, 0);
+    }
+
+    ngOnInit() {
+        this.getDashboardDetails();
+        this.getDeviceHealthData();
+    }
+
+    legendclick(){
+        alert();
+    }
+    showDetails(action:string, actionValue:string){
+        this.router.navigate(['devicehealthmanagement/devicecommunication'], { queryParams: { action: action, actionValue: actionValue }, queryParamsHandling: 'merge'});
+    }
+    getDashboardDetails() {
+        const actionsArray = ['IGNITION ', 'MAIN_POWER_STATUS', 'TAMPER_ALERT', 'EMERGENCY', 'COMMUNICATING',
+            'MEMORY_PERCENTAGE', 'BATTERY_PERCENTAGE'];
+        this.dashboardService.getAllDetails(actionsArray)
+            .subscribe((data: Dashboard) => {
+                for (let i = 0; i < data.length; i++) {
+                    // TODO need to check with team what happen here
+                    this[data[i].action] = data[i];
+                }
+                this.showPieChart = (this.COMMUNICATING.total !== 0);
+                if (this.showPieChart) {
+                    const pieChartData = new Object([this.COMMUNICATING]);
+                    this.pieChart.data = [
+                        { 'name': 'Communicating', 'value': pieChartData[0].on },
+                        { 'name': 'Not Communicating', 'value': pieChartData[0].off },
+                    ];
+                }
+            });
+    }
+
+    getDeviceHealthData() {
+        this.dashboardService.getDeviceHealthDetails() .subscribe((data: Dashboard) => {
+                for (let i = 0; i < data.length; i++) {
+                    this[data[i].status] = data[i].count;
+                    this.deviceHealthTotal += data[i].count;
+                }
+                console.log(this.deviceHealthTotal);
+            });
+    }
+}

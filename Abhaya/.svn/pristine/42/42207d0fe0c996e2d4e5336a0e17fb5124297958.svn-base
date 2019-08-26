@@ -1,0 +1,11 @@
+import { PageModel } from "./page.model";
+export class User {
+    public userId : number;
+    public firstName : string;
+    public lastName : string;
+    public username : string;
+    public emailId : string;
+    public mobileNumber : string;
+    public page: PageModel;
+    public content : any;
+}

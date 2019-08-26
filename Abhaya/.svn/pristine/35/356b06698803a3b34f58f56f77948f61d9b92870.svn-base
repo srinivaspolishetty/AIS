@@ -1,0 +1,13 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { EmergencymonitoringComponent } from './emergencymonitoring.component';
+import { EmergencymonitoringRoutingModule } from "./Emergencymonitoring-routing.module";
+
+@NgModule({
+  declarations: [EmergencymonitoringComponent],
+  imports: [
+    CommonModule,
+    EmergencymonitoringRoutingModule
+  ]
+})
+export class EmergencymonitoringModule { }

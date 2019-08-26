@@ -1,0 +1,157 @@
+<div class="row p-t-1 page-header">
+  <div class="col-md-8">
+    <h4>Device Details</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Device Management</li>
+        <li class="breadcrumb-item active" aria-current="page">Device Details</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<div class="row">
+  <div class="col-9 col-sm-10 col-md-10 p-t-3">
+    <span class="text-white">Total Records : {{page.totalElements}}</span>
+  </div>
+  <div class="col-3 col-sm-2 col-md-2 text-right">
+      <button type="button" class="btn-refresh" (click)="refreshPage()"><i class="fa fa-refresh" aria-hidden="true"></i>
+      </button>
+     <button type="button" class="btn-search" (click)="btnShowFilters()"><i class="icon-ic_searchfilter"></i></button>
+  </div>
+</div>
+<div class="row page-filters" [ngClass]="{'show': showFilters}">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-3"></div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search By IMEI No" [(ngModel)]="searchValue"
+            (keyup)="searchData();">
+          </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="input-group-append datepicker">
+            <input type="text" class="form-control" readOnly placeholder="yyyy-mm-dd" name="dp"
+              [(ngModel)]="model" (dateSelect)="changeDate();" ngbDatepicker #d="ngbDatepicker">
+            <button style="outline:none" class="btn-cal calendar" (click)="d.toggle()" type="button"> <i class="fa fa-calendar"
+              aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-rect-round">
+      <table class="grid-table m-t-3">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>IMEI No</th>
+            <th>SIM No</th>
+            <th>IP Address</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="noData">
+          <tr
+            *ngFor="let details of deviceData | paginate: { id: 'devicedetailspage', itemsPerPage: page.size, currentPage: p, totalItems: page.totalElements }">
+            <td>{{details.id}}</td>
+            <td>{{details.imeiNumber}}</td>
+            <td>{{details.simNumber}}</td>
+            <td>{{details.ipAddress}}</td>
+            <td>{{details.createdDate}}</td>
+            <!-- <td><i class="fa fa-ellipsis-v" (click)="deviceDetailspopup(details)" aria-hidden="true"></i></td> -->
+            <td>
+              <div class="actions-menu dropdown-click">
+                <button>
+                  <i class="icon-ic_more" aria-hidden="true"></i>
+                </button>
+                <ul>
+                  <li>
+                    <a title="Edit Vehicle Details" class="icon" (click)="deviceDetailspopup(details, 'view')">
+                      <i class="icon-ic_view" aria-hidden="true"></i><span>View Details</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a title="Download QR Code" class="icon" (click)="deviceDetailspopup(details, 'edit')">
+                      <i class="icon-ic_edit" aria-hidden="true"></i> <span>Edit Details</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a title="Install Device" class="icon" (click)="cmdHealthDevice(details, 'ACTVR', 'Device Activation')">
+                      <i class="icon-ic_activate" aria-hidden="true"></i><span>Activation</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a title="View Vehicle Map" class="icon" (click)="cmdHealthDevice(details, 'HCHKR', 'Health')">
+                      <i class="icon-ic_health" aria-hidden="true"></i><span>Health</span>
+                    </a>
+                  </li>
+                  <li>
+                      <a title="View Vehicle Map" class="icon" (click)="packetDetails(details,'Activation', 'activationPacketData')">
+                        <i class="icon-ic_activate_details" aria-hidden="true"></i><span>View Activation Details</span>
+                      </a>
+                    </li>
+                    <li>
+                        <a title="View Vehicle Map" class="icon" (click)="packetDetails(details, 'Health', 'healthPacketData')">
+                          <i class="icon-ic_health_details" aria-hidden="true"></i><span>View Health Details</span>
+                        </a>
+                      </li>
+                </ul>
+              </div>
+              <!-- <div class="actions-menu">
+                  <button type="button" class="dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="icon-ic_more" aria-hidden="true"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                      <ul>
+                          <li>
+                      <a title="Edit Vehicle Details" class="icon" (click)="deviceDetailspopup(details, 'view')">
+                          <i class="icon-ic_view" aria-hidden="true"></i><span>View Details</span>
+                        </a>
+                        </li>
+                        <li>
+                        <a title="Download QR Code" class="icon" (click)="deviceDetailspopup(details, 'edit')">
+                            <i class="icon-ic_edit" aria-hidden="true"></i> <span>Edit Details</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a title="Install Device" class="icon" (click)="cmdHealthDevice(details, 'ACTVR', 'Device Activation')">
+                              <i class="icon-ic_activate" aria-hidden="true"></i><span>Activation</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a title="View Vehicle Map" class="icon" (click)="cmdHealthDevice(details, 'HCHKR', 'Health')">
+                                <i class="icon-ic_health" aria-hidden="true"></i><span>Health</span>
+                              </a>
+                            </li>
+                            </ul>
+                  </div>
+                </div> -->
+
+
+            </td>
+          </tr>
+        </tbody>
+        <div *ngIf="!noData">
+            <div class="grid-nodata text-center text-red-medium">
+              <h6>No Data Found</h6>
+            </div>
+          </div>
+      </table>
+      <div class="row">
+        <div style="margin:0px auto;">
+          <pagination-controls *ngIf="noData" id="devicedetailspage" class="pagination" (pageChange)="pageChanged($event)" maxSize="6"
+            directionLinks="true" autoHide="true" responsive="true" previousLabel="Prev" nextLabel="Next">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

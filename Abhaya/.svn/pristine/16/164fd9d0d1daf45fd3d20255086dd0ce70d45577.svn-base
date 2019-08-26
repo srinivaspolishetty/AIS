@@ -1,0 +1,27 @@
+import { Component, OnInit } from '@angular/core';
+import { LocationMonitoringServiceApi } from "../common/services/locationmonitoring.api";
+import { LocationMonitoring } from "../common/models/locationmonitoring.model";
+
+@Component({
+  selector: 'app-locationmonitoring',
+  templateUrl: './locationmonitoring.component.html',
+  styleUrls: ['./locationmonitoring.component.css']
+})
+export class LocationmonitoringComponent implements OnInit {
+
+  pageTitle = "Location Monitoring Page";
+  locationMonitoringdata : Array<LocationMonitoring> = [];
+  constructor(private locationApiService : LocationMonitoringServiceApi) { }
+
+  ngOnInit() {
+    this.getLocationMonitoringDetails();
+  }
+
+  getLocationMonitoringDetails() {
+    this.locationApiService.getLocationMonitoringDetails()
+    .subscribe((data : LocationMonitoring) => {
+      this.locationMonitoringdata = data.content;
+      console.log(this.locationMonitoringdata);
+    });
+  }
+}

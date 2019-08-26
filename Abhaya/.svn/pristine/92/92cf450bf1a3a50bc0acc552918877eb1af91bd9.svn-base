@@ -1,0 +1,136 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{pageTitle}}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6">
+      <h5>ID</h5>
+      <h4>{{selectedDeviceDetails.id}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>IMEI No</h5>
+      <h4>{{selectedDeviceDetails.imeiNumber}}</h4>
+    </div>
+  </div>
+  <div class="row p-t-2">
+    <div class="col-md-6">
+      <h5>Sim No</h5>
+      <h4>{{selectedDeviceDetails.simNumber}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Ip Address</h5>
+      <h4>{{selectedDeviceDetails.ipAddress}}</h4>
+    </div>
+  </div>
+<div class="row">
+  <div class="col-md-12">
+        <table class="grid-table popup m-t-4 text-left">
+            <thead>
+              <tr>
+                  <th>IMSI No</th>
+                  <th>Provider</th>
+                  <th>Mobile No</th>
+                  <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let details of simDetails; let idx = index">
+                  <td>{{details.imsiNumber}}</td>
+                  <td>{{details.telecomProvider}}</td>
+                  <td *ngIf="viewDetails == false">
+                      <input type="text" class="form-control" [(ngModel)]="mobileNumber[idx]">
+                  </td>
+                  <td *ngIf="viewDetails == true">{{details.mobileNumber}}</td>
+                  <td>{{details.status}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button *ngIf="viewDetails == false" (click)="editDeviceDetails()" type="submit" class="btn-primary m-t-1">Update</button>
+  </div>
+</div>
+ 
+
+  
+  <!-- <div class="row p-t-2" *ngFor="let details of simDetails">
+    <div class="col-md-3">
+      <h5>IMSI No</h5>
+      <h4>{{details.imeiNumber}}</h4>
+    </div>
+    <div class="col-md-3">
+      <h5>IP Address</h5>
+      <h4>{{details.telecomProvider}}</h4>
+    </div>
+    <div class="col-md-3">
+      <h5>IP Address</h5>
+      <h4>{{details.mobileNumber}}</h4>
+    </div>
+    <div class="col-md-3">
+      <h5>IP Address</h5>
+      <h4>{{details.status}}</h4>
+    </div>
+  </div> -->
+
+
+</div>
+<!-- <div class="modal-body" *ngIf="viewDetails == false">
+
+
+  <form #editDetailsForm="ngForm" name="form" novalidate (ngSubmit)="editDetailsForm.valid && editDeviceDetails()">
+    <div class="row m-a-0">
+      <div class="col-md-6 p-r-0 form-group"
+        [class.has-error]="editDetailsForm.submitted && primaryProviderCtrl.invalid">
+        <label class="required">Primary Provider</label>
+        <select class="form-control" name="primaryProvider" required #primaryProviderCtrl="ngModel"
+          [(ngModel)]="primaryProvider">
+          <option value="">Select</option>
+          <option value="BSNL">BSNL</option>
+          <option value="Airtel">Airtel</option>
+          <option value="Idea">Idea</option>
+          <option value="Vodafone">Vodafone</option>
+        </select>
+        <span class="help-block" *ngIf="editDetailsForm.submitted && primaryProviderCtrl.invalid">
+          Primary Provider is required</span>
+      </div>
+      <div class="col-md-6 p-r-0 form-group" [class.has-error]="editDetailsForm.submitted && primaryNumberCtrl.invalid">
+        <label class="required">Primary Number</label>
+        <input type="number" class="form-control" [(ngModel)]="primaryNumber" name="primaryNumber" required
+          #primaryNumberCtrl="ngModel">
+        <span class="help-block" *ngIf="editDetailsForm.submitted && primaryNumberCtrl.invalid">
+          IMEI Number is required</span>
+      </div>
+      <div class="col-md-6 p-r-0 form-group"
+        [class.has-error]="editDetailsForm.submitted && secondaryProviderCtrl.invalid">
+        <label class="required">Secondary Provider</label>
+        <select class="form-control" name="secondaryProvider" required #secondaryProviderCtrl="ngModel"
+          [(ngModel)]="secondaryProvider">
+          <option value="">Select</option>
+          <option value="BSNL">BSNL</option>
+          <option value="Airtel">Airtel</option>
+          <option value="Idea">Idea</option>
+          <option value="Vodafone">Vodafone</option>
+        </select>
+        <span class="help-block" *ngIf="editDetailsForm.submitted && secondaryProviderCtrl.invalid">
+          Secondary Provider is required</span>
+      </div>
+      <div class="col-md-6 p-r-0 form-group"
+        [class.has-error]="editDetailsForm.submitted && secondaryNumberCtrl.invalid">
+        <label class="required">Secondary Number</label>
+        <input type="number" class="form-control" [(ngModel)]="secondaryNumber" name="secondaryNumber" required
+          #secondaryNumberCtrl="ngModel">
+        <span class="help-block" *ngIf="editDetailsForm.submitted && secondaryNumberCtrl.invalid">
+          IMEI Number is required</span>
+      </div>
+    </div>
+
+    <div class="row m-a-0">
+      <div class="col-md-6 form-group">
+        <button type="submit" class="btn-primary m-t-1">Activate</button>
+      </div>
+    </div>
+  </form>
+
+
+</div> -->

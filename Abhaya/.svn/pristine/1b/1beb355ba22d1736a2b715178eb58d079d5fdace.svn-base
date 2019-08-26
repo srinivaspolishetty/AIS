@@ -1,0 +1,147 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceManagementServiceApi } from '../common/services/devicemanagement.api';
+import { DeviceDetails } from '../common/models/devicedetails.model';
+import { DeviceactivationComponent } from './deviceactivation/deviceactivation.component';
+import { PageModel } from '../common/models/page.model';
+import { NgbDateFRParserFormatter } from '../common/directives/dateformatter';
+import { DevicedetailsComponent } from './devicedetails/devicedetails.component';
+import { CommandManagementServiceApi } from '../common/services/commandmanagement.api';
+import { ToasterService } from '../common/services/toaster.service';
+import { PacketdetailsComponent } from './packetdetails/packetdetails.component';
+import { environment } from '../../environments/environment';
+import { Validations } from '../common/constants/validationconstants';
+
+@Component({
+    selector: 'app-devicedetails',
+    templateUrl: './devices.component.html',
+    styleUrls: ['./devices.component.css']
+})
+export class DevicesComponent implements OnInit {
+    public showFilters: Boolean = false;
+    public pageSize: Number = environment.pageSize;
+    public intilPageNumber: Number = 0;
+    public page: PageModel = new PageModel();
+    public p: Number;
+    model: NgbDateStruct;
+    public formatDate: string;
+    public searchValue: string;
+    public pageSizeValues = [];
+    public showSearchClear = false;
+    public isDataExists: Boolean = false;
+    deviceData: Array<DeviceDetails> = [];
+    public validations: any = Validations;
+    constructor(private devicemanagementApiService: DeviceManagementServiceApi, private modalService: NgbModal,
+        private ngbDateFRParserFormatter: NgbDateFRParserFormatter, private commandmanagementApiService: CommandManagementServiceApi,
+        private toasterService: ToasterService) {
+        this.searchValue = '';
+        this.pageSizeValues = [10, 50, 100, 200];
+    }
+
+    ngOnInit() {
+        this.getAllDeviceDetails(this.intilPageNumber, this.pageSize);
+    }
+
+    refreshPage() {
+        this.searchValue = '';
+        this.model = undefined;
+        this.getAllDeviceDetails(this.intilPageNumber, this.pageSize);
+    }
+
+    cmdHealthDevice(device, headerType, messageText) {
+        const newobj = new Object(
+            {
+                header: headerType,
+                imeiNumber: device.imeiNumber,
+            }
+        );
+        this.commandmanagementApiService.sendActivationRequest(JSON.stringify(newobj))
+            .subscribe((_data: any) => {
+                console.log(_data.message);
+                (_data.message === "Success") ? this.toasterService.showSuccess('bottom-right', 'Successfully Sent ' + messageText + ' Message.')
+                : (_data.message === "Already Existed") ? this.toasterService.showWarning('bottom-right', 'Command was already Sent Waiting for Response.') 
+                : this.toasterService.showError('bottom-right', 'ERROR: Unable to Sent ' + messageText + ' Message.' + _data.message);
+            }, (_error: any) => {
+                this.toasterService.showError('bottom-right', 'ERROR: Unable to Sent ' + messageText + ' Message.' + _error.message);
+            }
+            );
+    }
+    packetDetails(device, name, type) {
+        device.packetType = type;
+        device.packetName = name;
+        const modalRef = this.modalService.open(PacketdetailsComponent, { size: 'lg', backdrop: 'static', keyboard: false });
+        modalRef.componentInstance.packetDetails = device;
+    }
+    activateDevice(curDevice) {
+        const modalRef = this.modalService.open(DeviceactivationComponent, {
+            size: 'lg', backdrop: 'static',
+            keyboard: false
+        });
+        modalRef.componentInstance.deviceDetails = curDevice;
+    }
+
+    changeDate() {
+        this.getAllDeviceDetails(this.intilPageNumber, this.pageSize);
+        this.p = 1;
+    }
+    searchData() {
+        this.showSearchClear = (this.searchValue.length > 4);
+        this.p = 1;
+        this.getAllDeviceDetails(this.intilPageNumber, this.pageSize);
+    }
+    clearSearch() {
+        this.searchValue = '';
+        this.searchData();
+    }
+    addDevice() {
+        const modalRef = this.modalService.open(DeviceactivationComponent, {
+            size: 'lg', backdrop: 'static',
+            keyboard: false
+        });
+        modalRef.result.then((result) => {
+            if (result === 'refreshContent') {
+                this.getAllDeviceDetails(this.intilPageNumber, this.pageSize);
+                this.p = 1;
+            }
+        }).catch((_error) => {
+        });
+    }
+
+    deviceDetailspopup(deviceDetails, eventType) {
+        deviceDetails.selectedEvent = eventType;
+        const modalRef = this.modalService.open(DevicedetailsComponent, {
+            size: 'lg', backdrop: 'static',
+            keyboard: false
+        });
+        modalRef.componentInstance.selectedDeviceDetails = deviceDetails;
+        modalRef.result.then((result) => {
+            if (result === 'refreshContent') {
+                this.getAllDeviceDetails(this.intilPageNumber, this.pageSize);
+                this.p = 1;
+            }
+        }).catch((_error) => {
+        });
+    }
+
+    btnShowFilters() {
+        this.showFilters = !this.showFilters;
+    }
+    changePageSize() {
+        this.getAllDeviceDetails(this.intilPageNumber, this.pageSize);
+    }
+    pageChanged(event) {
+        this.p = event;
+        this.getAllDeviceDetails(event - 1, this.pageSize);
+    }
+    getAllDeviceDetails(page: Number, size: Number) {
+        this.formatDate = this.ngbDateFRParserFormatter.format(this.model);
+        this.devicemanagementApiService.getDeviceDetails(page, size, this.formatDate, this.searchValue)
+            .subscribe((data: DeviceDetails) => {
+                this.deviceData = data.content;
+                this.isDataExists = (this.deviceData.length > 0);
+                this.page = data.page;
+            });
+    }
+
+}

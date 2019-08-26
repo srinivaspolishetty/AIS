@@ -1,0 +1,29 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { CoreComponent } from "./core.component";
+
+const routes: Routes = [
+  {
+    path: '', component: CoreComponent,
+    children: [
+      { path: 'dashboard', loadChildren: '../dashboard/dashboard.module#DashboardModule' },
+      { path: 'mapview', loadChildren: '../mapview/mapview.module#MapviewModule' },
+      { path: 'locationmonitoring', loadChildren: '../locationmonitoring/locationmonitoring.module#LocationmonitoringModule' },
+      { path: 'devicehealthmanagement', loadChildren: '../devicemanagement/devicemanagement.module#DevicemanagementModule' },
+      { path: 'commandmanagement', loadChildren: '../commandmanagement/commandmanagement.module#CommandmanagementModule' },
+      { path: 'healthmonitoring', loadChildren: '../healthmonitoring/healthmonitoring.module#HealthmonitoringModule' },
+      { path: 'emergencymonitoring', loadChildren: '../emergencymonitoring/emergencymonitoring.module#EmergencymonitoringModule' },
+      { path: 'rawdata', loadChildren: '../rawdata/rawdata.module#RawdataModule' },
+      { path: 'users', loadChildren: '../usermanagement/usermanagement.module#UsermanagementModule' },
+      { path: 'tripmanagement', loadChildren: '../trackmanagement/trackmanagement.module#TrackmanagementModule' },
+      { path: 'vehiclemanagement', loadChildren: '../vehiclemanagement/vehiclemanagement.module#VehiclemanagementModule'},
+      { path: 'systemmanagement', loadChildren: '../systemmanagement/systemmanagement.module#SystemmanagementModule'}
+    ]
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class CoreRoutingModule { }

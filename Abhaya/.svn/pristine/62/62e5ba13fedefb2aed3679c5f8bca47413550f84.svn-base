@@ -1,0 +1,9 @@
+import { PageModel } from "./page.model";
+
+export class Tripdetails {
+    public chassisNumber: string;
+    public engineNumber: string;
+    public vehicleMake: string;
+    public vehicleModel: string;
+    public vehicleRegNumber: string;
+    }

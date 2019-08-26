@@ -1,0 +1,57 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Vehicledetails } from 'src/app/common/models/vehicle.model';
+import { VehicleManagementServiceApi } from "../../common/services/vehiclemanagement.api";
+import { ToasterService } from "../../common/services/toaster.service";
+
+@Component({
+  selector: 'app-addeditvehicle',
+  templateUrl: './addeditvehicle.component.html',
+  styleUrls: ['./addeditvehicle.component.css']
+})
+export class AddeditvehicleComponent implements OnInit {
+  @Input() selectVehicleDetails : Vehicledetails;
+  public addeditvehicle: Vehicledetails;
+  public pageTitle : string;
+  public viewdata : boolean = false;
+
+  constructor(public activeModal: NgbActiveModal, private vehicleDetailsApi : VehicleManagementServiceApi, private toasterService: ToasterService ) { }
+
+  ngOnInit() {
+    if(this.selectVehicleDetails.action == undefined){
+      this.addeditvehicle = new Vehicledetails();
+      this.viewdata = false;
+      this.pageTitle = 'Add New Vehicle';
+      return false;
+    }
+    if(this.selectVehicleDetails.action == 'edit'){
+      this.addeditvehicle = this.selectVehicleDetails;
+      this.viewdata = false;
+      this.pageTitle = 'Edit Vehicle Details of ' + this.addeditvehicle.vehicleRegNumber;
+      return false;
+    }
+    if(this.selectVehicleDetails.action == 'view'){
+      this.viewdata = true;
+      this.addeditvehicle = this.selectVehicleDetails;
+      this.pageTitle = 'Vehicle Details of ' + this.addeditvehicle.vehicleRegNumber;
+      return false;
+    }
+  }
+  onSubmit() {
+    this.activeModal.close();
+  }
+
+  
+  saveVehicle(){
+    this.vehicleDetailsApi.addeditvehicle(JSON.stringify(this.addeditvehicle))
+      .subscribe((data: Vehicledetails) => {
+        this.activeModal.close('refreshContent');
+        this.toasterService.showSuccess('bottom-right', 'Trip has been successfully closed ');
+      }, error => {
+        this.activeModal.close();
+        this.activeModal.close('Close click');
+        this.toasterService.showError('bottom-right', 'ERROR: Unable to close the Trip.');
+      }
+      );
+  }
+}

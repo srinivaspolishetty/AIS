@@ -1,0 +1,47 @@
+import { Component, OnInit } from '@angular/core';
+import { DeviceManagementServiceApi } from "../common/services/devicemanagement.api";
+import { DeviceDetails } from "../common/models/devicedetails.model";
+import { CommandManagementServiceApi } from "../common/services/commandmanagement.api";
+
+@Component({
+  selector: 'app-commandexecutive',
+  templateUrl: './commandexecutive.component.html',
+  styleUrls: ['./commandexecutive.component.css']
+})
+export class CommandexecutiveComponent implements OnInit {
+
+  public deviceData: Array<DeviceDetails> = [];
+  public executeType: string;
+  public packetType: string;
+  public imeiNumber: string;
+
+  constructor(private devicemanagementApiService: DeviceManagementServiceApi,
+    private commandmanagementApiService: CommandManagementServiceApi) {
+    this.executeType = '';
+    this.packetType = '';
+    this.imeiNumber = '';
+  }
+
+  ngOnInit() {
+    this.getAllDeviceDetails()
+  }
+  getAllDeviceDetails() {
+    this.devicemanagementApiService.getDeviceDetails(0, '', '', '')
+      .subscribe((data: DeviceDetails) => {
+        this.deviceData = data.content;
+        console.log(this.deviceData);
+      });
+  }
+  executecommand() {
+    const newobj = new Object({"imeiNumber": this.imeiNumber});
+    this.commandmanagementApiService.sendActivationRequest(JSON.stringify(newobj))
+      .subscribe((data: any) => {
+        console.log(data);
+      }, error => {
+        console.log('error', error);
+      }
+      );
+    console.log(this.imeiNumber);
+  }
+
+}

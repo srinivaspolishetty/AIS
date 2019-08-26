@@ -1,0 +1,75 @@
+<div class="row p-t-1 page-header">
+    <div class="col-md-10">
+      <h4>Route Deviation</h4>
+      <nav aria-label="breadcrumb" class="d-none d-sm-block">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Track Management</li>
+            <li class="breadcrumb-item active" aria-current="page">Route Deviation</li>
+          </ol>
+        </nav>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-9 col-sm-10 col-md-11 p-t-3">
+        <span class="text-white">Total Records : {{page.totalElements}}</span>
+      </div>
+      <div class="col-3 col-sm-2 col-md-1 text-right">
+         <button type="button" class="btn-search" (click)="btnShowFilters()"><i class="icon-ic_searchfilter"></i></button>
+      </div>
+    </div>
+    <div class="row page-filters" [ngClass]="{'show': showFilters == true}">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+              <div class="col-md-3">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search By IMEI No">
+                    <button type="button" class="btn-close close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                      <div class="input-group-append datepicker">
+                        <input type="text" class="form-control" placeholder="Start Date">
+                        <button style="outline:none" class="btn-cal calendar"><i class="fa fa-calendar"
+                          aria-hidden="true"></i></button>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+         </div>
+     </div>
+     <div class="row">
+        <div class="col-md-12">
+          <div class="box-rect-round o-x-auto">
+            <table class="grid-table m-t-3">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Created Date</th>
+                  <th>Deviation Time</th>
+                  <th width="250">Location</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let details of routeDevDetails  | paginate: { id: 'routedetailspages', itemsPerPage: page.size, currentPage: p, totalItems: page.totalElements }">
+                  <td>{{details.deviationId}}</td>
+                  <td>{{details.createdDate}}</td>
+                  <td>{{details.deviationTime}}</td>
+                  <td>{{details.location}}</td>
+                  <!-- <td (click)="rawDataDetails(details)">
+                      <div class='actions-menu'>
+                          <button>
+                            <i class="icon-ic_more" aria-hidden="true"></i>
+                          </button></div></td> -->
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            </div>
+            </div>

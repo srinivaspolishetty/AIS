@@ -1,0 +1,80 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceManagementServiceApi } from '../../common/services/devicemanagement.api';
+import { DeviceCommunication } from '../../common/models/devicecommunication.model';
+import { PageModel } from '../../common/models/page.model';
+import { NgbDateFRParserFormatter } from '../../common/directives/dateformatter';
+import { DevicecomdetailsComponent } from './devicecomdetails/devicecomdetails.component';
+import { environment } from '../../../environments/environment';
+
+@Component({
+    selector: 'app-devicecommunication',
+    templateUrl: './devicecommunication.component.html',
+    styleUrls: ['./devicecommunication.component.css']
+})
+export class DevicecommunicationComponent implements OnInit {
+    public showFilters: Boolean = false;
+    public page: PageModel = new PageModel();
+    public pageSize: Number = environment.pageSize;
+    public p: number;
+    model: NgbDateStruct;
+    public formatDate: string;
+    public searchValue: string;
+    public showSearchClear = false;
+    public noData: Boolean = false;
+    deviceCommData: Array<DeviceCommunication> = [];
+    constructor(private devicemanagementApiService: DeviceManagementServiceApi, private modalService: NgbModal,
+        private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+        this.searchValue = '';
+    }
+
+    ngOnInit() {
+        this.getAllDeviceCommunication(0, this.pageSize);
+    }
+
+    deviceComDetails(deviceComDetails) {
+        const modalRef = this.modalService.open(DevicecomdetailsComponent, {
+            size: 'lg', backdrop: 'static',
+            keyboard: false
+        });
+        modalRef.componentInstance.selectedComDetails = deviceComDetails;
+    }
+
+    btnShowFilters() {
+        this.showFilters = !this.showFilters;
+    }
+    changeDate() {
+        this.getAllDeviceCommunication(0, this.pageSize);
+    }
+    searchData() {
+        this.getAllDeviceCommunication(0, this.pageSize);
+        this.showSearchClear = (this.searchValue.length > 4) ? true : false;
+    }
+    refreshPage() {
+        this.searchValue = '';
+        this.model = undefined;
+        this.getAllDeviceCommunication(0, this.pageSize);
+    }
+    clearSearch() {
+        this.searchValue = '';
+        this.showSearchClear = false;
+        this.searchData();
+    }
+
+    pageChanged(event) {
+        this.p = event;
+        this.getAllDeviceCommunication(this.p - 1, this.pageSize);
+    }
+    getAllDeviceCommunication(page: Number, size: Number) {
+        this.formatDate = this.ngbDateFRParserFormatter.format(this.model);
+        this.devicemanagementApiService.getDeviceCommDetails(page, size, this.formatDate, this.searchValue)
+            .subscribe((data: DeviceCommunication) => {
+                this.deviceCommData = data.content;
+                this.noData = (this.deviceCommData.length > 0);
+                this.page = data.page;
+                console.log(this.deviceCommData);
+            });
+    }
+
+}

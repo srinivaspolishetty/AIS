@@ -1,0 +1,62 @@
+import { Component, OnInit } from '@angular/core';
+import { PageModel } from "../../common/models/page.model";
+import { TripManagementServiceApi } from "../../common/services/tripnamagement.api";
+import { Tripdetails } from "../../common/models/tripdetails.model";
+import { ToasterService } from "../../common/services/toaster.service";
+
+@Component({
+  selector: 'app-tripdetails',
+  templateUrl: './tripdetails.component.html',
+  styleUrls: ['./tripdetails.component.css']
+})
+export class TripdetailsComponent implements OnInit {
+
+  public tripDetailsData: Tripdetails;
+  public page: PageModel;
+  public p: number;
+  public showFilters : boolean = false;
+
+  constructor(private tripdetailsApi: TripManagementServiceApi,
+    private toasterService: ToasterService) {
+    this.page = new PageModel(0, 0, 0, 0);
+  }
+
+  ngOnInit() {
+    this.getTripDetails(0, 10);
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+
+  pageChanged(event) {
+    this.p = event;
+    this.getTripDetails(this.p - 1, 10);
+  }
+  endTrip(tripdetails) {
+    const newobj = new Object(
+      {
+        imeiNumber: tripdetails.imeiNumber,
+        tripClosed: true
+      }
+    );
+    this.tripdetailsApi.endTrip(JSON.stringify(newobj))
+      .subscribe((data: any) => {
+        this.getTripDetails(0, 10);
+        this.toasterService.showSuccess('bottom-right', 'Trip has been successfully closed ');
+      }, error => {
+        console.log('error', error);
+        this.toasterService.showError('bottom-right', 'ERROR: Unable to close the Trip.');
+      }
+      );
+  }
+  getTripDetails(page, size) {
+    this.tripdetailsApi.getAllTripDetails(page, size)
+      .subscribe((data: Tripdetails) => {
+        this.tripDetailsData = data.content;
+        this.page = data.page;
+        console.log(this.tripDetailsData);
+      });
+  }
+
+}

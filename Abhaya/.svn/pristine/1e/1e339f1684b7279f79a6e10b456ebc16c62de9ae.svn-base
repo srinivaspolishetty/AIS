@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from "../../../environments/environment";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CommandManagementServiceApi {
+
+  constructor(private httpClient: HttpClient) { }
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      'Authorization': 'my-auth-token'
+    })
+  };
+  sendActivationRequest(imeiNumber) {
+    let url = `${environment.apiBase}${environment.version}/createTask`;
+    return this.httpClient.post(url, imeiNumber, this.httpOptions);
+  }
+
+  getCommandList(page:number, size:number) {
+    let url = `${environment.apiBase}${environment.version}/taskDetails`;
+    url += `?page=${page}&size=${size}`;
+    return this.httpClient.get(url);
+  }
+}

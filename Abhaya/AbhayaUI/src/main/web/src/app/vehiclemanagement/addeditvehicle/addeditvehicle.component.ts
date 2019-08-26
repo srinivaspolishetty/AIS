@@ -1,0 +1,53 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Vehicledetails } from 'src/app/common/models/vehicle.model';
+import { VehicleManagementServiceApi } from '../../common/services/vehiclemanagement.api';
+import { Validations } from '../../common/constants/validationconstants';
+import { ToasterService } from '../../common/services/toaster.service';
+
+@Component({
+    selector: 'app-addeditvehicle',
+    templateUrl: './addeditvehicle.component.html',
+    styleUrls: ['./addeditvehicle.component.css']
+})
+export class AddeditvehicleComponent implements OnInit {
+    @Input() selectVehicleDetails: Vehicledetails;
+    public addeditvehicle: Vehicledetails;
+    public pageTitle: string;
+    public viewdata: Boolean = false;
+    public Validations: Object = Validations;
+
+
+    constructor(public activeModal: NgbActiveModal, private vehicleDetailsApi: VehicleManagementServiceApi,
+        private toasterService: ToasterService) {
+        this.pageTitle = 'Add New Vehicle';
+    }
+
+    ngOnInit() {
+        this.addeditvehicle = (this.selectVehicleDetails.action === undefined) ? new Vehicledetails() : this.selectVehicleDetails;
+        this.viewdata = (this.selectVehicleDetails.action === 'view') ? true : false;
+        this.pageTitle = (this.selectVehicleDetails.action === 'view')
+            ? 'Vehicle Details of ' + this.addeditvehicle.vehicleRegNumber :
+            (this.selectVehicleDetails.action === 'edit') ?
+            'Edit Vehicle Details of ' + this.addeditvehicle.vehicleRegNumber : 'Add New Vehicle';
+    }
+    onSubmit() {
+        this.activeModal.close();
+    }
+    saveVehicle() {
+        this.addeditvehicle.vehicleId = (this.addeditvehicle.vehicleId == undefined) ? null : this.addeditvehicle.vehicleId;
+        console.log(this.addeditvehicle.vehicleId);
+            this.vehicleDetailsApi.addeditvehicle(JSON.stringify(this.addeditvehicle))
+            .subscribe((data: any) => {
+                (data.code === 200) ?
+                (this.selectVehicleDetails.action === 'edit')?
+                this.toasterService.showSuccess('bottom-right','Successfully updated Vehicle Details.')  : this.toasterService.showSuccess('bottom-right','Vehicle added Successfully.') 
+                    : this.toasterService.showError('bottom-right', data.message);
+                this.activeModal.close('refreshContent');
+            }, (_error: any) => {
+                this.toasterService.showError('bottom-right', _error.message);
+                this.activeModal.close('Close click');
+            }
+            );
+    }
+}

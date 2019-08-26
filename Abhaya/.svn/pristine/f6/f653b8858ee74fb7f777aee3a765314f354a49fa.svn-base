@@ -1,0 +1,75 @@
+<div class="row p-t-1 ">
+  <div class="col-md-10">
+    <h4>Command Execute</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Command Management</li>
+        <li class="breadcrumb-item active" aria-current="page">Command Execute</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-rect-round">
+      <form #commandExeForm="ngForm" name="form" novalidate
+        (ngSubmit)="commandExeForm.valid && executecommand(commandExeForm)">
+        <div class="row p-t-6 p-r-4 m-a-0">
+          <div class="col-md-4 p-r-0 form-group"
+            [class.has-error]="commandExeForm.submitted && executeTypecontrol.invalid">
+            <label class="required">Execute Type</label>
+            <select class="form-control" name="executeType" required #executeTypecontrol="ngModel"
+              [(ngModel)]="executeType" (change)="executechange(commandExeForm)">
+              <option value="">Select</option>
+              <option value="SET">SET</option>
+              <option value="GET">GET</option>
+              <option value="CLR">CLR</option>
+            </select>
+            <span class="help-block" *ngIf="commandExeForm.submitted && executeTypecontrol.invalid">
+              Execute Type is required</span>
+          </div>
+          <div class="col-md-4 p-r-0 form-group" [class.has-error]="commandExeForm.submitted && payLoadcontrol.invalid">
+            <label class="required">Payload</label>
+            <select class="form-control" [(ngModel)]="payLoad" name="payLoad" required #payLoadcontrol="ngModel"
+              (change)="payloadchange($event)">
+              <option value="">Select</option>
+              <option *ngFor="let data of payLoadData" [value]="data.payload">{{data.description}}</option>
+            </select>
+            <span class="help-block" *ngIf="commandExeForm.submitted && payLoadcontrol.invalid">
+              Payload is required</span>
+          </div>
+          <div class="col-md-4 p-r-0 form-group"
+            [class.has-error]="commandExeForm.submitted && imeiNumbercontrol.invalid">
+            <label class="required">IMEI Number</label>
+            <select class="form-control" [(ngModel)]="imeiNumber" #imeiNumbercontrol="ngModel" required
+              name="imeiNumber">
+              <option value="">Select IMEI Number</option>
+              <option *ngFor="let device of deviceData" value="{{device.imeiNumber}}">{{device.imeiNumber}}</option>
+            </select>
+            <span class="help-block" *ngIf="commandExeForm.submitted && imeiNumbercontrol.invalid">
+              IMEI Number is required</span>
+          </div>
+          <div class="col-md-4 p-r-0 form-group"
+            [class.has-error]="commandExeForm.submitted && payloadValuecontrol.invalid" *ngIf="propertyValue == true">
+            <label class="required">Value</label>
+            <input type="text" class="form-control" [(ngModel)]="payloadValue" name="payloadValue" 
+              #payloadValuecontrol="ngModel" required pattern="{{ Validations.CMDEXE_VAL_PATTERN }}"  minlength="{{ Validations.MOBILE_MIN_LENGTH }}" maxlength={{Validations.MOBILE_MAX_LENGTH}} /> 
+            <span class="help-block" *ngIf="commandExeForm.submitted && payloadValuecontrol.errors?.required">
+              Value is required</span>              
+            <span class="help-block" *ngIf="!(payloadValuecontrol.errors?.pattern) && (commandExeForm.submitted && payloadValuecontrol.errors?.minlength)">Value must be 10 characters</span>
+            <span class="help-block" *ngIf="!(payloadValuecontrol.errors?.pattern) && (commandExeForm.submitted && payloadValuecontrol.errors?.maxlength)">Value must be 10 characters</span>
+        <span class="help-block" *ngIf="commandExeForm.submitted && payloadValuecontrol.errors?.pattern">
+            Value must be alpha numeric</span>
+          </div>
+        </div>
+
+        <div class="row m-a-0">
+          <div class="col-md-6 form-group" *ngIf="showBtn == true">
+            <button type="submit" class="btn-primary m-t-1">{{btnText}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { RawDataServiceApi } from "../common/services/rawdata.api";
+import { RawData } from "../common/models/rawdata.model";
+import { PageModel } from "../common/models/page.model";
+import { NgbDateFRParserFormatter } from "../common/directives/dateformatter";
+import { RawdatadetailsComponent } from "./rawdatadetails/rawdatadetails.component";
+
+@Component({
+  selector: 'app-rawdata',
+  templateUrl: './rawdata.component.html',
+  styleUrls: ['./rawdata.component.css']
+})
+export class RawdataComponent implements OnInit {
+
+  public showFilters : boolean = false;
+  public page : PageModel;
+  public p : number;
+  model: NgbDateStruct;
+  public formatDate : string;
+  public searchValue : string;
+  public cvpType : string;
+  public showSearchClear = false;
+  public noData : boolean = false;
+  rawdata : Array<RawData> = [];
+  constructor(private rawdataApiService:RawDataServiceApi,
+    private modalService: NgbModal, private calendar: NgbCalendar,
+    private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+    this.page = new PageModel(0, 0, 0, 0);
+    this.searchValue = '';
+    this.cvpType = '';
+   }
+
+  ngOnInit() {
+    this.getAllRawData(0,10);
+  }
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+
+  changeDate() {
+    this.getAllRawData(0,10);
+  }
+  cvpChange(){
+    this.getAllRawData(0,10);
+  }
+  searchData() {
+    this.getAllRawData(0,10);
+    this.showSearchClear = (this.searchValue.length > 4) ? true : false;
+  }
+  clearSearch() {
+    this.searchValue = '';
+    this.showSearchClear = false;
+    this.searchData();
+  }
+  rawDataDetails(rawdetails) {
+    const modalRef = this.modalService.open(RawdatadetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.selectedrawdata = rawdetails;
+  }
+
+
+  pageChanged(event) {
+    this.p = event;
+    this.getAllRawData(this.p-1,10);
+  }
+  getAllRawData(page:number, size:number) {
+    this.formatDate = this.ngbDateFRParserFormatter.format(this.model);
+    this.rawdataApiService.getrawdata(page, size, this.formatDate, this.searchValue, this.cvpType)
+    .subscribe((data : RawData) => {
+      this.rawdata = data.content;
+      this.noData = (this.rawdata.length > 0);
+      this.page = data.page;
+      console.log(this.rawdata);
+    });
+  }
+
+}

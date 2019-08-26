@@ -1,0 +1,34 @@
+import { PageModel } from './page.model';
+
+export class Packetdetails {
+    public activationPacketDataId: Number;
+    public healthPacketDataId: Number;
+    public header: string;
+    public randomCode: string;
+    public vendorId: string;
+    public firmwareVersion: string;
+    public imeiNumber: string;
+    public alertId: string;
+    public latitude: string;
+    public latitudeDirection: string;
+    public longnitude: string;
+    public longnitudeDirection: string;
+    public gpsFix: string;
+    public date: string;
+    public time: string;
+    public heading: string;
+    public speed: string;
+    public gsmStrength: string;
+    public countryCode: string;
+    public networkCode: string;
+    public lac: string;
+    public mainPower: string;
+    public ignStatus: string;
+    public batteryVoltage: string;
+    public frameNumber: string;
+    public vehicleMode: string;
+    public networkDate: string;
+    public networkTime: string;
+    public page: PageModel;
+    public content: any;
+}

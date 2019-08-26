@@ -1,0 +1,176 @@
+<div class="row p-t-1 p-a-0 m-a-0">
+    <div class="col-md-10">
+      <h4>ITS Dashboard</h4>
+    </div>
+    <div class="col-md-2 text-right">
+      <button type="button" class="active btn-left btn-toggle">Today</button>
+      <button type="button" class="btn-right btn-toggle">All</button>
+    </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Library</li>
+        </ol>
+      </nav>
+  </div>
+ 
+    
+  <div class="row p-a-0 m-a-0">
+    <div class="col-md-4 p-r-1">
+      <div class="box-rect-round">
+        <div class="box-heading">
+          <h5><img src="../../../assets/images/SVG/ic_ActivationStatus.svg">Activation Status</h5>
+          <span>10</span>
+        </div>
+        <ul class="box-details">
+          <li>
+            <h6>ACTIVATED</h6> <span class="text-green">10</span>
+          </li>
+          <li>
+            <h6>NOT ACTIVATED</h6> <span>10</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="box-rect-round">
+        <div class="box-heading">
+          <h5><img src="../../../assets/images/SVG/ic_EmergencyAlerts.svg">Emergency Alerts</h5>
+          <span>10</span>
+        </div>
+        <ul class="box-details">
+          <li>
+            <h6>PANIC ALERT</h6> <span>10</span>
+          </li>
+          <li>
+            <h6>TAMPER ALERT</h6> <span>10</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-4 p-l-1">
+      <div class="box-rect-round">
+        <div class="box-heading">
+          <h5><img src="../../../assets/images/SVG/ic_VehicleHealth.svg">Vehicle Health</h5>
+          <span>10</span>
+        </div>
+        <ul class="box-details">
+          <li>
+            <h6>BATTERY CONNECTED</h6> <span>10</span>
+          </li>
+          <li>
+            <h6>BATTERY DISCONNECTED</h6> <span>10</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+   
+  </div>
+  <div class="m-t-4 row p-a-0 m-a-0">
+        <div class="col-md-8">
+            <div class="box-rect-round">
+              <div class="box-heading">
+                <h5><img src="../../../assets/images/SVG/ic_DeviceStatus.svg">Device Status</h5>
+                <span>10</span>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                    <ul class="box-details">
+                        <li>
+                          <h6>COMMUNICATING</h6> <span>10</span>
+                        </li>
+                        <li>
+                          <h6>NOT COMMUNICATING</h6> <span>10</span>
+                        </li>
+                        <li>
+                          <h6>INTERNAL BATTERY LOW</h6> <span>10</span>
+                        </li>
+                      </ul>
+                </div>
+              
+                <div class="col-md-6">
+                    <ul class="box-details">
+                        <li>
+                          <h6>IGNITION ON</h6> <span>10</span>
+                        </li>
+                        <li>
+                          <h6>IGNITION OFF</h6> <span>10</span>
+                        </li>
+                      </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 p-l-1">
+              <div class="box-rect-round">
+                <div class="box-heading">
+                  <h5><img src="../../../assets/images/SVG/ic_TripTracking.svg">Trip Tracking</h5>
+                  <span>10</span>
+                </div>
+                <ul class="box-details">
+                  <li>
+                    <h6>OPEN</h6> <span>10</span>
+                  </li>
+                  <li>
+                    <h6>CLOSED</h6> <span>10</span>
+                  </li>
+                  <li>
+                    <h6>ROUTE DEVIATION</h6> <span>10</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+      <!-- <div class="box-rect-round">
+        <table class="abhaya-table m-t-3">
+          <thead>
+            <tr>
+              <th>Trip ID</th>
+              <th>Citizen Mobile No</th>
+              <th>Vehicle No</th>
+              <th>Start Time</th>
+              <th>Source</th>
+              <th>Destination</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td>9642949201</td>
+              <td>AP39 1234</td>
+              <td>15:10:52</td>
+              <td>Polyclinic road, Pettengle Pet, Siddhartha Nagar</td>
+              <td>MG Road, Auto Nagar, Vijayawada</td>
+              <td><i class="fa fa-ellipsis-v" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td>01</td>
+              <td>9642949201</td>
+              <td>AP39 1234</td>
+              <td>15:10:52</td>
+              <td>Polyclinic road, Pettengle Pet, Siddhartha Nagar</td>
+              <td>MG Road, Auto Nagar, Vijayawada</td>
+              <td><i class="fa fa-ellipsis-v" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td>01</td>
+              <td>9642949201</td>
+              <td>AP39 1234</td>
+              <td>15:10:52</td>
+              <td>Polyclinic road, Pettengle Pet, Siddhartha Nagar</td>
+              <td>MG Road, Auto Nagar, Vijayawada</td>
+              <td><i class="fa fa-ellipsis-v" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td>01</td>
+              <td>9642949201</td>
+              <td>AP39 1234</td>
+              <td>15:10:52</td>
+              <td>Polyclinic road, Pettengle Pet, Siddhartha Nagar</td>
+              <td>MG Road, Auto Nagar, Vijayawada </td>
+              <td><i class="fa fa-ellipsis-v" aria-hidden="true"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
+  </div>

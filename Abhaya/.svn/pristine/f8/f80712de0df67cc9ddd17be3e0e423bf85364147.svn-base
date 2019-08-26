@@ -1,0 +1,85 @@
+<div class="row p-t-1 p-a-0 m-a-0">
+  <div class="col-md-8">
+    <h4>Device Management</h4>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Device Management</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="col-md-4 text-right">
+    <button type="button" class="btn btn-round" (click)="activateDevice()">Activate Device</button>
+    <button type="button" class="btn-search" (click)="btnShowFilters()"><i class="icon-ic_searchfilter"></i></button>
+  </div>
+</div>
+
+<div class="row p-a-0 m-a-0 page-filters" [ngClass]="{'show': showFilters == true}">
+  <div class="col-md-12">
+    <div class="row page-leftdiv">
+      <div class="col-md-4  p-r-0">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search RFID Number / DL Number">
+        </div>
+      </div>
+      <div class="col-md-4  p-r-0">
+        <div class="form-group">
+          <div class="input-group-append">
+            <input type="text" class="form-control" placeholder="From Date">
+            <button class="calendar btn-cal" type="button"> <i class="fa fa-calendar" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 p-r-0">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="To Date">
+          <button class="calendar btn-cal" type="button"> <i class="fa fa-calendar" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="page-rightdiv text-right">
+      <button class="active btn"><i class="icon-ic_search"></i> Search</button>
+    </div>
+  </div>
+</div>
+<div class="row p-a-0 m-a-0">
+  <div class="col-md-12">
+    <div class="box-rect-round">
+      <table class="abhaya-table m-t-3">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>IMEI No</th>
+            <th>IMSI No</th>
+            <th>Serial No</th>
+            <th>SIM No</th>
+            <th>IP Address</th>
+            <th>Mobile No</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let details of deviceData | paginate: { id: 'devicedetailspage', itemsPerPage: page.size, currentPage: p, totalItems: page.totalElements }">
+            <td>{{details.modemDeviceId}}</td>
+            <td>{{details.imeiNumber}}</td>
+            <td>{{details.imsiNumber}}</td>
+            <td>{{details.serialNumber}}</td>
+            <td>{{details.simNumber}}</td>
+            <td>{{details.ipAddress}}</td>
+            <td>{{details.mobileNumber}}</td>
+            <td>{{details.createdDate}}</td>
+            <td><i class="fa fa-ellipsis-v" (click)="deviceDetailspopup(details)" aria-hidden="true"></i></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <div style="margin:0px auto;">
+          <pagination-controls id="devicedetailspage" class="pagination" (pageChange)="pageChanged($event)"
+            maxSize="6" directionLinks="true" autoHide="true" responsive="true" previousLabel="Prev" nextLabel="Next">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

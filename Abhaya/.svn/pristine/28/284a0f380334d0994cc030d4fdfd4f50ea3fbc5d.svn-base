@@ -1,0 +1,15 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-devicecommunication',
+  templateUrl: './devicecommunication.component.html',
+  styleUrls: ['./devicecommunication.component.css']
+})
+export class DevicecommunicationComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

@@ -1,0 +1,62 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{pageTitle}}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6">
+      <h5>ID</h5>
+      <h4>{{selectedDeviceDetails.id}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>IMEI No</h5>
+      <h4>{{selectedDeviceDetails.imeiNumber}}</h4>
+    </div>
+  </div>
+  <div class="row p-t-2">
+    <div class="col-md-6">
+      <h5>Sim No</h5>
+      <h4>{{selectedDeviceDetails.simNumber}}</h4>
+    </div>
+    <div class="col-md-6">
+      <h5>Ip Address</h5>
+      <h4>{{selectedDeviceDetails.ipAddress}}</h4>
+    </div>
+  </div>
+<div class="row" *ngIf="simDetails.length>0">
+  <div class="col-md-12">
+      <form name="form" (ngSubmit)="f.form.valid && editDeviceDetails()" #f="ngForm" novalidate>
+        <table class="grid-table popup m-t-4 text-left">
+            <thead>
+              <tr>
+                  <th class="w-25p">IMSI No</th>
+                  <th class="w-25p">Provider</th>
+                  <th class="w-25p">Mobile No</th>
+                  <th class="w-25p">Status</th>
+              </tr>
+            </thead>
+            <tbody>              
+              <tr *ngFor="let details of simDetails; let idx = index">
+                  <td class="w-25p">{{details.imsiNumber}}</td>
+                  <td class="w-25p">{{details.telecomProvider}}</td>                  
+                  <td class="w-25p" *ngIf="viewDetails == false">                      
+                    <input type="text" class="form-control" [(ngModel)]="mobileNumber[idx]"  #mobileNumberctrl="ngModel" name="mobileNumber{{idx}}" [ngClass]="{ 'is-invalid': f.submitted && mobileNumberctrl.invalid }" minlength="{{ myConstanstsFactory.MOBILEMINLENGTH }}" maxlength="{{ myConstanstsFactory.MOBILEMAXLENGTH }}" pattern="{{ myConstanstsFactory.MOBILEPATTERN }}" />
+                      <div *ngIf="f.submitted && mobileNumberctrl.invalid" class="invalid-feedback">
+                          <!-- <div *ngIf="mobileNumberctrl.errors.required">Mobile number is required</div> -->
+                          <div *ngIf="mobileNumberctrl.errors?.minlength">Mobile number must be 10 characters</div>
+                          <div *ngIf="mobileNumberctrl.errors?.maxlength">Mobile number must be 10 characters</div>
+                          <div *ngIf="mobileNumberctrl.errors?.pattern">Mobile number must be numeric</div>
+                      </div>
+                  </td>
+                  <td class="w-25p" *ngIf="viewDetails == true">{{details.mobileNumber}}</td>
+                  <td class="w-25p">{{details.status}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button *ngIf="viewDetails == false" type="submit" class="btn-primary m-t-1">Update</button>
+        </form>
+  </div>
+</div>
+</div>

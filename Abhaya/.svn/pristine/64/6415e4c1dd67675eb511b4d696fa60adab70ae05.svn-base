@@ -1,0 +1,19 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SystempropertiesComponent } from './systemproperties.component';
+import { SystemmanagementRoutingModule } from "./systemmanagement-routing.module";
+
+@NgModule({
+  declarations: [SystempropertiesComponent],
+  imports: [
+    CommonModule,
+    NgxPaginationModule,
+    FormsModule,
+    NgbModule,
+    SystemmanagementRoutingModule
+  ]
+})
+export class SystemmanagementModule { }

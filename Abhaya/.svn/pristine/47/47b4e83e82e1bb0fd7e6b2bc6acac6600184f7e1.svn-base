@@ -1,0 +1,39 @@
+<div class="row p-t-1 ">
+  <div class="col-md-10">
+    <h4>{{pageTitle}}</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Trip Management</li>
+        <li class="breadcrumb-item active" aria-current="page">{{pageTitle}}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<div class="box-rect-round">
+  <div *ngIf="showDetails">
+  <div class="row" *ngFor="let tripData of tripDetailsData">
+    <div class="col-md-3">
+      <h6>Trip Type: {{tripData.identifier}}</h6>
+    </div>
+    <div class="col-md-9">
+      <h6>Source: {{tripData.sourceLocation}}</h6>
+    </div>
+    <div class="col-md-3 m-t-26">
+      <h6>IMEI No: {{tripData.imeiNumber}}</h6>
+    </div>
+    <div class="col-md-9 m-t-2">
+      <h6>Destination: {{tripData.destiLocation}}</h6>
+    </div>
+  </div>
+</div>
+  
+  <div class="floating-btn form-group" *ngIf="!endTripBtn">
+    <button type="button"  (click)="endTrip()" class="btn-primary m-t-1">End Trip</button>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <object type="text/html" [data]="url" class="map-frame" [ngClass]="{'large' : !showDetails}"> </object>
+    </div>
+  </div>
+</div>

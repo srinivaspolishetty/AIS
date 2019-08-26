@@ -1,0 +1,21 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MapviewComponent } from './mapview.component';
+import { MapviewRoutingModule } from './mapview-routing.module';
+import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction';
+
+@NgModule({
+    declarations: [MapviewComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        NgbModule,
+        MapviewRoutingModule,
+        AgmDirectionModule,
+        AgmCoreModule
+    ]
+})
+export class MapviewModule { }

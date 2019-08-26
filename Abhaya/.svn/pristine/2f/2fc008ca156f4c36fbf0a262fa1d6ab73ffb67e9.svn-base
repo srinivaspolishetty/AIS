@@ -1,0 +1,43 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class DeviceManagementServiceApi {
+
+    constructor(private httpClient: HttpClient) { }
+
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+            'Authorization': 'my-auth-token'
+        })
+    };
+    getDeviceDetails(page, size, searchDate: string, searchValue: string) {
+        let url = `${environment.apiBase}${environment.version}/deviceDetails`;
+        url += `?page=${page}&size=${size}&imeiNumber=${searchValue}&searchDate=${searchDate}`;
+        return this.httpClient.get(url);
+    }
+    getDeviceCommDetails(page: Number, size: Number, searchDate: string, searchValue: string, action:string, actionValue:string) {
+        let url = `${environment.apiBase}${environment.version}/deviceCommunication`;
+        url += `?page=${page}&size=${size}&imeiNumber=${searchValue}&searchDate=${searchDate}&${action}=${actionValue}`;
+        return this.httpClient.get(url);
+    }
+
+    updateDeviceDetails(deviceDetails) {
+        const url = `${environment.apiBase}${environment.version}/simDetails`;
+        return this.httpClient.post(url, deviceDetails, this.httpOptions);
+    }
+    getliveDevices() {
+        const url = `${environment.apiBase}${environment.version}/deviceCommunication?status=Communicating`;
+        return this.httpClient.get(`${url}`);
+    }
+    getPackedDetails(packetType, imeiNumber) {
+        let url = `${environment.apiBase}${environment.version}/${packetType}`;
+        url += `?imeiNumber=${imeiNumber}`;
+        return this.httpClient.get(`${url}`);
+    }
+}

@@ -1,0 +1,159 @@
+<div class="row p-t-1 page-header">
+  <div class="col-md-10">
+    <h4>Trip Details</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Trip Management</li>
+        <li class="breadcrumb-item active" aria-current="page">Trip Details</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-4 col-md-4 p-t-3">
+    <span class="text-white">Total Records : {{page.totalElements}} </span>
+  </div>
+  <div class="col-md-8 text-right p-a-0">
+    <div class="float-right">
+
+
+      <div class="switch-toggle p-t-1">
+      <div class="onoffswitch">
+          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" (click)="openclosedTrips()" id="myonoffswitch" checked>
+          <label class="onoffswitch-label" for="myonoffswitch">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"></span>
+          </label>
+      </div>
+    </div>
+
+
+    <div class="switch-toggle2 p-t-1">
+      <button  [ngClass]="{'active': tripType == 'TRIP'}" type="button" class="btn btn-left" (click)="changeTripType('TRIP')">Trips</button>
+      <button [ngClass]="{'active': tripType == 'GEOFENCING' }" type="button" class="btn btn-right" (click)="changeTripType('GEOFENCING')">Geofencing</button>
+    </div>
+
+
+    <div class="switch-search">
+      <span>
+          <button type="button" class="btn-refresh p-l-4" (click)="refreshPage()"><i class="fa fa-refresh" aria-hidden="true"></i>
+          </button>
+        <button type="button" class="btn-search" (click)="btnShowFilters()"><i class="icon-ic_searchfilter"></i></button>
+      </span>
+    </div>
+
+
+    </div>
+  </div>
+</div>
+<div class="row page-filters" [ngClass]="{'show': showFilters}">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-3"></div>
+      <div class="col-md-3">
+        <form #tripdetailsForm="ngForm">
+        <div class="form-group">
+          <input type="text"
+             class="form-control" name="IMEIcontrol"
+             #IMEIcontrol="ngModel"
+             placeholder="Search By IMEI No" 
+              [(ngModel)]="searchValue"
+          (keyup)="tripdetailsForm.valid && searchData()"
+          pattern="{{ validations.CMDEXE_VAL_PATTERN }}">
+          <span class="text-red help-block" *ngIf="IMEIcontrol.errors?.pattern">Special Characters are not allowed</span>
+          <button type="button" class="btn-close close" aria-label="Close">
+            <span aria-hidden="true" (click)="clearSearch();" *ngIf="showSearchClear">&times;</span>
+          </button>
+        </div>
+      </form>
+      </div>
+      <div class="col-md-3   ">
+        <div class="form-group">
+          <div class="input-group-append datepicker">
+            <input type="text" class="form-control" readOnly placeholder="yyyy-mm-dd" name="dp"
+            [(ngModel)]="model" (dateSelect)="changeDate();" ngbDatepicker #d="ngbDatepicker">
+            <button style="outline:none" class="btn-cal calendar"
+              (click)="d.toggle()" type="button"> <i class="fa fa-calendar" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-rect-round">
+      <table class="grid-table m-t-3">
+        <thead>
+          <tr>
+            <th>Trip ID</th>
+            <th>IMEI No</th>
+            <th width="280">Source</th>
+            <th *ngIf="tripType == 'TRIP'">Destination</th>
+            <th *ngIf="tripType == 'GEOFENCING'">Radius</th>
+            <th>Status</th>
+            <th width="160">Start Time</th>
+            <th width="160">End Time</th>
+            <th width="80">Trip Type</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="isDataExists">
+          <tr *ngFor="let details of tripDetailsData | paginate: { id: 'tripdetailspage', itemsPerPage: page.size, currentPage: p, totalItems: page.totalElements }">
+            <td>{{details.tripId}}</td>
+            <td>{{details.imeiNumber}}</td>
+            <td>{{details.sourceLocation}}</td>
+            <td *ngIf="tripType == 'TRIP'">{{details.destiLocation}}</td>
+            <td *ngIf="tripType == 'GEOFENCING'">{{details.radius}}</td>
+            <td *ngIf="details.tripClosed">Closed</td>
+            <td *ngIf="!details.tripClosed">Open</td>
+            <td>{{details.createdDate}}</td>
+            <td>{{details.closeTime == undefined ? '--' : details.closeTime}}</td>
+            <td>{{details.identifier}}</td>
+            <td>
+              <div class="actions-menu dropdown-click">
+                <button>
+                  <i class="icon-ic_more" aria-hidden="true"></i>
+                </button>
+                <ul>
+                  <li>
+                    <a title="View Location Details" class="icon" (click)="viewTrip(details)">
+                      <i class="icon-ic_view" aria-hidden="true"></i><span>View Details</span>
+                    </a>
+                  </li>
+                  <li *ngIf="!details.tripClosed">
+                    <a title="View Location Map" class="icon" (click)="endTrip(details)">
+                      <i class="icon-ic_mapview" aria-hidden="true"></i> <span>End Trip</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <div *ngIf="!isDataExists">
+            <div class="grid-nodata text-center text-red-medium">
+              <h6>No Data Found</h6>
+            </div>
+          </div>
+      </table>
+      <div class="row">
+          <div *ngIf="isDataExists" style="margin:0px auto;">
+            <pagination-controls id="tripdetailspage" class="pagination float-right" (pageChange)="pageChanged($event)" maxSize="6"
+              directionLinks="true" autoHide="true" responsive="true" previousLabel="Prev" nextLabel="Next">
+            </pagination-controls>
+            <div class="float-left p-t-1">
+                Page size :
+                <select (change)="changePageSize()" [(ngModel)]="pageSize">
+                  <option *ngFor="let number of pageSizeValues" value="{{number}}">{{number}}</option>
+                </select>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

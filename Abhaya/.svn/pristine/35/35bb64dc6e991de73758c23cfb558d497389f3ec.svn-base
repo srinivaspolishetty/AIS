@@ -1,0 +1,62 @@
+<div class="row p-t-1 ">
+  <div class="col-md-10">
+    <h4>Command Execute</h4>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Command Management</li>
+        <li class="breadcrumb-item active" aria-current="page">Command Execute</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-rect-round">
+      <div class="row p-t-6 p-r-4 m-a-0">
+        <div class="col-md-4 p-r-0 form-group">
+          <label>Execute Type</label>
+          <select class="form-control" [(ngModel)]="executeType">
+            <option value="">Select</option>
+            <option value="SET">SET</option>
+            <option value="GET">GET</option>
+          </select>
+        </div>
+        <div class="col-md-4 p-r-0 form-group">
+          <label>Command Type</label>
+          <select class="form-control" [(ngModel)]="commandType" (change)="commandChange()">
+            <option value="">Select</option>
+            <option value="activation">Activation</option>
+            <option value="health">Health</option>
+            <option value="properties">Properties</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 p-r-0 form-group">
+          <label>Payload</label>
+          <select class="form-control" [(ngModel)]="payLoad" (change)="payloadchange($event)">
+            <option value="">Select</option>
+            <option *ngFor="let data of payLoadData" [value]="data.payload">{{data.description}}</option>
+          </select>
+        </div>
+        <div class="col-md-4 p-r-0 form-group">
+          <label>IMEI Number</label>
+          <select class="form-control" [(ngModel)]="imeiNumber">
+            <option value="">Select IMEI Number</option>
+            <option *ngFor="let device of deviceData" value="{{device.imeiNumber}}">{{device.imeiNumber}}</option>
+          </select>
+        </div>
+        <div class="col-md-4 p-r-0 form-group" *ngIf="propertyValue == true">
+          <label>Value</label>
+          <input type="text" class="form-control" [(ngModel)]="payloadValue">
+        </div>
+      </div>
+
+      <div class="row m-a-0">
+        <div class="col-md-6 form-group">
+          <button type="submit" class="btn-primary m-t-1" (click)="executecommand()">Activate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

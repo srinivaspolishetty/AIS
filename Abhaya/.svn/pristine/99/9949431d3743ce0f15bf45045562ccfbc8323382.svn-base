@@ -1,0 +1,100 @@
+import { Component, OnInit } from '@angular/core';
+import { DeviceManagementServiceApi } from '../common/services/devicemanagement.api';
+import { DeviceDetails } from '../common/models/devicedetails.model';
+import { ToasterService } from '../common/services/toaster.service';
+import { CommandManagementServiceApi } from '../common/services/commandmanagement.api';
+import { Payload } from '../common/models/payload.model';
+import { Validations } from '../common/constants/validationconstants';
+
+@Component({
+    selector: 'app-commandexecutive',
+    templateUrl: './commandexecutive.component.html',
+    styleUrls: ['./commandexecutive.component.css']
+})
+export class CommandexecutiveComponent implements OnInit {
+
+    public deviceData: Array<DeviceDetails> = [];
+    public executeType: string;
+    public payLoad: string;
+    public imeiNumber: string;
+    public commandType: string;
+    public payloadValue: string;
+    public payloadDesc: String;
+    public payLoadData: Payload;
+    public propertyValue: Boolean = false;
+    public showBtn: Boolean = false;
+    public btnText: string;
+    public Validations: Object = Validations;
+
+    constructor(private devicemanagementApiService: DeviceManagementServiceApi,
+        private commandmanagementApiService: CommandManagementServiceApi,
+        private toasterService: ToasterService) {
+        this.executeType = '';
+        this.payLoad = '';
+        this.imeiNumber = '';
+        this.commandType = '';
+    }
+
+    ngOnInit() {
+        this.getAllDeviceDetails();
+    }
+
+    executechange(commandExeForm) {
+        this.getPayloadData(this.executeType);
+        this.payLoad = '';
+        this.imeiNumber = '';
+        this.payloadValue = '';
+        this.showBtn = true;
+        this.propertyValue = (this.executeType === 'SET');
+        this.btnText = this.executeType + ' Command';
+        // this.resetForm(commandExeForm);
+    }
+    payloadchange(event) {
+        const selectedOptions = event.target['options'];
+        const selectedIndex = selectedOptions.selectedIndex;
+        this.payloadDesc = selectedOptions[selectedIndex].text;
+    }
+    getPayloadData(type: string) {
+        this.commandmanagementApiService.getpayloadDetails(type)
+            .subscribe((data: Payload) => {
+                this.payLoadData = data;
+            });
+    }
+    getAllDeviceDetails() {
+        this.devicemanagementApiService.getDeviceDetails(0, '', '', '')
+            .subscribe((data: DeviceDetails) => {
+                this.deviceData = data.content;
+            });
+    }
+
+    resetForm(commandExeForm) {
+        commandExeForm.resetForm();
+        this.executeType = '';
+        this.payLoad = '';
+        this.imeiNumber = '';
+        this.commandType = '';
+        this.propertyValue = false;
+    }
+    executecommand(commandExeForm) {
+        const newobj = new Object(
+            {
+                header: this.executeType,
+                payload: this.payLoad + this.payloadValue,
+                imeiNumber: this.imeiNumber,
+                description: this.payloadDesc
+            }
+        );
+        this.commandmanagementApiService.sendActivationRequest(JSON.stringify(newobj))
+            .subscribe((data: any) => {
+                (data.code === 200) ?
+                    this.toasterService.showSuccess('bottom-right', 'Successfully Executed ' + this.executeType + ' Command.') :
+                    this.toasterService.showError('bottom-right', '' + data.message);
+                this.resetForm(commandExeForm);
+            }, error => {
+                console.log('error', error);
+
+            }
+            );
+    }
+
+}

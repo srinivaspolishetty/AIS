@@ -1,0 +1,49 @@
+var gulp = require('gulp'),
+   sass = require('gulp-sass');
+   consolidate = require('gulp-consolidate'),
+    iconfont = require('gulp-iconfont');
+
+
+
+gulp.task('styles', async function() {
+      gulp.watch('scss/**/*.scss', gulp.series('scsstocss'));
+      return
+});
+
+  gulp.task('scsstocss', async function() {
+    gulp.src('scss/**/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('./css/'))
+        .pipe(gulp.dest('../Abhaya/AbhayaUI/src/main/web/src/'))
+});
+
+
+gulp.task('iconfont', function () {
+  return gulp.src('SVG/*.svg')
+       .pipe(iconfont({
+           fontName: 'iconfont',
+           formats: ['ttf', 'eot', 'woff', 'woff2'],
+           appendCodepoints: true,
+           appendUnicode: false,
+           normalize: true,
+           fontHeight: 1000,
+           centerHorizontally: true
+       }))
+       .on('glyphs', function (glyphs, options) {
+           gulp.src('iconfonts/iconfont.css')
+               .pipe(consolidate('underscore', {
+                   glyphs: glyphs,
+                   fontName: options.fontName,
+                   fontDate: new Date().getTime()
+               }))
+               .pipe(gulp.dest('des'));
+
+           gulp.src('iconfonts/index.html')
+               .pipe(consolidate('underscore', {
+                   glyphs: glyphs,
+                   fontName: options.fontName
+               }))
+               .pipe(gulp.dest('des'));
+       })
+       .pipe(gulp.dest('des'));
+});

@@ -1,0 +1,23 @@
+import { Component, OnInit } from '@angular/core';
+import { User } from '../models/user.model';
+import { Router } from '@angular/router';
+
+@Component({
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css']
+})
+export class HeaderComponent implements OnInit {
+
+    public userDetails: User;
+    constructor(private router: Router) {
+        this.userDetails = JSON.parse(localStorage.getItem('userdetails'));
+        if ((this.userDetails === null) || (this.userDetails.username === '') || (this.userDetails.mobileNumber === '')) {
+            this.router.navigate(['/login']);
+        }
+    }
+
+    ngOnInit() {
+    }
+
+}

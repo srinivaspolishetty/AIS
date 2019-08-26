@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{pageTitle}}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <form #systempropertiesForm="ngForm" name="form" novalidate (ngSubmit)="systempropertiesForm.valid && saveSystemProperties()">
+        <div class="row">
+          <div class="col-md-6 form-group" [class.has-error]="systempropertiesForm.submitted && propertyNamecontrol.invalid">
+            <label class="required">Property Name</label>
+            <input type="text" class="form-control" [(ngModel)]="addeditsystemprop.propertyName" name="propertyName" required #propertyNamecontrol="ngModel">
+            <span class="help-block" *ngIf="systempropertiesForm.submitted && propertyNamecontrol.invalid">
+                Property name is required</span>
+          </div>          
+          <div class="col-md-6 form-group" [class.has-error]="systempropertiesForm.submitted && propertyValuecontrol.invalid"> 
+            <label class="required">Property Value</label>
+            <input type="text" class="form-control" [(ngModel)]="addeditsystemprop.propertyValue" name="propertyValue" required #propertyValuecontrol="ngModel">            
+          <span class="help-block" *ngIf="systempropertiesForm.submitted && propertyValuecontrol.invalid">
+              Property value is required</span>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+              <button type="submit" class="btn-primary m-t-1">SUBMIT</button>
+            </div>
+          </div>
+      </form>
+  </div>

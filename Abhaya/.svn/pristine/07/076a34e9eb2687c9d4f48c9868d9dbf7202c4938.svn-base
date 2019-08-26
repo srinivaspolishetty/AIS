@@ -1,0 +1,12 @@
+import { PageModel } from "./page.model";
+
+export class Commandlist {
+    public taskId: number;
+    public header: string;
+    public randomCode: string;
+    public replyGatewayNumber: string;
+    public payload: string;
+    public imeiNumber: string;
+    public page: PageModel;
+    public content : any;
+}

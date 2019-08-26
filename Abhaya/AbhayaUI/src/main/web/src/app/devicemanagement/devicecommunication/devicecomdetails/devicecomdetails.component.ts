@@ -1,0 +1,20 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceCommunication } from '../../../common/models/devicecommunication.model';
+
+@Component({
+    selector: 'app-devicecomdetails',
+    templateUrl: './devicecomdetails.component.html',
+    styleUrls: ['./devicecomdetails.component.css']
+})
+export class DevicecomdetailsComponent implements OnInit {
+
+    @Input() selectedComDetails: DeviceCommunication;
+
+    constructor(public activeModal: NgbActiveModal) { }
+
+    ngOnInit() {
+        console.log(this.selectedComDetails);
+    }
+
+}

@@ -1,0 +1,97 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { RawDataServiceApi } from "../common/services/rawdata.api";
+import { RawData } from "../common/models/rawdata.model";
+import { PageModel } from "../common/models/page.model";
+import { NgbDateFRParserFormatter } from "../common/directives/dateformatter";
+import { RawdatadetailsComponent } from "./rawdatadetails/rawdatadetails.component";
+
+@Component({
+  selector: 'app-rawdata',
+  templateUrl: './rawdata.component.html',
+  styleUrls: ['./rawdata.component.css']
+})
+export class RawdataComponent implements OnInit {
+
+  public showFilters : boolean = false;
+  public page: PageModel = new PageModel();
+  public p : number;
+  startDateModel: NgbDateStruct;
+  endDateModel: NgbDateStruct;
+  public formatStartDate : string;
+  public formatEndDate : string;
+  public searchValue : string = '';
+  public cvpType : string;
+  public packetType : string;
+  public showSearchClear = false;
+  public noData : boolean = false;
+  public pageSizeValues = [];
+  rawdata : Array<RawData> = [];
+  public pageSizeCount : number;
+  constructor(private rawdataApiService:RawDataServiceApi,
+    private modalService: NgbModal, private calendar: NgbCalendar,
+    private ngbDateFRParserFormatter: NgbDateFRParserFormatter) {
+    this.cvpType = '';
+    this.packetType = '';
+    this.pageSizeValues = [10,50,100,200];
+    this.pageSizeCount = 10;
+   }
+
+  ngOnInit() {
+    this.getAllRawData(0,this.pageSizeCount);
+  }
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+
+  changeDate() {
+    this.getAllRawData(0,this.pageSizeCount);
+  }
+  cvpChange(){
+    this.getAllRawData(0,this.pageSizeCount);
+  }
+  packetChange(){
+    this.getAllRawData(0,this.pageSizeCount);
+  }
+  searchData() {
+    this.getAllRawData(0,this.pageSizeCount);
+    this.showSearchClear = (this.searchValue.length > 4) ? true : false;
+  }
+  refreshPage() {
+    this.searchValue = '';
+    this.cvpType = '';
+    this.packetType = '';
+  }
+  clearSearch() {
+    this.searchValue = '';
+    this.showSearchClear = false;
+    this.searchData();
+  }
+  changePageSize(){
+    this.getAllRawData(0,this.pageSizeCount);
+  }
+  rawDataDetails(rawdetails) {
+    const modalRef = this.modalService.open(RawdatadetailsComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+    modalRef.componentInstance.selectedrawdata = rawdetails;
+  }
+
+
+  pageChanged(event) {
+    this.p = event;
+    this.getAllRawData(this.p-1,this.pageSizeCount);
+  }
+  getAllRawData(page:number, size:number) {
+    this.formatStartDate = this.ngbDateFRParserFormatter.format(this.startDateModel);
+    this.formatEndDate = this.ngbDateFRParserFormatter.format(this.endDateModel);
+    this.rawdataApiService.getrawdata(page, size, this.formatStartDate, this.formatEndDate, this.searchValue, this.cvpType)
+    .subscribe((data : RawData) => {
+      this.rawdata = data.content;
+      this.noData = (this.rawdata.length > 0);
+      this.page = data.page;
+      console.log(this.rawdata);
+    });
+  }
+
+}

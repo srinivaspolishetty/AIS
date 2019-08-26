@@ -1,0 +1,42 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Vehicledetails } from 'src/app/common/models/vehicle.model';
+import { VehicleManagementServiceApi } from "../../common/services/vehiclemanagement.api";
+import { ToasterService } from "../../common/services/toaster.service";
+
+@Component({
+  selector: 'app-addeditvehicle',
+  templateUrl: './addeditvehicle.component.html',
+  styleUrls: ['./addeditvehicle.component.css']
+})
+export class AddeditvehicleComponent implements OnInit {
+  @Input() selectVehicleDetails : Vehicledetails;
+  public addeditvehicle;
+
+  constructor(public activeModal: NgbActiveModal, private vehicleDetailsApi : VehicleManagementServiceApi, private toasterService: ToasterService ) { }
+
+  ngOnInit() {
+    if(this.selectVehicleDetails !== undefined){
+      this.addeditvehicle = this.selectVehicleDetails;
+    }
+    else{
+      this.addeditvehicle = '';
+    }
+  }
+  onSubmit() {
+    this.activeModal.close();
+  }
+
+  saveVehicle(){
+    this.vehicleDetailsApi.addeditvehicle(JSON.stringify(this.addeditvehicle))
+      .subscribe((data: any) => {
+        this.activeModal.close();
+        this.toasterService.showSuccess('bottom-right', 'Trip has been successfully closed ');
+      }, error => {
+        this.activeModal.close();
+        console.log('error', error);
+        this.toasterService.showError('bottom-right', 'ERROR: Unable to close the Trip.');
+      }
+      );
+  }
+}

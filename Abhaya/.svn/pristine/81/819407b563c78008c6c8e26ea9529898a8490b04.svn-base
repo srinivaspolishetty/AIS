@@ -1,0 +1,131 @@
+<div class="row p-t-1 page-header">
+  <div class="col-md-10">
+    <h4>Health Management</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Health Management</li>
+        </ol>
+      </nav>
+  </div>
+</div>
+<div class="row">
+  <div class="col-9 col-sm-10 col-md-10 p-t-3">
+    <span class="text-white">Total Records : {{page.totalElements}}</span>
+  </div>
+  <div class="col-3 col-sm-2 col-md-2 text-right">
+      <button type="button" class="btn-refresh" (click)="refreshPage()"><i class="fa fa-refresh" aria-hidden="true"></i>
+      </button>
+     <button type="button" class="btn-search" (click)="btnShowFilters()"><i class="icon-ic_searchfilter"></i></button>
+  </div>
+</div>
+<div class="row page-filters" [ngClass]="{'show': showFilters}">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-3">
+        <form #healthmonitoringForm="ngForm">
+        <div class="form-group">
+          <input type="text" class="form-control" 
+          placeholder="Search By IMEI No"
+          name="IMEI" #IMEIcontrol="ngModel"
+           [(ngModel)]="searchValue"
+            (keyup)="searchData();" pattern="{{ Validations.CMDEXE_VAL_PATTERN }}">
+          <!-- <button type="button" class="btn-close close" aria-label="Close">
+            <span aria-hidden="true" (click)="clearSearch();" *ngIf="showSearchClear">&times;</span>
+          </button> -->
+          <span class="text-red help-block" *ngIf="IMEIcontrol.errors?.pattern">Special Characters are not allowed</span>
+        </div>
+      </form>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="input-group-append datepicker">
+            <input type="text" class="form-control" readOnly placeholder="Start Date" name="dp"
+              [(ngModel)]="startDateModel" (dateSelect)="changeDate();" ngbDatepicker #startDate="ngbDatepicker">
+            <button style="outline:none" class="btn-cal calendar" (click)="startDate.toggle()" type="button"> <i class="fa fa-calendar"
+                aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="input-group-append datepicker">
+            <input type="text" class="form-control" readOnly placeholder="End Date" name="dp"
+              [(ngModel)]="endDateModel" (dateSelect)="changeDate();" ngbDatepicker #endDate="ngbDatepicker">
+            <button style="outline:none" class="btn-cal calendar" (click)="endDate.toggle()" type="button"> <i class="fa fa-calendar"
+                aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-rect-round o-x-auto">
+      <table class="grid-table m-t-3">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>IMEI No</th>
+            <th>Battery %</th>
+            <th>Digital IO Status</th>
+            <th>Low Battery Thr Value</th>
+            <th>Memory %</th>
+            <th>Network Date</th>
+            <th>Network Time</th>
+            <th>Vendor ID</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="isDataExists" >
+          <tr *ngFor="let details of healthMonitoringdata | paginate: { id: 'healthmonitoringpage', itemsPerPage: page.size, currentPage: p, totalItems: page.totalElements }">
+            <td>{{details.hmpPacketDataId}}</td>
+            <td>{{details.imeiNumber}}</td>
+            <td>{{details.batteryPercentage}}</td>
+            <td>{{details.digitalIOStatus}}</td>
+            <td>{{details.lowBatteryThrValue}}</td>
+            <td>{{details.memoryPercentage}}</td>
+            <td>{{details.networkDate}}</td>
+            <td>{{details.networkTime}}</td>
+            <td>{{details.vendorId}}</td>
+            <td>
+                <div class="actions-menu dropdown-click">
+                    <button>
+                      <i class="icon-ic_more" aria-hidden="true"></i>
+                    </button>
+                    <ul>
+                      <li>
+                        <a title="View Health  Details" class="icon" (click)="healthDetails(details)">
+                          <i class="icon-ic_view" aria-hidden="true"></i><span>View Details</span>
+                        </a>
+                      </li>
+                  
+                    </ul>
+                    </div>
+                  </td>
+          </tr>
+        </tbody>
+        <div *ngIf="!isDataExists">
+            <div class="grid-nodata text-center text-red-medium">
+              <h6>No Data Found</h6>
+            </div>
+          </div>
+      </table>
+      <div class="row">
+          <div *ngIf="isDataExists" style="margin:0px auto;">
+            <pagination-controls id="healthmonitoringpage" class="pagination float-right" (pageChange)="pageChanged($event)" maxSize="6"
+              directionLinks="true" autoHide="true" responsive="true" previousLabel="Prev" nextLabel="Next">
+            </pagination-controls>
+            <div class="float-left p-t-1">
+                Page size :
+                <select (change)="changePageSize()" [(ngModel)]="pageSize">
+                  <option *ngFor="let number of pageSizeValues" value="{{number}}">{{number}}</option>
+                </select>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

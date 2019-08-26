@@ -1,0 +1,184 @@
+<button class="btn-menu" type="button" [ngClass]="{'collapsed' : showmenu== false}" (click)="showhide($event)">
+    <i *ngIf="showmenu== false" class="icon-ic_close" aria-hidden="true"></i>
+    <i *ngIf="showmenu== true" class="icon-ic_menu_bar" aria-hidden="true"></i>
+</button>
+<div class="abhaya-logo" [ngClass]="{'small' : showmenu== false}"></div>
+<div>
+    <div *ngIf="showmenu== true" class="menu-block">
+        <a [routerLink]="['/dashboard']" routerLinkActive="active" (click)="hidesubmenu()">
+            <i class="icon-ic_dashboard"></i>
+            <br> <span>DASHBOARD</span></a>
+
+        <a [routerLink]="['/mapview']" routerLinkActive="active" (click)="hidesubmenu()">
+            <i class="icon-ic_mapview"></i>
+            <br> <span>MAP VIEW</span></a>
+
+        <a [routerLink]="['/devicereport']" routerLinkActive="active" (click)="hidesubmenu()">
+            <i class="icon-ic_devicereport"></i>
+            <br> <span>DEVICE REPORT</span></a>
+
+    </div>
+    <ul [ngClass]="{'show m-t-3': showmenu== true}" class="menu" id="accordionEx" role="tablist"
+        aria-multiselectable="true">
+
+        <li *ngIf="showmenu== false" class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a [routerLink]="['/dashboard']" routerLinkActive="active" (click)="hidesubmenu($event)">
+                <i class="icon-ic_dashboard"></i>
+                <span>Dashboard</span></a>
+        </li>
+        <li *ngIf="showmenu== false" class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a [routerLink]="['/mapview']" routerLinkActive="active" (click)="hidesubmenu($event)">
+                <i class="icon-ic_mapview"></i>
+                <span>Map View</span></a>
+        </li>
+        <li *ngIf="showmenu== false" class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a [routerLink]="['/devicereport']" routerLinkActive="active" (click)="hidesubmenu($event)">
+                <i class="icon-ic_devicereport"></i>
+                <span>Device Report</span></a>
+        </li>
+
+
+        <li class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a (click)="hidesubmenu($event)" [routerLink]="['/locationmonitoring']" routerLinkActive="active"
+                href="#drivermanagementbody"><i class="icon-ic_mapview" aria-hidden="true"></i> <span>Location
+                    Monitoring</span></a>
+        </li>
+
+        <li class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a (click)="hidesubmenu($event)" [routerLink]="['/healthmonitoring']" routerLinkActive="active"
+                href="#drivermanagementbody"><i class="icon-ic_EmergencyManagement" aria-hidden="true"></i> <span>Health
+                    Monitoring</span></a>
+        </li>
+        <li class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a (click)="hidesubmenu($event)" [routerLink]="['/emergencymonitoring']" routerLinkActive="active"
+                href="#drivermanagementbody"><i class="icon-ic_LocationManagement" aria-hidden="true"></i>
+                <span>Emergency Monitoring</span></a>
+        </li>
+        <li class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a [ngClass]="{'active': activelink=='devicemanagementbody'}" id="devicemanagement" data-toggle="collapse"
+                data-parent="#accordionEx" href="#devicemanagementbody"><i class="icon-ic_DriverManagement"
+                    aria-hidden="true"></i> <span>Device Management</span><i class="icon-ic_arrow_down"
+                    aria-hidden="true"></i></a>
+            <ul id="devicemanagementbody" class="collapse menu-sub" aria-labelledby="devicemanagement"
+                data-parent="#accordionEx">
+                <li class="menu-sub-item"><a [routerLink]="['/devicehealthmanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_DriverManagement" aria-hidden="true"></i>
+                        Device Details</a></li>
+                <li class="menu-sub-item"><a [routerLink]="['/drivermanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_driverduty" aria-hidden="true"></i>
+                        Device Communication</a></li>
+            </ul>
+        </li>
+        <li class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a (click)="hidesubmenu($event)" [routerLink]="['/rawdata']" routerLinkActive="active"
+                href="#drivermanagementbody"><i class="icon-ic_rawData" aria-hidden="true"></i> <span>Raw
+                    Data</span></a>
+        </li>
+        <li class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a (click)="hidesubmenu($event)" [routerLink]="['/users']" routerLinkActive="active"
+                href="#drivermanagementbody"><i class="icon-ic_UserManagement" aria-hidden="true"></i>
+                <span>Users</span></a>
+        </li>
+
+        <!-- <li class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a [ngClass]="{'active': activelink=='userprofilebody'}" id="userprofile" data-toggle="collapse"
+                data-parent="#accordionEx" href="#userprofilebody"><i class="icon-ic_VehicleManagement"
+                    aria-hidden="true"></i> <span>Vehicle Management</span><i class="icon-ic_arrow_down"
+                    aria-hidden="true"></i></a>
+            <ul id="userprofilebody" class="collapse menu-sub" aria-labelledby="userprofile" data-parent="#accordionEx">
+                <li class="menu-sub-item"><a [routerLink]="['/usermanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_VehicleManagement" aria-hidden="true"></i>
+                        Vehicles</a></li>
+                <li class="menu-sub-item"><a [routerLink]="['/usermanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_SuspiciousVehicles" aria-hidden="true"></i>
+                        Suspicious Vehicles</a></li>
+            </ul>
+        </li>
+        <li class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a [ngClass]="{'active': activelink=='drivermanagementbody'}" id="drivermanagement" data-toggle="collapse"
+                data-parent="#accordionEx" href="#drivermanagementbody"><i class="icon-ic_DriverManagement"
+                    aria-hidden="true"></i> <span>Driver Management</span><i class="icon-ic_arrow_down"
+                    aria-hidden="true"></i></a>
+            <ul id="drivermanagementbody" class="collapse menu-sub" aria-labelledby="drivermanagement"
+                data-parent="#accordionEx">
+                <li class="menu-sub-item"><a [routerLink]="['/drivermanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_DriverManagement" aria-hidden="true"></i>
+                        Drivers</a></li>
+                <li class="menu-sub-item"><a [routerLink]="['/drivermanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_driverduty" aria-hidden="true"></i>
+                        Driver Duty Details</a></li>
+            </ul>
+        </li>
+        <li class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a [ngClass]="{'active': activelink=='tripmanagementbody'}" id="tripmanagement" data-toggle="collapse"
+                data-parent="#accordionEx" href="#tripmanagementbody"><i class="icon-ic_TripManagement"
+                    aria-hidden="true"></i> <span>Trip Management</span><i class="icon-ic_arrow_down"
+                    aria-hidden="true"></i></a>
+            <ul id="tripmanagementbody" class="collapse menu-sub" aria-labelledby="tripmanagement"
+                data-parent="#accordionEx">
+                <li class="menu-sub-item"><a [routerLink]="['/tripmanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_TripManagement" aria-hidden="true"></i>
+                        Vehicle Tracking</a></li>
+                <li class="menu-sub-item"><a [routerLink]="['/tripmanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_tripdetails" aria-hidden="true"></i>Trip
+                        Details</a></li>
+                <li class="menu-sub-item"><a [routerLink]="['/tripmanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_rootdeviation" aria-hidden="true"></i>
+                        Route Deviation</a></li>
+                <li class="menu-sub-item"><a [routerLink]="['/tripmanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_panicalert" aria-hidden="true"></i>
+                        Panic Alerts</a></li>
+                <li class="menu-sub-item"><a [routerLink]="['/tripmanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_video_streaming" aria-hidden="true"></i>
+                        Video Streaming</a></li>
+            </ul>
+        </li>
+        <li class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a [ngClass]="{'active': activelink=='devicemanagementbody'}" id="devicemanagement" data-toggle="collapse"
+                data-parent="#accordionEx" href="#devicemanagementbody"><i class="icon-ic_DeviceManagement"
+                    aria-hidden="true"></i> <span>Device Management</span><i class="icon-ic_arrow_down"
+                    aria-hidden="true"></i></a>
+            <ul id="devicemanagementbody" class="collapse menu-sub" aria-labelledby="devicemanagement"
+                data-parent="#accordionEx">
+                <li class="menu-sub-item"><a [routerLink]="['/devicemanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_DeviceManagement" aria-hidden="true"></i> Device
+                        Details</a></li>
+                <li class="menu-sub-item"><a [routerLink]="['/devicemanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_Reports" aria-hidden="true"></i> Device
+                        Report</a></li>
+                <li class="menu-sub-item"><a [routerLink]="['/devicemanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_CommunicationDetails" aria-hidden="true"></i>
+                        Communication Details</a></li>
+                <li class="menu-sub-item"><a [routerLink]="['/devicemanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_Movement_Details" aria-hidden="true"></i>
+                        Movement Details</a></li>
+                <li class="menu-sub-item"><a [routerLink]="['/devicemanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_rawData" aria-hidden="true"></i> Raw
+                        Data</a></li>
+            </ul>
+        </li>
+        <li class="menu-item" [ngClass]="{'menu-small' : showmenu== false}">
+            <a [ngClass]="{'active': activelink=='usermanagementbody'}" id="usermanagement" data-toggle="collapse"
+                data-parent="#accordionEx" href="#usermanagementbody"><i class="icon-ic_UserManagement"
+                    aria-hidden="true"></i> <span>Users Management</span>
+                <i *ngIf="activelink!=='usermanagementbody'" class="icon-ic_arrow_down" aria-hidden="true"></i>
+                <i *ngIf="activelink =='usermanagementbody'" class="icon-ic_arrow_up" aria-hidden="true"></i>
+            </a>
+            <ul id="usermanagementbody" class="collapse menu-sub" aria-labelledby="usermanagement"
+                data-parent="#accordionEx">
+                <li class="menu-sub-item"><a [routerLink]="['/usermanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_user" aria-hidden="true"></i> User</a>
+                </li>
+                <li class="menu-sub-item"><a [routerLink]="['/usermanagement']" routerLinkActive="active"
+                        (click)="hidesubmenu($event)"><i class="icon-ic_Admin" aria-hidden="true"></i>
+                        Administrative Hierarchy</a></li>
+            </ul>
+        </li> -->
+    </ul>
+</div>
+<!-- <footer class="footer">
+    <div class=" footer-details" [ngClass]="{'footer-small' : showmenu== false}">
+        <span>Developed By</span>
+        <img src="assets/images/logo_otsi.png">
+    </div>
+</footer> -->

@@ -1,0 +1,67 @@
+<div class="modal-header">
+  <h5 class="modal-title">Add Device</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+ 
+    <div class="row" *ngIf="!viewdata">
+        <form #addDeviceForm="ngForm" name="form" novalidate (ngSubmit)="addDeviceForm.valid && saveDevice(addDevice)">
+        <div class="row m-a-0">
+            <div class="col-md-4 form-group" [class.has-error]="addDeviceForm.submitted && imeiNumbercontrol.invalid" >
+                <label class="required">IMEI Number</label>
+                <input type="text" class="form-control" [(ngModel)]="imeiNumber"  name="imeiNumber" required #imeiNumbercontrol="ngModel" pattern="{{ Validations.MOBILE_PATTERN }}" />
+                <span class="help-block" *ngIf="addDeviceForm.submitted && imeiNumbercontrol.errors?.required">
+                    IMEI Number is Required</span>
+                <span class="help-block" *ngIf="addDeviceForm.submitted && imeiNumbercontrol.errors?.pattern">
+                    </span>
+                    <span class="help-block" *ngIf="!(imeiNumbercontrol.errors?.minlength) && (addDeviceForm.submitted && imeiNumbercontrol.errors?.pattern)">IMEI number must be numeric</span>
+              </div>
+          <div class="col-md-4 form-group" [class.has-error]="addDeviceForm.submitted && simNumbercontrol.invalid" >
+            <label class="required">SIM Number</label>
+            <input type="text" class="form-control" [(ngModel)]="simNumber" name="simNumber" required #simNumbercontrol="ngModel" pattern="{{ Validations.MOBILE_PATTERN }}" />
+            <span class="help-block" *ngIf="addDeviceForm.submitted && simNumbercontrol.errors?.required">
+                Sim number is required</span>
+            <span class="help-block" *ngIf="addDeviceForm.submitted && simNumbercontrol.errors?.pattern">
+                </span>
+                <span class="help-block" *ngIf="!(simNumbercontrol.errors?.minlength) && (addDeviceForm.submitted && simNumbercontrol.errors?.pattern)">SIM number must be numeric</span>
+          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4 form-group" [class.has-error]="addDeviceForm.submitted && imsiNumbercontrol.invalid" >
+            <label class="required">IMSI Number</label>
+            <input type="text" class="form-control" [(ngModel)]="imsiNumber" name="imsiNumber" required #imsiNumbercontrol="ngModel" pattern="{{ Validations.MOBILE_PATTERN }}" />
+            <span class="help-block" *ngIf="addDeviceForm.submitted && imsiNumbercontrol.errors?.required">
+                IMSI number is required</span>
+            <span class="help-block" *ngIf="addDeviceForm.submitted && imsiNumbercontrol.errors?.pattern">
+                </span>
+                <span class="help-block" *ngIf="!(imsiNumbercontrol.errors?.minlength) && (addDeviceForm.submitted && imsiNumbercontrol.errors?.pattern)">IMSI number must be numeric</span>
+          </div>
+          <div class="col-md-4 form-group" [class.has-error]="addDeviceForm.submitted && providerNamecontrol.invalid" >
+            <label class="required">Provider</label>
+            <input type="text" class="form-control" [(ngModel)]="provider" name="provider" required #providerNamecontrol="ngModel" pattern="{{ Validations.VEHICLE_PATTERN }}" />
+            <span class="help-block" *ngIf="addDeviceForm.submitted && providerNamecontrol.errors?.required">
+                Provider Name is required</span>
+              <span class="help-block" *ngIf="addDeviceForm.submitted && providerNamecontrol.errors?.pattern">
+                    Value must be alpha numeric</span>
+          </div>
+         
+          <div class="col-md-4 form-group" [class.has-error]="addDeviceForm.submitted && mobileNumber.invalid" >
+            <label class="required">Mobile Number</label>
+            <input type="text" class="form-control" [(ngModel)]="newmobileNumber"  name="mobileNumber" #mobileNumber="ngModel"  minlength="{{ Validations.MOBILE_MIN_LENGTH }}" required maxlength="{{ Validations.MOBILE_MAX_LENGTH }}" pattern="{{ Validations.MOBILE_PATTERN }}" />
+            <span class="help-block" *ngIf="addDeviceForm.submitted && mobileNumber.errors?.required">
+                Mobile Number is required</span>
+            <span class="help-block" *ngIf="!(mobileNumber.errors?.required) && (addDeviceForm.submitted && mobileNumber.errors?.minlength)">Mobile number must be 10 characters</span>
+            <span class="help-block" *ngIf="!(mobileNumber.errors?.required) && (addDeviceForm.submitted && mobileNumber.errors?.maxlength)">Mobile number must be 10 characters</span>
+            <span class="help-block" *ngIf="!(mobileNumber.errors?.minlength) && (addDeviceForm.submitted && mobileNumber.errors?.pattern)">Mobile number must be numeric</span>
+          </div>
+        </div>
+    
+        <div class="row m-a-0">
+          <div class="col-md-6 form-group">
+            <button type="submit" class="btn-primary m-t-1">SUBMIT</button>
+          </div>
+        </div>
+      </form>
+      </div>
+</div>

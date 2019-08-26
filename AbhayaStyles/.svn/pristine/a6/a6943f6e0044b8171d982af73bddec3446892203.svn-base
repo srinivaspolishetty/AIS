@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>iconfont - glyphs list</title>
+
+	<link rel="stylesheet" href="iconfont.css">
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: Helvetica, Verdana, sans-serif;
+		}
+
+		.wrap {
+			max-width: 800px;
+			margin: 0 auto;
+		}
+
+		.glyphs-list {
+			margin: 0;
+			padding: 0;
+			list-style: none
+		}
+
+		.glyphs-list li {
+			float: left;
+			width: 25%;
+			padding: 16px;
+			text-align: center;
+		}
+
+		.glyphs-list li:hover {
+			cursor: default;
+			background: #fafafa;
+		}
+
+		.glyphs-list li:nth-child(4n+1) {
+			clear: left;
+		}
+
+		.glyphs-list i {
+			font-size: 48px;
+			line-height: 1;
+		}
+
+		.glyphs-list code {
+			display: block;
+			margin: 16px 0 0;
+		}
+
+		.glyphs-list input {
+			display: block;
+			width: 100%;
+			margin: 16px 0 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<h1>iconfont - glyphs list</h1>
+		<ul class="glyphs-list">
+			
+			<li>
+				<i class="icon-Abhaya_logo"></i>
+				<code>\ea01</code>
+				<input type="text" value="icon-Abhaya_logo"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_dashboard"></i>
+				<code>\ea02</code>
+				<input type="text" value="icon-ic_dashboard"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_dashboard_s"></i>
+				<code>\ea03</code>
+				<input type="text" value="icon-ic_dashboard_s"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_DeviceManagement"></i>
+				<code>\ea04</code>
+				<input type="text" value="icon-ic_DeviceManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_DeviceManagement_s"></i>
+				<code>\ea05</code>
+				<input type="text" value="icon-ic_DeviceManagement_s"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_devicereport"></i>
+				<code>\ea06</code>
+				<input type="text" value="icon-ic_devicereport"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_devicereport_s"></i>
+				<code>\ea07</code>
+				<input type="text" value="icon-ic_devicereport_s"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_DriverManagement"></i>
+				<code>\ea08</code>
+				<input type="text" value="icon-ic_DriverManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_DriverManagement_s"></i>
+				<code>\ea09</code>
+				<input type="text" value="icon-ic_DriverManagement_s"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_mapview"></i>
+				<code>\ea0a</code>
+				<input type="text" value="icon-ic_mapview"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_mapview_s"></i>
+				<code>\ea0b</code>
+				<input type="text" value="icon-ic_mapview_s"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_PanicAlerts"></i>
+				<code>\ea0c</code>
+				<input type="text" value="icon-ic_PanicAlerts"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_PanicAlerts_device"></i>
+				<code>\ea0d</code>
+				<input type="text" value="icon-ic_PanicAlerts_device"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_PanicAlerts_mobile"></i>
+				<code>\ea0e</code>
+				<input type="text" value="icon-ic_PanicAlerts_mobile"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_PanicAlerts_video"></i>
+				<code>\ea0f</code>
+				<input type="text" value="icon-ic_PanicAlerts_video"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_search"></i>
+				<code>\ea10</code>
+				<input type="text" value="icon-ic_search"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_TripManagement"></i>
+				<code>\ea11</code>
+				<input type="text" value="icon-ic_TripManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_TripManagement_s"></i>
+				<code>\ea12</code>
+				<input type="text" value="icon-ic_TripManagement_s"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_TripTracking"></i>
+				<code>\ea13</code>
+				<input type="text" value="icon-ic_TripTracking"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_UserManagement"></i>
+				<code>\ea14</code>
+				<input type="text" value="icon-ic_UserManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_UserManagement_s"></i>
+				<code>\ea15</code>
+				<input type="text" value="icon-ic_UserManagement_s"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_VehicleManagement"></i>
+				<code>\ea16</code>
+				<input type="text" value="icon-ic_VehicleManagement"/>
+			</li>
+			
+			<li>
+				<i class="icon-ic_VehicleManagement_s"></i>
+				<code>\ea17</code>
+				<input type="text" value="icon-ic_VehicleManagement_s"/>
+			</li>
+			
+		</ul>
+	</div>
+</body>
+</html>

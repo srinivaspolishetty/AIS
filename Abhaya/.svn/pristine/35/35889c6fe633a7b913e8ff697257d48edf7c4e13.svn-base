@@ -1,0 +1,13 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MapviewComponent } from './mapview.component';
+import { MapviewRoutingModule } from "./mapview-routing.module";
+
+@NgModule({
+  declarations: [MapviewComponent],
+  imports: [
+    CommonModule,
+    MapviewRoutingModule
+  ]
+})
+export class MapviewModule { }

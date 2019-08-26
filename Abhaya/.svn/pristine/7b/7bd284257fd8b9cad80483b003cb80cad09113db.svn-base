@@ -1,0 +1,16 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { TrackdeviceComponent } from "./trackdevice.component";
+import { TripcreateComponent } from "./tripcreate/tripcreate.component";
+
+const routes: Routes = [
+  { path: '', redirectTo: 'trackdevice', pathMatch: 'full' },
+  { path: 'trackdevice', component: TrackdeviceComponent, },
+  { path: 'tripcreate', component: TripcreateComponent, }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class TrackmanagementRoutingModule { }

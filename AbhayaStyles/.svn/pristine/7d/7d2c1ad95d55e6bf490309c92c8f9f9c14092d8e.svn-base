@@ -1,0 +1,13 @@
+.modal{
+    &-content{
+        background-color: $white;
+        padding:20px !important;
+        padding-left:0px;
+    }
+    &-header{
+        padding:20px;
+        font-size: 18px;
+        font-weight: bold;
+        color:$abhaya-primary-color;
+    }
+}

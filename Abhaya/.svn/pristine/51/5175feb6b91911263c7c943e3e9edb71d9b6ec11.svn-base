@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h5 class="modal-title">Vehicle Mapping</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form #vehiclemappingForm="ngForm" name="form" novalidate (ngSubmit)="vehiclemappingForm.valid && saveVehicleMap()">
+  <div class="row">
+      <div class="col-md-6 form-group" [class.has-error]="vehiclemappingForm.submitted && vehicleRegNumbercontrol.invalid" >
+        <label class="required">Vehicle Number</label>
+        <input type="text" readonly class="form-control" [(ngModel)]="VehicleMapDetails.vehicleRegNumber"  name="vehicleRegNumber" required #vehicleRegNumbercontrol="ngModel">
+        <span class="help-block" *ngIf="vehiclemappingForm.submitted && vehicleRegNumbercontrol.invalid">
+            Vehicle number is required</span>
+      </div>
+      <div class="col-md-6 form-group" [class.has-error]="vehiclemappingForm.submitted && imeiNumbercontrol.invalid">
+        <label class="required">IMEI Number</label>
+        <input type="text" class="form-control" [(ngModel)]="VehicleMapDetails.imeiNumber"  name="imeiNumber" required #imeiNumbercontrol="ngModel">
+        <span class="help-block" *ngIf="vehiclemappingForm.submitted && imeiNumbercontrol.invalid">
+            IMEI number is required</span>
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <button type="submit" class="btn-primary m-t-1">SUBMIT</button>
+        </div>
+      </div>
+      

@@ -1,0 +1,109 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{pageTitle}}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('refreshContent')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row" *ngIf="!viewdata">
+    <form #addeditVehicleForm="ngForm" name="form" novalidate (ngSubmit)="addeditVehicleForm.valid && saveVehicle(addeditvehicle)">
+    <div class="row m-a-0">
+      <div class="col-md-4 form-group" [class.has-error]="addeditVehicleForm.submitted && chassisNumbercontrol.invalid" >
+        <label class="required">Chassis Number</label>
+        <input type="text" class="form-control" [(ngModel)]="addeditvehicle.chassisNumber" name="chassisNumber" required #chassisNumbercontrol="ngModel" pattern="{{ Validations.VEHICLE_PATTERN }}" />
+        <span class="help-block" *ngIf="addeditVehicleForm.submitted && chassisNumbercontrol.errors?.required">
+            Chassis number is required</span>
+        <span class="help-block" *ngIf="addeditVehicleForm.submitted && chassisNumbercontrol.errors?.pattern">
+            Value must be alpha numeric</span>
+      </div>
+      <div class="col-md-4 form-group" [class.has-error]="addeditVehicleForm.submitted && engineNumbercontrol.invalid" >
+        <label class="required">Engine Number</label>
+        <input type="text" class="form-control" [(ngModel)]="addeditvehicle.engineNumber" name="engineNumber" required #engineNumbercontrol="ngModel" pattern="{{ Validations.VEHICLE_PATTERN }}" />
+        <span class="help-block" *ngIf="addeditVehicleForm.submitted && engineNumbercontrol.errors?.required">
+            Engine number is required</span>
+        <span class="help-block" *ngIf="addeditVehicleForm.submitted && engineNumbercontrol.errors?.pattern">
+            Value must be alpha numeric</span>
+      </div>
+      <div class="col-md-4 form-group" [class.has-error]="addeditVehicleForm.submitted && vehicleMakecontrol.invalid" >
+        <label class="required">Vehicle Make</label>
+        <input type="text" class="form-control" [(ngModel)]="addeditvehicle.vehicleMake" name="vehicleMake" required #vehicleMakecontrol="ngModel" pattern="{{ Validations.VEHICLE_PATTERN }}" />
+        <span class="help-block" *ngIf="addeditVehicleForm.submitted && vehicleMakecontrol.errors?.required">
+            Vehicle Make is required</span>
+        <span class="help-block" *ngIf="addeditVehicleForm.submitted && vehicleMakecontrol.errors?.pattern">
+            Value must be alpha numeric</span>
+      </div>
+      <div class="col-md-4 form-group" [class.has-error]="addeditVehicleForm.submitted && vehicleModelcontrol.invalid" >
+        <label class="required">Vehicle Model</label>
+        <input type="text" class="form-control" [(ngModel)]="addeditvehicle.vehicleModel" name="vehicleModel" required #vehicleModelcontrol="ngModel" pattern="{{ Validations.VEHICLE_PATTERN }}" />
+        <span class="help-block" *ngIf="addeditVehicleForm.submitted && vehicleModelcontrol.errors?.required">
+            Vehicle Model is required</span>
+          <span class="help-block" *ngIf="addeditVehicleForm.submitted && vehicleModelcontrol.errors?.pattern">
+                Value must be alpha numeric</span>
+      </div>
+      <div class="col-md-4 form-group" [class.has-error]="addeditVehicleForm.submitted && vehicleRegNumbercontrol.invalid" >
+        <label class="required">Vehicle Registration No</label>
+        <input type="text" class="form-control" [(ngModel)]="addeditvehicle.vehicleRegNumber"  name="vehicleRegNumber" required #vehicleRegNumbercontrol="ngModel" pattern="{{ Validations.VEHICLE_PATTERN }}" />
+        <span class="help-block" *ngIf="addeditVehicleForm.submitted && vehicleRegNumbercontrol.errors?.required">
+            Vehicle Registration No is required</span>
+        <span class="help-block" *ngIf="addeditVehicleForm.submitted && vehicleRegNumbercontrol.errors?.pattern">
+            Value must be alpha numeric</span>
+      </div>
+      <div class="col-md-4 form-group" [class.has-error]="addeditVehicleForm.submitted && mobileNumber.invalid" >
+        <label class="required">Mobile Number</label>
+        <input type="text" class="form-control" [(ngModel)]="addeditvehicle.mobileNumber"  name="mobileNumber" #mobileNumber="ngModel"  minlength="{{ Validations.MOBILE_MIN_LENGTH }}" required maxlength="{{ Validations.MOBILE_MAX_LENGTH }}" pattern="{{ Validations.MOBILE_PATTERN }}" />
+        <span class="help-block" *ngIf="addeditVehicleForm.submitted && mobileNumber.errors?.required">
+            Mobile Number is required</span>
+        <span class="help-block" *ngIf="!(mobileNumber.errors?.required) && (addeditVehicleForm.submitted && mobileNumber.errors?.minlength)">Mobile number must be 10 characters</span>
+        <span class="help-block" *ngIf="!(mobileNumber.errors?.required) && (addeditVehicleForm.submitted && mobileNumber.errors?.maxlength)">Mobile number must be 10 characters</span>
+        <span class="help-block" *ngIf="!(mobileNumber.errors?.minlength) && (addeditVehicleForm.submitted && mobileNumber.errors?.pattern)">Mobile number must be numeric</span>
+      </div>
+    </div>
+
+    <div class="row m-a-0">
+      <div class="col-md-6 form-group">
+        <button type="submit" class="btn-primary m-t-1">SUBMIT</button>
+      </div>
+    </div>
+  </form>
+  </div>
+
+
+  <div class="row" *ngIf="viewdata">
+    
+      <div class="row m-a-0">
+        <div class="col-md-6">
+          <h5>ID No</h5>
+          <h4>{{selectVehicleDetails.vehicleId}}</h4>
+        </div>
+        <div class="col-md-6">
+          <h5>Chassis Number</h5>
+          <h4>{{selectVehicleDetails.chassisNumber}}</h4>
+        </div>
+        <div class="col-md-6">
+            <h5>IMEIumber</h5>
+            <h4>{{selectVehicleDetails.imeiNumber}}</h4>
+          </div>
+        
+        <div class="col-md-6 p-t-2">
+          <h5>Engine Number</h5>
+          <h4>{{selectVehicleDetails.engineNumber}}</h4>
+        </div>
+        <div class="col-md-6 p-t-2">
+          <h5>Vehicle Make</h5>
+          <h4>{{selectVehicleDetails.vehicleMake}}</h4>
+        </div>
+        <div class="col-md-6 p-t-2">
+          <h5>Vehicle Model</h5>
+          <h4>{{selectVehicleDetails.vehicleModel}}</h4>
+        </div>
+        <div class="col-md-6 p-t-2">
+          <h5>Vehicle Registration Number</h5>
+          <h4>{{selectVehicleDetails.vehicleRegNumber}}</h4>
+        </div>
+        <div class="col-md-6 p-t-2">
+          <h5>Mobile Number</h5>
+          <h4>{{selectVehicleDetails.mobileNumber}}</h4>
+        </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="row p-t-1 ">
+  <div class="col-md-10">
+    <h4>{{pageTitle}}</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Trip Management</li>
+        <li class="breadcrumb-item active" aria-current="page">{{pageTitle}}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<div class="box-rect-round">
+  <div class="row">
+    <div class="col-md-3" *ngIf="showDetails">
+        <div>
+            <div class="row map-view p-a-3" *ngFor="let tripData of tripDetailsData">
+                <div class="m-t-2">
+                <h6>Trip Type :</h6>
+                <h6><span>{{tripData.identifier}}</span></h6>
+                </div>
+               <div class="col-md-12 p-a-0 m-t-2">
+                  <h6>IMEI No : </h6>
+                  <h6><span>{{tripData.imeiNumber}}</span></h6>
+                </div>
+              <div class="m-t-2">
+                <h6>Source :</h6>
+                <h6><span>{{tripData.sourceLocation}}</span></h6> 
+              </div>
+             
+              <div class="m-t-2" *ngIf="!isGeoFencing">
+                <h6>Destination : </h6>
+                <h6><span>{{tripData.destiLocation}}</span></h6>
+              </div>
+              <div class="m-t-2" *ngIf="isGeoFencing">
+                <h6>Radius : </h6>
+                <h6><span>{{tripData.radius}}</span></h6>
+              </div>
+            </div>
+          </div>
+          <div class="floating-btn form-group" *ngIf="!endTripBtn">
+              <button type="button" (click)="endTrip()" class="btn-primary m-t-1">End Trip</button>
+            </div>
+    </div>
+    <div class="col-md-9" [ngClass]="{'col-md-12' : !showDetails}">
+        <div class="row">
+            <div class="col-md-12">
+              <iframe [src]="url" class="map-frame"></iframe>
+            </div>
+          </div>
+    </div>
+  </div>
+ 
+
+  
+  
+</div>

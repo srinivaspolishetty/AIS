@@ -1,0 +1,38 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceManagementServiceApi } from "../common/services/devicemanagement.api";
+import { EmergencynMonitoring } from "../common/models/devicedetails.model";
+
+@Component({
+  selector: 'app-devicedetails',
+  templateUrl: './devicedetails.component.html',
+  styleUrls: ['./devicedetails.component.css']
+})
+export class DevicedetailsComponent implements OnInit {
+  private boolean showFilters = false;
+  pageTitle = "Device Management";
+  deviceData : Array<EmergencynMonitoring> = [];
+  constructor(private devicemanagementApiService : DeviceManagementServiceApi, private modalService: NgbModal) { }
+
+  ngOnInit() {
+    this.getAllDeviceDetails();
+  }
+
+  activateDevice() {
+    const modalRef = this.modalService.open(DeviceactivationComponent, { size : 'lg', backdrop: 'static',
+    keyboard: false });
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+
+  getAllDeviceDetails() {
+    this.devicemanagementApiService.getDeviceDetails()
+    .subscribe((data : EmergencynMonitoring) => {
+      this.deviceData = data.content;
+      console.log(this.deviceData);
+    });
+  }
+
+}

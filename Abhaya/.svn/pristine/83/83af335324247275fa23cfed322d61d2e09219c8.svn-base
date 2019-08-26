@@ -1,0 +1,121 @@
+<div class="row p-t-1">
+  <div class="col-md-10">
+    <h4>Trip Details</h4>
+    <nav aria-label="breadcrumb" class="d-none d-sm-block">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Trip Management</li>
+        <li class="breadcrumb-item active" aria-current="page">Trip Details</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 col-md-8 p-t-3">
+    <span class="text-white">Total Records : {{page.totalElements}} </span>
+  </div>
+  <div class="col-md-4 text-right m-b-1">
+      <div class="onoffswitch">
+          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" (click)="openclosedTrips()" id="myonoffswitch" checked>
+          <label class="onoffswitch-label" for="myonoffswitch">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"></span>
+          </label>
+      </div>
+      <button  [ngClass]="{'active': !tripType}" type="button" class="btn btn-left" (click)="changeTripType(false)">Trips</button>
+      <button [ngClass]="{'active': tripType}" type="button" class="btn btn-right" (click)="changeTripType(true)">Geo Fencing</button>
+      <span>
+        <button type="button" class="btn-search" (click)="btnShowFilters()"><i class="icon-ic_searchfilter"></i></button>
+      </span>
+  </div>
+</div>
+<div class="row page-filters" [ngClass]="{'show': showFilters == true}">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-3"></div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search By IMEI No"  [(ngModel)]="searchValue"
+          (keyup)="searchData();">
+          <button type="button" class="btn-close close" aria-label="Close">
+            <span aria-hidden="true" (click)="clearSearch();" *ngIf="showSearchClear">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-3   ">
+        <div class="form-group">
+          <div class="input-group-append datepicker">
+            <input type="text" class="form-control" readOnly placeholder="yyyy-mm-dd" name="dp"
+            [(ngModel)]="model" (dateSelect)="changeDate();" ngbDatepicker #d="ngbDatepicker">
+            <button style="outline:none" class="btn-cal calendar"
+              (click)="d.toggle()" type="button"> <i class="fa fa-calendar" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="box-rect-round o-x-auto">
+      <table class="grid-table m-t-3">
+        <thead>
+          <tr>
+            <th>Trip ID</th>
+            <th>IMEI No</th>
+            <th width="300">Source</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th width="200">Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="noData">
+          <tr *ngFor="let details of tripDetailsData | paginate: { id: 'tripdetailspage', itemsPerPage: page.size, currentPage: p, totalItems: page.totalElements }">
+            <td>{{details.tripId}}</td>
+            <td>{{details.imeiNumber}}</td>
+            <td>{{details.sourceLocation}}</td>
+            <td>{{details.destiLocation}}</td>
+            <td *ngIf="details.tripClosed == true">Closed</td>
+            <td *ngIf="details.tripClosed == false">Open</td>
+            <td>{{details.createdDate}}</td>
+            <td>
+              <div class='actions-menu dropdown-click'>
+                <button>
+                  <i class="icon-ic_more" aria-hidden="true"></i>
+                </button>
+                <ul>
+                  <li>
+                    <a title="View Location Details" class="icon" (click)="viewTrip(details)">
+                      <i class="icon-ic_view" aria-hidden="true"></i><span>View Details</span>
+                    </a>
+                  </li>
+                  <li *ngIf="details.tripClosed == false">
+                    <a title="View Location Map" class="icon" (click)="endTrip(details)">
+                      <i class="icon-ic_mapview" aria-hidden="true"></i> <span>End Trip</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <div *ngIf="!noData">
+            <div class="grid-nodata text-center text-red-medium">
+              <h6>No Data Found</h6>
+            </div>
+          </div>
+      </table>
+      <div class="row">
+        <div style="margin:0px auto;" *ngIf="noData">
+          <pagination-controls id="tripdetailspage" class="pagination" (pageChange)="pageChanged($event)"
+            maxSize="6" directionLinks="true" autoHide="true" responsive="true" previousLabel="Prev" nextLabel="Next">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LocationMonitoringServiceApi } from "../common/services/locationmonitoring.api";
+import { LocationMonitoring } from "../common/models/locationmonitoring.model";
+
+@Component({
+  selector: 'app-locationmonitoring',
+  templateUrl: './locationmonitoring.component.html',
+  styleUrls: ['./locationmonitoring.component.css']
+})
+export class LocationmonitoringComponent implements OnInit {
+
+  private showFilters : boolean = false;
+  pageTitle = "Location Monitoring Page";
+  locationMonitoringdata : Array<LocationMonitoring> = [];
+  constructor(private locationApiService : LocationMonitoringServiceApi, private modalService: NgbModal) { }
+
+  ngOnInit() {
+    this.getLocationMonitoringDetails();
+  }
+
+  btnShowFilters(){
+    this.showFilters = !this.showFilters;
+  }
+
+  getLocationMonitoringDetails() {
+    this.locationApiService.getLocationMonitoringDetails()
+    .subscribe((data : LocationMonitoring) => {
+      this.locationMonitoringdata = data.content;
+      console.log(this.locationMonitoringdata);
+    });
+  }
+}

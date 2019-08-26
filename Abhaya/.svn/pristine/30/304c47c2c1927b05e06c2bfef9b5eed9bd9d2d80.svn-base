@@ -1,0 +1,10 @@
+import { PageModel } from './page.model';
+export class SystemManagement {
+    public systemPropertiesId: Number;
+    public propertyName: string;
+    public propertyValue: string;
+    public createdDate: string;
+    public updatedDate: string;
+    public page: PageModel;
+    public content: any;
+}

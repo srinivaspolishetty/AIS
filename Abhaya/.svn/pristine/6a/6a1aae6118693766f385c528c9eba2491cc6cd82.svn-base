@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { UserManagementServiceApi } from "../common/services/usermanagement.api";
+import { User } from "../common/models/user.model";
+
+@Component({
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
+})
+export class UsersComponent implements OnInit {
+
+  pageTitle = "User Management";
+  userdata: Array<User> = [];
+  constructor(private usersApiService:UserManagementServiceApi) { }
+
+  ngOnInit() {
+    this.getUserDetails();
+  }
+
+  getUserDetails() {
+    this.usersApiService.getAllUsers()
+    .subscribe((data : User) => {
+      this.userdata = data.content;
+      console.log(this.userdata);
+    });
+  }
+
+}
